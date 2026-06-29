@@ -49,7 +49,7 @@ h3 { font-weight: 700; }
 }
 
 /* 앵커 점프 시 sticky 헤더 보정 */
-[id] { scroll-margin-top: calc(var(--navh) + 14px); }
+[id] { scroll-margin-top: calc(var(--navh) + env(safe-area-inset-top) + 14px); }
 
 /* 포커스 접근성 */
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; border-radius: 6px; }

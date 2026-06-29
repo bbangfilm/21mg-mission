@@ -76,7 +76,7 @@ export default function EditMode() {
 
       {/* 모달 */}
       {open && (
-        <div className={styles.backdrop} onClick={closeAll}>
+        <div className={styles.backdrop} onClick={pendingRole ? undefined : closeAll}>
           <div className={styles.modal} role="dialog" aria-modal="true" aria-label="편집 모드" onClick={(e) => e.stopPropagation()}>
             <button className={styles.close} onClick={closeAll} aria-label="닫기">✕</button>
 

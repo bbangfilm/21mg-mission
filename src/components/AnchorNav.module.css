@@ -1,6 +1,6 @@
 .nav {
   position: sticky; top: 0; z-index: 50;
-  height: var(--navh);
+  padding-top: env(safe-area-inset-top); /* iPhone 노치/상태바 아래로 */
   background: color-mix(in srgb, var(--bg) 86%, transparent);
   backdrop-filter: saturate(160%) blur(10px);
   -webkit-backdrop-filter: saturate(160%) blur(10px);
@@ -8,7 +8,7 @@
 }
 .list {
   display: flex; gap: 6px; align-items: center;
-  height: 100%; max-width: var(--maxw); margin-inline: auto;
+  height: var(--navh); max-width: var(--maxw); margin-inline: auto;
   padding-inline: 12px;
   overflow-x: auto; scrollbar-width: none;
 }

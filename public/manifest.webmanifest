@@ -1,0 +1,18 @@
+{
+  "name": "21MG 국내선교",
+  "short_name": "21MG",
+  "description": "2026 더행복한교회 국내단기선교 · 충남 부여 홍산은혜교회 · 마을 나눔 잔치",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#5331E8",
+  "theme_color": "#16151D",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

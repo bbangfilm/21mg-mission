@@ -46,4 +46,6 @@
   background: var(--violet); color: #fff; font-weight: 700; font-size: 0.84rem;
 }
 
+.catEmpty { font-size: 0.78rem; color: var(--muted); padding: 4px 2px; }
+
 .hint { margin-top: 14px; font-size: 0.78rem; color: var(--muted); }

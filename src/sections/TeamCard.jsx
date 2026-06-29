@@ -1,28 +1,36 @@
 import { useState } from 'react'
 import { Chip } from '../components/ui.jsx'
 import CheckRow from '../components/CheckRow.jsx'
+import { useCollection } from '../lib/useFirestore.js'
+import { addItem, updateItem, removeItem, serverTimestamp } from '../lib/mutations.js'
 import styles from './Teams.module.css'
 
-const stamp = () => {
-  const d = new Date()
+const fmt = (ts) => {
+  if (!ts?.toDate) return '방금'
+  const d = ts.toDate()
   return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
 }
 
-// 팀 카드 — 편집 모드(팀장)에서 체크리스트 토글·추가·삭제 + 메모(append·삭제). 이름·시각 귀속.
-// 실제 저장/실시간은 S4에서 Firestore 서브컬렉션으로 교체.
+// 팀 카드 — 체크리스트/메모 Firestore 서브컬렉션 실시간.
 export default function TeamCard({ team, editable, name }) {
-  const [items, setItems] = useState(() => (team.checklist || []).map((c) => ({ ...c, done: false, doneBy: null })))
-  const [memos, setMemos] = useState([])
+  const clPath = `teams/${team.id}/checklists`
+  const memoPath = `teams/${team.id}/memos`
+  const { items } = useCollection(clPath, 'order')
+  const { items: memos } = useCollection(memoPath)
   const [draft, setDraft] = useState('')
   const [memo, setMemo] = useState('')
   const done = items.filter((i) => i.done).length
-
   const who = () => name || '익명'
-  const toggle = (id) => setItems((p) => p.map((it) => (it.id === id ? { ...it, done: !it.done, doneBy: !it.done ? who() : null } : it)))
-  const removeItem = (id) => setItems((p) => p.filter((it) => it.id !== id))
-  const addItem = (e) => { e.preventDefault(); const t = draft.trim(); if (!t) return; setItems((p) => [...p, { id: 'n' + Date.now(), text: t, done: false, doneBy: null, addedBy: who() }]); setDraft('') }
-  const addMemo = (e) => { e.preventDefault(); const t = memo.trim(); if (!t) return; setMemos((p) => [{ id: 'm' + Date.now(), text: t, by: who(), at: stamp() }, ...p]); setMemo('') }
-  const removeMemo = (id) => setMemos((p) => p.filter((m) => m.id !== id))
+
+  const sortedMemos = [...memos].sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
+
+  const toggle = (it) => updateItem(clPath, it.id, it.done
+    ? { done: false, doneBy: null, doneAt: null }
+    : { done: true, doneBy: who(), doneAt: serverTimestamp() })
+  const removeCl = (id) => removeItem(clPath, id)
+  const addCl = (e) => { e.preventDefault(); const text = draft.trim(); if (!text) return; addItem(clPath, { text, done: false, order: items.length, addedBy: who() }); setDraft('') }
+  const addMemo = (e) => { e.preventDefault(); const text = memo.trim(); if (!text) return; addItem(memoPath, { text, by: who() }); setMemo('') }
+  const removeMemo = (id) => removeItem(memoPath, id)
 
   return (
     <article className={`${styles.card} lift`}>
@@ -50,16 +58,13 @@ export default function TeamCard({ team, editable, name }) {
         <ul className={styles.clList}>
           {items.map((it) => (
             <li key={it.id}>
-              <CheckRow
-                text={it.text} done={it.done} doneBy={it.doneBy}
-                editable={editable}
-                onToggle={() => toggle(it.id)} onRemove={() => removeItem(it.id)}
-              />
+              <CheckRow text={it.text} done={it.done} doneBy={it.doneBy} editable={editable}
+                onToggle={() => toggle(it)} onRemove={() => removeCl(it.id)} />
             </li>
           ))}
         </ul>
         {editable && (
-          <form className={styles.addRow} onSubmit={addItem}>
+          <form className={styles.addRow} onSubmit={addCl}>
             <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="+ 항목 추가" />
             <button type="submit" className={`${styles.addBtn} pressable`}>추가</button>
           </form>
@@ -69,13 +74,13 @@ export default function TeamCard({ team, editable, name }) {
       {/* 팀 메모 */}
       <div className={styles.block}>
         <span className={styles.blockTitle}>팀 메모</span>
-        {memos.length > 0 && (
+        {sortedMemos.length > 0 && (
           <ul className={styles.memoList}>
-            {memos.map((m) => (
+            {sortedMemos.map((m) => (
               <li key={m.id} className={styles.memoItem}>
                 <div className={styles.memoBody}>
                   <span>{m.text}</span>
-                  <em>— {m.by} · {m.at}</em>
+                  <em>— {m.by || '익명'} · {fmt(m.createdAt)}</em>
                 </div>
                 {editable && <button type="button" className={`${styles.memoDel} pressable`} onClick={() => removeMemo(m.id)} aria-label="메모 삭제">✕</button>}
               </li>
@@ -87,7 +92,7 @@ export default function TeamCard({ team, editable, name }) {
             <input className={styles.addInput} value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="메모 남기기…" />
             <button type="submit" className={`${styles.addBtn} pressable`}>등록</button>
           </form>
-        ) : (memos.length === 0 && <p className={styles.memoEmpty}>편집 모드에서 진행상황·메모를 남길 수 있어요</p>)}
+        ) : (sortedMemos.length === 0 && <p className={styles.memoEmpty}>편집 모드(팀장)에서 진행상황·메모를 남길 수 있어요</p>)}
       </div>
     </article>
   )

@@ -14,6 +14,17 @@
 
 .ref { margin-top: 16px; font-size: 0.8rem; color: var(--on-ink-muted); }
 
+/* 관리자 인라인 편집 (목표·누적) */
+.editRow { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line-ink); }
+.editRow label { display: flex; flex-direction: column; gap: 4px; font-size: 0.74rem; font-weight: 700; color: var(--on-ink-muted); }
+.editRow input {
+  width: 130px; height: 40px; padding: 0 11px; font-size: 0.95rem; font-weight: 700;
+  border: 1.5px solid var(--line-ink); border-radius: var(--radius-sm);
+  background: var(--ink-2); color: #fff;
+}
+.editRow input:focus { outline: none; border-color: var(--sunny); }
+.saveBtn { height: 40px; padding: 0 18px; border-radius: var(--radius-sm); background: var(--sunny); color: var(--on-sunny); font-weight: 800; font-size: 0.88rem; }
+
 /* 후원계좌 — violet 위 흰 카드 */
 .account {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;

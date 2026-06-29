@@ -1,0 +1,61 @@
+rules_version = '2';
+// 21MG 대시보드 — 동적 컬렉션만 Firestore 사용(정적 데이터는 앱 src/data).
+// 읽기: 누구나(링크 공유형). 쓰기: 익명 로그인 + 타입/길이 검증.
+// ⚠️ PIN은 클라이언트 UX 게이트일 뿐 — 규칙은 "인증된 누구나 + 스키마 검증"까지만(1회용·신뢰그룹 전제).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signed() { return request.auth != null; }
+
+    // 후원 현황 (관리자 편집)
+    match /config/sponsorship {
+      allow read: if true;
+      allow write: if signed()
+        && request.resource.data.goalAmount is number && request.resource.data.goalAmount >= 0
+        && request.resource.data.currentAmount is number && request.resource.data.currentAmount >= 0;
+    }
+
+    // 이번 주 할 일
+    match /todos/{id} {
+      allow read: if true;
+      allow create, update: if signed()
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0 && request.resource.data.text.size() < 300;
+      allow delete: if signed();
+    }
+
+    // 바자회 품목
+    match /bazaarItems/{id} {
+      allow read: if true;
+      allow create, update: if signed()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0 && request.resource.data.name.size() < 200;
+      allow delete: if signed();
+    }
+
+    // 공지사항
+    match /notices/{id} {
+      allow read: if true;
+      allow create, update: if signed()
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0 && request.resource.data.text.size() < 2000;
+      allow delete: if signed();
+    }
+
+    // 팀 체크리스트 / 메모
+    match /teams/{teamId}/checklists/{id} {
+      allow read: if true;
+      allow create, update: if signed()
+        && request.resource.data.text is string && request.resource.data.text.size() < 300;
+      allow delete: if signed();
+    }
+    match /teams/{teamId}/memos/{id} {
+      allow read: if true;
+      allow create: if signed()
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0 && request.resource.data.text.size() < 1000;
+      allow delete: if signed();
+    }
+
+    // 그 외 모든 경로 차단(명시되지 않음 = 기본 거부)
+  }
+}

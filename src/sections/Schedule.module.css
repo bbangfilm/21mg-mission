@@ -1,0 +1,31 @@
+.grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 760px) { .grid { grid-template-columns: repeat(3, 1fr); align-items: start; } }
+
+.day {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px;
+}
+.dayHead {
+  display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+  padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px dashed var(--line);
+}
+.date { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+.dow { color: var(--muted); font-size: 0.85rem; }
+.dayLabel { margin-left: auto; font-size: 0.72rem; font-weight: 700; color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); padding: 3px 8px; border-radius: var(--radius-pill); }
+
+.items { display: flex; flex-direction: column; gap: 4px; }
+.item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px; border-radius: var(--radius-sm);
+}
+.time { font-size: 0.8rem; font-weight: 700; color: var(--muted); min-width: 84px; flex: none; padding-top: 1px; }
+.body { display: flex; flex-direction: column; }
+.body b { font-size: 0.92rem; color: var(--navy); font-weight: 600; }
+.body em { font-style: normal; font-size: 0.8rem; color: var(--muted); }
+
+.highlight {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.highlight .time { color: #8a6400; }
+.star { margin-left: auto; }

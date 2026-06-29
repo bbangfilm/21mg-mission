@@ -1,0 +1,89 @@
+/* ── 플로팅 편집 버튼 (우하단) ── */
+.fabWrap {
+  position: fixed; z-index: 60;
+  right: calc(16px + env(safe-area-inset-right));
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.fab {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 48px; padding: 0 18px; border-radius: var(--radius-pill);
+  background: var(--ink); color: #fff; font-weight: 700; font-size: 0.92rem;
+  box-shadow: var(--shadow-lg);
+}
+.fab.on { background: var(--violet); box-shadow: var(--shadow-violet); }
+.fabName { font-weight: 800; }
+
+/* 잠금 해제 후 팝오버 */
+.panel {
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 12px; min-width: 200px;
+  box-shadow: var(--shadow-lg);
+}
+.panelWho { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.panelWho b { font-size: 0.95rem; color: var(--ink); }
+.roleBadge { font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: var(--radius-pill); }
+.role_team { background: var(--violet-soft); color: var(--violet); }
+.role_admin { background: color-mix(in srgb, var(--sunny) 30%, transparent); color: var(--on-sunny); }
+.panel button { text-align: left; padding: 9px 10px; border-radius: var(--radius-sm); font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+.panel button:hover { background: var(--paper); }
+.lockBtn { color: var(--danger) !important; }
+
+/* ── 모달 ── */
+.backdrop {
+  position: fixed; inset: 0; z-index: 70;
+  background: rgba(22,21,29,.55); backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.modal {
+  position: relative; width: 100%; max-width: 400px;
+  background: var(--paper-2); border-radius: var(--radius);
+  padding: 26px 22px 22px; box-shadow: var(--shadow-lg);
+  animation: pop .26s var(--ease-spring) both;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.96); } to { opacity: 1; transform: none; } }
+.close {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px; border-radius: 50%;
+  color: var(--muted); font-size: 0.9rem;
+}
+.close:hover { background: var(--paper); }
+
+.mTitle { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--ink); }
+.mSub { font-size: 0.88rem; color: var(--muted); margin: 6px 0 18px; }
+.mSub b { color: var(--violet); }
+
+.pinInput {
+  width: 100%; height: 54px; text-align: center;
+  font-size: 1.5rem; font-weight: 700; letter-spacing: 0.3em;
+  border: 2px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--white); color: var(--ink);
+  transition: border-color .2s var(--ease);
+}
+.pinInput:focus { outline: none; border-color: var(--violet); }
+.err { color: var(--danger); font-size: 0.82rem; font-weight: 600; margin-top: 8px; }
+.shake { border-color: var(--danger); animation: shake .35s; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+
+.primary {
+  width: 100%; height: 48px; margin-top: 14px;
+  background: var(--violet); color: #fff; font-weight: 800; font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+}
+.note { font-size: 0.76rem; color: var(--muted); text-align: center; margin-top: 12px; }
+
+/* 이름 선택 */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.nameChip {
+  padding: 10px 16px; border-radius: var(--radius-pill);
+  background: var(--white); border: 1.5px solid var(--line);
+  font-weight: 700; font-size: 0.92rem; color: var(--ink);
+  transition: transform .14s var(--ease-spring), border-color .2s, background .2s;
+}
+.nameChip:hover { border-color: var(--violet); transform: translateY(-2px); }
+.more { background: var(--violet-soft); border-color: transparent; color: var(--violet); }
+.freeRow { display: flex; gap: 8px; margin-top: 12px; }
+.freeInput { flex: 1; height: 46px; padding: 0 14px; border: 2px solid var(--line); border-radius: var(--radius-sm); font-size: 1rem; }
+.freeInput:focus { outline: none; border-color: var(--violet); }
+.freeRow .primary { width: auto; margin-top: 0; padding-inline: 22px; }

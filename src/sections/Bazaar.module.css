@@ -1,0 +1,49 @@
+.head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+.pbar { flex: 1; min-width: 160px; }
+
+.cats { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 760px) { .cats { grid-template-columns: repeat(3, 1fr); align-items: start; } }
+
+.cat {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px;
+}
+.catTitle {
+  font-size: 0.82rem; font-weight: 800; color: var(--violet);
+  padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid var(--line);
+}
+.list { display: flex; flex-direction: column; gap: 5px; }
+.item {
+  display: flex; align-items: center; gap: 9px; width: 100%; text-align: left;
+  padding: 9px 10px; border-radius: var(--radius-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+}
+.item:disabled { cursor: default; }
+.editable { transition: border-color .2s var(--ease), background .2s var(--ease); }
+.editable:hover { border-color: var(--violet); }
+.check {
+  flex: none; width: 19px; height: 19px; border-radius: 6px;
+  border: 2px solid var(--line); display: grid; place-items: center;
+  color: #fff; font-size: 0.72rem; font-weight: 700;
+}
+.editable .check { border-color: var(--violet); }
+.done .check { background: var(--success); border-color: var(--success); }
+.text { font-size: 0.86rem; color: var(--text); }
+.done .text { color: var(--muted); text-decoration: line-through; }
+.by {
+  margin-left: auto; flex: none; font-size: 0.68rem; font-weight: 700;
+  color: var(--success-ink); background: color-mix(in srgb, var(--success) 16%, transparent);
+  padding: 2px 7px; border-radius: var(--radius-pill); white-space: nowrap;
+}
+.addRow { display: flex; gap: 6px; margin-top: 7px; }
+.addInput {
+  flex: 1; min-width: 0; height: 38px; padding: 0 12px; font-size: 0.85rem;
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--white);
+}
+.addInput:focus { outline: none; border-color: var(--violet); }
+.addBtn {
+  flex: none; padding: 0 15px; border-radius: var(--radius-sm);
+  background: var(--violet); color: #fff; font-weight: 700; font-size: 0.84rem;
+}
+
+.hint { margin-top: 14px; font-size: 0.78rem; color: var(--muted); }

@@ -1,0 +1,30 @@
+// 부록 C — 회비(수입) / 예산(지출) / 잔액. 정적 단일 출처.
+// ⚠️ 표시 인원 45 / 회비·예산 산정 44(덕인셀 +1 미반영) — headcountNote 단일 출처.
+export const budget = {
+  income: [
+    { label: '성인', people: 24, unit: 60000, amount: 1440000 },
+    { label: '취학', people: 15, unit: 60000, amount: 900000 },
+    { label: '미취학', people: 5, unit: 30000, amount: 150000 },
+  ],
+  incomeTotal: { people: 44, amount: 2490000 },
+
+  expense: [
+    { label: '조식 2회', unit: 14000, people: 44, amount: 616000, note: '전원 성인 계산' },
+    { label: '석식 (금)', unit: 10000, people: 40, amount: 400000, note: '40인분 계산' },
+    { label: '석식 (토)', unit: 7000, people: 44, amount: 308000, note: '전원 성인 계산' },
+    { label: '수영장', unit: 10000, people: 44, amount: 440000, note: '전원 성인 계산' },
+    { label: '평상', unit: 70000, people: 4, amount: 280000, note: '7만원 × 4개' },
+    { label: '현수막', unit: null, people: null, amount: 30000, note: '' },
+    { label: '라면', unit: 1500, people: 44, amount: 66000, note: '' },
+  ],
+  expenseTotal: 2140000,
+
+  balance: 350000, // 예비비 = 2,490,000 − 2,140,000
+
+  headcountNote:
+    '대시보드 표시 인원은 45명, 회비·예산 산정은 44명 기준(덕인셀 1명 차이는 회비 재산정 시 반영).',
+  notes: [
+    '회비는 식사·수영장·시설 등 공동 운영비. 숙소(유스호스텔)는 별도로 각자 부담.',
+    '오병이어 음식·판매 물품은 회비에 미포함 — 별도 선교헌금(목표 300만)으로 준비.',
+  ],
+}

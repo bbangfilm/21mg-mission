@@ -1,0 +1,33 @@
+.card {
+  background: var(--ink); color: var(--on-ink);
+  border-radius: var(--radius); padding: 24px;
+  box-shadow: var(--shadow-lg);
+}
+.top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.note { font-size: 0.82rem; color: var(--on-ink-muted); }
+
+.amounts { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.lbl { display: block; font-size: 0.74rem; font-weight: 700; color: var(--on-ink-muted); margin-bottom: 4px; }
+.cur { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 11vw, 3.6rem); color: var(--sunny); line-height: 0.9; }
+.goalWrap { text-align: right; }
+.goal { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: #fff; }
+
+.ref { margin-top: 16px; font-size: 0.8rem; color: var(--on-ink-muted); }
+
+/* 후원계좌 — violet 위 흰 카드 */
+.account {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 16px; padding: 16px 18px;
+  background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.accLbl { font-family: var(--font-display); font-weight: 700; color: var(--violet); font-size: 0.95rem; }
+.accNum { color: var(--ink); font-size: 0.9rem; }
+.accPlaceholder { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+.copyBtn {
+  margin-left: auto; font-size: 0.78rem; font-weight: 700;
+  padding: 7px 15px; border-radius: var(--radius-pill);
+  background: var(--violet-soft); color: var(--violet);
+}
+.copyBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.pending { margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,.78); text-align: center; }

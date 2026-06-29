@@ -1,0 +1,17 @@
+.verse {
+  background: var(--navy); color: #EAF0FF;
+  border-radius: var(--radius); padding: 24px;
+  margin-bottom: 18px;
+}
+.verse p { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; line-height: 1.5; }
+.verse cite { display: block; margin-top: 12px; font-style: normal; color: var(--accent); font-size: 0.9rem; }
+
+.list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 760px) { .list { grid-template-columns: 1fr 1fr; } }
+.item {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 12px 14px;
+  font-size: 0.92rem; color: var(--text);
+}
+.bullet { flex: none; }

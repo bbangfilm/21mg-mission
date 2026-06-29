@@ -1,0 +1,8 @@
+.footer {
+  background: var(--navy); color: #B9C6E6;
+  padding-block: 32px; margin-top: 24px;
+  text-align: center;
+}
+.team { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: #fff; }
+.meta { font-size: 0.85rem; margin-top: 6px; }
+.credit { font-size: 0.74rem; color: #6F80A8; margin-top: 14px; }

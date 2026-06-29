@@ -1,0 +1,23 @@
+.grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 760px) { .grid { grid-template-columns: repeat(3, 1fr); align-items: start; } }
+
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.head { display: flex; align-items: baseline; justify-content: space-between; }
+.name { font-size: 1.2rem; }
+.count { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+.count small { font-size: 0.8rem; margin-left: 2px; color: var(--muted); font-weight: 500; }
+.leaders { color: var(--muted); font-size: 0.82rem; margin: 6px 0 12px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.totalBar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 16px; padding: 14px 18px;
+  background: var(--navy); color: #fff; border-radius: var(--radius);
+}
+.totalBar strong { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: var(--accent); }
+.totalBar em { font-style: normal; font-size: 0.78rem; color: #B9C6E6; margin-left: auto; }

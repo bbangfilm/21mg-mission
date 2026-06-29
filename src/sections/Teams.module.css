@@ -1,0 +1,93 @@
+.grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 680px) { .grid { grid-template-columns: repeat(2, 1fr); align-items: start; } }
+@media (min-width: 980px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.head { display: flex; align-items: center; gap: 12px; }
+.emoji {
+  font-size: 1.4rem; width: 44px; height: 44px; flex: none;
+  display: grid; place-items: center;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+.name { font-size: 1.1rem; }
+.role { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.reassign {
+  font-size: 0.78rem; color: #8a6400;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+  border-radius: var(--radius-sm); padding: 8px 10px;
+}
+
+/* ── 체크리스트 · 메모 블록 ── */
+.block { padding-top: 12px; border-top: 1px dashed var(--line); }
+.blockHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.blockTitle { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.02em; color: var(--muted); }
+.blockCount { font-size: 0.78rem; font-weight: 800; color: var(--violet); }
+
+.clList { display: flex; flex-direction: column; gap: 5px; }
+.clItem {
+  display: flex; align-items: center; gap: 9px; width: 100%; text-align: left;
+  padding: 8px 9px; border-radius: var(--radius-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+}
+.clItem:disabled { cursor: default; }
+.clEditable { transition: border-color .2s var(--ease), background .2s var(--ease); }
+.clEditable:hover { border-color: var(--violet); }
+.clCheck {
+  flex: none; width: 18px; height: 18px; border-radius: 6px;
+  border: 2px solid var(--line); display: grid; place-items: center;
+  color: #fff; font-size: 0.7rem; font-weight: 700;
+}
+.clEditable .clCheck { border-color: var(--violet); }
+.clDone .clCheck { background: var(--success); border-color: var(--success); }
+.clText { font-size: 0.85rem; color: var(--text); }
+.clDone .clText { color: var(--muted); text-decoration: line-through; }
+.clBy {
+  margin-left: auto; flex: none; font-size: 0.68rem; font-weight: 700;
+  color: var(--success-ink); background: color-mix(in srgb, var(--success) 16%, transparent);
+  padding: 2px 7px; border-radius: var(--radius-pill); white-space: nowrap;
+}
+
+.addRow { display: flex; gap: 6px; margin-top: 7px; }
+.addInput {
+  flex: 1; height: 36px; padding: 0 11px; font-size: 0.84rem;
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--white);
+}
+.addInput:focus { outline: none; border-color: var(--violet); }
+.addBtn {
+  flex: none; padding: 0 14px; border-radius: var(--radius-sm);
+  background: var(--violet); color: #fff; font-weight: 700; font-size: 0.82rem;
+}
+
+.memoList { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.memoItem {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--paper); border-radius: var(--radius-sm); padding: 8px 10px;
+  font-size: 0.85rem; color: var(--text);
+}
+.memoBody { flex: 1; min-width: 0; }
+.memoBody em { display: block; font-style: normal; font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
+.memoDel {
+  flex: none; width: 28px; height: 28px; border-radius: 8px; margin-top: -1px;
+  display: grid; place-items: center; color: var(--muted); font-size: 0.74rem;
+  transition: color .15s var(--ease), background .15s var(--ease);
+}
+.memoDel:hover { color: #fff; background: var(--danger); }
+.memoEmpty { font-size: 0.76rem; color: var(--muted); margin-top: 6px; }
+
+.support {
+  margin-top: 18px; padding: 18px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.supportTitle { font-size: 1rem; margin-bottom: 12px; }
+.supportChips { display: flex; flex-wrap: wrap; gap: 14px; }
+.supportItem { display: inline-flex; align-items: center; gap: 7px; }
+.supportPeople { font-size: 0.82rem; color: var(--navy); }
+.note { margin-top: 14px; font-size: 0.78rem; color: var(--muted); }

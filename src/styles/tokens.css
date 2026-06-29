@@ -1,0 +1,68 @@
+/* ──────────────────────────────────────────────────────────────
+   디자인 토큰 — "마을 나눔 잔치" 에디토리얼
+   레퍼런스(코오롱몰·LG헬로비전) 무드: 잉크블랙 + 웜페이퍼 위 컨페티 팔레트.
+   각 섹션이 하나의 색을 '소유'하는 컬러블록 방식(레인보우 난잡함 방지).
+   ────────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --ink:      #16151D;  /* near-black (어두운 에디토리얼 섹션·히어로 오버레이) */
+  --ink-2:    #221F2C;  /* 다크 카드 */
+  --paper:    #F1ECE1;  /* 웜 오프화이트 (공동체의 온기 — 차가운 커머스와 차별) */
+  --paper-2:  #FBF8F1;  /* paper 위 카드 */
+  --white:    #FFFFFF;
+
+  /* Confetti accents (잔치 색) */
+  --violet:   #5B3DF5;  /* 메인 액센트 (코오롱 페리윙클 계열) */
+  --violet-2: #7C63FF;
+  --violet-soft: #ECE7FF;
+  --sunny:    #FFCE2E;  /* 에너지·D-Day·열매·하이라이트 */
+  --mint:     #15C6A0;  /* 완료/달성 (기획서 연속성) */
+  --mint-ink: #0A6F58;
+  --coral:    #FF5A6E;  /* 손하트·온기·강조 */
+
+  /* Text */
+  --text:     #1B1A22;  /* paper 위 본문 */
+  --muted:    #6B6976;  /* paper 위 보조 (AA) */
+  --on-ink:   #F1ECE1;  /* ink 위 본문 */
+  --on-ink-muted: #A29DB4;
+  --on-sunny: #2A2300;  /* sunny 위 텍스트 */
+  --line:     #E3DCCC;  /* paper 위 경계 */
+  --line-ink: #322E3F;  /* ink 위 경계 */
+
+  /* Type */
+  --font-display: 'Paperlogy', 'Pretendard', sans-serif;  /* 제목 — 굵기로 위계 */
+  --font-body:    'Pretendard', system-ui, -apple-system, sans-serif;
+
+  /* Shape */
+  --radius:    22px;
+  --radius-sm: 13px;
+  --radius-pill: 999px;
+  --gap:       16px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(22,21,29,.06), 0 2px 6px rgba(22,21,29,.06);
+  --shadow:    0 10px 30px rgba(22,21,29,.10);
+  --shadow-lg: 0 24px 60px rgba(22,21,29,.18);
+  --shadow-violet: 0 16px 40px rgba(91,61,245,.28);
+
+  /* Layout */
+  --maxw:     1120px;
+  --navh:     54px;
+  --page-pad: 18px;
+
+  /* Motion */
+  --ease:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.42, 0.5, 1);  /* 살짝 오버슈트 — '텐션' */
+  --dur:      260ms;
+
+  /* ── 구 토큰 호환 별칭 (기존 섹션 CSS가 새 팔레트로 자동 매핑) ── */
+  --bg:        var(--paper);
+  --surface:   var(--paper-2);
+  --surface-2: var(--white);
+  --navy:      var(--ink);
+  --primary:   var(--violet);
+  --success:   var(--mint);
+  --success-ink: var(--mint-ink);
+  --accent:    var(--sunny);
+  --muted-soft: var(--muted);
+}

@@ -1,0 +1,31 @@
+.section { padding-block: 56px; }
+
+/* ── 컬러모드 (각 섹션이 한 색을 소유) ── */
+.paper  { background: var(--paper); color: var(--text); }
+.ink    { background: var(--ink); color: var(--on-ink); }
+.violet { background: var(--violet); color: #fff; }
+.sunny  { background: var(--sunny); color: var(--on-sunny); }
+
+.head { margin-bottom: 28px; max-width: 60ch; }
+.eyebrow { margin-bottom: 10px; }
+.ink .eyebrow    { color: var(--sunny); }
+.violet .eyebrow { color: var(--sunny); }
+.sunny .eyebrow  { color: var(--violet); }
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 8vw, 3.4rem);
+  line-height: 0.98;
+}
+.ink .title, .violet .title { color: #fff; }
+.sunny .title { color: var(--on-sunny); }
+
+.desc { margin-top: 12px; font-size: 0.98rem; font-weight: 500; }
+.paper  .desc { color: var(--muted); }
+.ink    .desc { color: var(--on-ink-muted); }
+.violet .desc { color: rgba(255,255,255,.82); }
+.sunny  .desc { color: rgba(42,35,0,.72); }
+
+@media (min-width: 720px) {
+  .section { padding-block: 84px; }
+}

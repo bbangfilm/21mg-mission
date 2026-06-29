@@ -1,0 +1,32 @@
+.grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 680px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius); padding: 22px;
+  min-height: 168px; display: flex; flex-direction: column;
+  color: #fff; box-shadow: var(--shadow);
+}
+/* 레퍼런스풍 그라데이션 컬러 카드 */
+.c0 { background: linear-gradient(150deg, #6E54FF, #5B3DF5); }
+.c1 { background: linear-gradient(150deg, #FF7A8A, #FF5A6E); }
+.c2 { background: linear-gradient(150deg, #2BD4AE, #15C6A0); }
+
+.emoji { font-size: 2rem; margin-bottom: auto; }
+.cardTitle { font-family: var(--font-display); font-size: 1.45rem; margin: 14px 0 6px; color: #fff; }
+.cardDesc { font-size: 0.9rem; color: rgba(255,255,255,.9); line-height: 1.5; }
+
+/* 작년 열매 — sunny 스탬프 콜아웃 */
+.fruit {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 18px; padding: 18px 20px;
+  background: var(--sunny); color: var(--on-sunny);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+}
+.fruit strong { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; }
+.fruitMark {
+  font-family: var(--font-display); font-weight: 800; font-size: 0.9rem;
+  background: var(--ink); color: var(--sunny);
+  padding: 6px 12px; border-radius: var(--radius-pill);
+  transform: rotate(-4deg); white-space: nowrap;
+}

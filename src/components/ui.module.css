@@ -1,0 +1,35 @@
+/* ── Chip ── */
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--radius-pill); padding: 5px 11px;
+  font-size: 0.85rem; color: var(--navy); white-space: nowrap;
+}
+@media (hover: hover) {
+  .chip { transition: transform .2s var(--ease-spring), box-shadow .2s var(--ease), border-color .2s var(--ease); }
+  .chip:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: color-mix(in srgb, var(--violet) 40%, var(--line)); }
+}
+.chip_leader { background: color-mix(in srgb, var(--primary) 12%, var(--surface-2)); border-color: color-mix(in srgb, var(--primary) 30%, var(--line)); color: var(--primary); font-weight: 600; }
+.chip_accent { background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); color: #8a6400; font-weight: 600; }
+.chip_role   { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+  padding: 3px 9px; border-radius: var(--radius-pill);
+}
+.badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge_muted   { background: color-mix(in srgb, var(--muted) 14%, transparent); color: var(--muted); }
+.badge_primary { background: color-mix(in srgb, var(--primary) 14%, transparent); color: var(--primary); }
+.badge_success { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--success-ink); }
+.badge_accent  { background: color-mix(in srgb, var(--accent) 26%, transparent); color: #8a6400; }
+
+/* ── ProgressBar ── */
+.progress { display: flex; align-items: center; gap: 10px; }
+.track { flex: 1; height: 10px; background: color-mix(in srgb, var(--navy) 8%, var(--surface-2)); border-radius: var(--radius-pill); overflow: hidden; }
+.fill { height: 100%; border-radius: var(--radius-pill); transition: width 600ms var(--ease); }
+.fill_primary { background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--success))); }
+.fill_success { background: var(--success); }
+.fill_accent  { background: var(--accent); }
+.pct { font-size: 0.85rem; font-weight: 700; color: var(--navy); min-width: 38px; text-align: right; }

@@ -1,0 +1,22 @@
+{
+  "name": "21mg-mission-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "21MG 국내선교 대시보드 — 더행복한교회 2026 국내단기선교",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "seed": "node scripts/seed.mjs"
+  },
+  "dependencies": {
+    "firebase": "^10.13.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}

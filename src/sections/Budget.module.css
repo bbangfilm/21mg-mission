@@ -1,0 +1,32 @@
+.grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 760px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+.tableCard {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px 18px;
+}
+.tableTitle { font-size: 1rem; margin-bottom: 10px; }
+.table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.table td { padding: 9px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table td:nth-child(2), .table td:last-child { text-align: right; color: var(--muted); white-space: nowrap; }
+.amt { color: var(--navy) !important; font-weight: 600; }
+.note { display: block; font-style: normal; font-size: 0.72rem; color: var(--muted-soft); margin-top: 2px; }
+
+.table tfoot td {
+  border-top: 2px solid var(--navy); border-bottom: none;
+  font-weight: 700; color: var(--navy); padding-top: 11px;
+}
+
+.balance {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 16px; padding: 16px 20px;
+  background: color-mix(in srgb, var(--success) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--success) 36%, var(--line));
+  border-radius: var(--radius);
+}
+.balance span { font-weight: 600; color: var(--success-ink); }
+.balance strong { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--success-ink); }
+
+.notes { margin-top: 14px; display: flex; flex-direction: column; gap: 5px; }
+.notes li { font-size: 0.8rem; color: var(--muted); }
+.notes li:first-child { color: var(--navy); font-weight: 600; }

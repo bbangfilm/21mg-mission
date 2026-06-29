@@ -1,0 +1,96 @@
+.hero {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--ink);
+  isolation: isolate;
+}
+.photo {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 50%;
+}
+.scrim {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(22,21,29,.55) 0%, rgba(22,21,29,.06) 20%, rgba(22,21,29,.30) 44%, rgba(22,21,29,.86) 72%, rgba(22,21,29,.98) 100%);
+}
+
+/* D-Day 스티커 — 우상단, 살짝 기울인 잔치 배지 */
+.dday {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  display: inline-flex; flex-direction: column; align-items: center; line-height: 1;
+  background: var(--sunny); color: var(--on-sunny);
+  padding: 11px 16px; border-radius: 18px;
+  transform: rotate(4deg);
+  box-shadow: var(--shadow-lg);
+}
+.dday b { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; }
+.dday i { font-style: normal; font-size: 0.64rem; font-weight: 700; margin-top: 3px; opacity: .8; }
+.dday[data-phase='during'] { background: var(--coral); color: #fff; }
+.dday[data-phase='after']  { background: var(--ink-2); color: var(--on-ink); }
+
+.content { position: relative; z-index: 1; padding-bottom: 40px; padding-top: 80px; color: var(--on-ink); }
+
+.kicker {
+  font-weight: 800; font-size: 0.8rem; letter-spacing: 0.04em;
+  color: #fff; margin-bottom: 8px;
+  display: inline-block;
+  background: var(--violet); padding: 5px 11px; border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-violet);
+}
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 27vw, 12rem);
+  line-height: 0.82; color: #fff; letter-spacing: -0.02em;
+  text-shadow: 0 6px 30px rgba(0,0,0,.45);
+}
+.title span { color: var(--sunny); }
+.lead { font-size: 1rem; font-weight: 500; margin-top: 10px; color: #fff; }
+.lead b { font-weight: 800; color: var(--sunny); }
+
+.meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+.chip {
+  font-size: 0.84rem; font-weight: 700;
+  background: rgba(255,255,255,.14); color: #fff;
+  border: 1px solid rgba(255,255,255,.22);
+  padding: 6px 13px; border-radius: var(--radius-pill);
+  backdrop-filter: blur(6px);
+}
+.chip i { font-style: normal; opacity: .6; margin: 0 1px; }
+
+.verse {
+  margin-top: 20px; font-size: 0.82rem; color: rgba(255,255,255,.82);
+  border-left: 3px solid var(--coral); padding-left: 12px; max-width: 40ch;
+  word-break: keep-all;
+}
+
+@media (min-width: 720px) {
+  .hero { min-height: 80svh; }
+  .content { padding-bottom: 56px; }
+  .title { font-size: clamp(8rem, 19vw, 14rem); }
+  .dday { top: 24px; right: 28px; }
+  .dday b { font-size: 1.9rem; }
+}
+
+/* ── 로드 시퀀스 (CSS 키프레임 — rAF/JS 상태 불필요, fill-mode로 최종상태 유지) ── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .content > * { animation: heroIn .7s var(--ease-spring) both; }
+  .content > .kicker { animation-delay: .12s; }
+  .content > .title  { animation-delay: .22s; }
+  .content > .lead   { animation-delay: .38s; }
+  .content > .meta   { animation-delay: .46s; }
+  .content > .verse  { animation-delay: .54s; }
+
+  .dday { animation: ddayPop .6s var(--ease-spring) .5s both; }
+  @keyframes ddayPop {
+    from { opacity: 0; transform: rotate(-10deg) scale(0.5); }
+    to   { opacity: 1; transform: rotate(4deg) scale(1); }
+  }
+}

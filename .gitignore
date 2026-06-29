@@ -1,0 +1,52 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# build
+dist
+dist-ssr
+*.local
+
+# env — ⚠️ .env.example 만 커밋. PIN/키가 든 실제 env는 절대 추적 금지.
+.env
+.env.local
+.env.*.local
+
+# firebase service account (혹시 쓰게 될 경우)
+serviceAccount*.json
+firebase-adminsdk*.json
+
+# logs / editor / os
+logs
+*.log
+npm-debug.log*
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── 원본 자료(대용량·소스 머티리얼) — 웹앱은 public/img/ 의 가공본만 사용 ──
+오병이어 이미지/
+1차답사자료/
+대시보드자료/
+숙소자료/
+문서자료/
+21MG_국내선교_대시보드_기획서.md
+
+# 로컬 툴링/에이전트 설정 (저장소에 불필요)
+.claude/
+.agents/
+.omc/
+
+# 루트 떠돌이 이미지(앱 미사용)
+/*.jpg
+/*.jpeg
+/*.png
+/*.JPG
+/*.PNG

@@ -1,0 +1,51 @@
+.head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.count { margin-left: auto; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+
+.addRow { display: flex; gap: 6px; margin-bottom: 14px; }
+.addInput {
+  flex: 1; min-width: 0; height: 44px; padding: 0 14px; font-size: 0.92rem;
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--white);
+}
+.addInput:focus { outline: none; border-color: var(--violet); }
+.addBtn {
+  flex: none; padding: 0 18px; border-radius: var(--radius-sm);
+  background: var(--violet); color: #fff; font-weight: 700; font-size: 0.88rem;
+}
+
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+}
+.pinned {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.body { flex: 1; min-width: 0; }
+.pinTag {
+  display: inline-block; font-size: 0.68rem; font-weight: 800; color: #8a6400;
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 2px 8px; border-radius: var(--radius-pill); margin-bottom: 6px;
+}
+.text { font-size: 0.95rem; color: var(--text); line-height: 1.45; }
+.meta { display: block; font-size: 0.74rem; color: var(--muted); margin-top: 6px; }
+
+.actions { flex: none; display: flex; gap: 4px; }
+.pinBtn, .del {
+  width: 34px; height: 34px; border-radius: var(--radius-sm);
+  display: grid; place-items: center; font-size: 0.82rem;
+  border: 1px solid var(--line); background: var(--surface-2);
+  transition: color .15s var(--ease), background .15s var(--ease), border-color .15s var(--ease), filter .15s var(--ease);
+}
+.pinBtn { filter: grayscale(1) opacity(0.55); }
+.pinBtn:hover { filter: none; border-color: var(--accent); }
+.pinOn { filter: none; background: color-mix(in srgb, var(--accent) 22%, transparent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.del { color: var(--muted); }
+.del:hover { color: #fff; background: var(--danger); border-color: var(--danger); }
+
+.empty {
+  text-align: center; padding: 28px 20px; color: var(--muted);
+  background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); font-size: 0.92rem;
+}
+.hint { margin-top: 14px; font-size: 0.78rem; color: var(--muted); }

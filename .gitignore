@@ -44,6 +44,9 @@ npm-debug.log*
 .agents/
 .omc/
 
+# 작업 핸드오프(PIN 포함 — 로컬 전용)
+HANDOFF.md
+
 # 루트 떠돌이 이미지(앱 미사용)
 /*.jpg
 /*.jpeg

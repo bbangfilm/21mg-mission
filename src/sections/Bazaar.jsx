@@ -36,7 +36,7 @@ export default function Bazaar() {
         {editable
           ? <Badge tone="success">편집 모드 · {name || '이름 미설정'}</Badge>
           : <Badge tone="muted">실시간</Badge>}
-        <span className={styles.pbar}><ProgressBar value={done} max={items.length || 1} tone="success" /></span>
+        <span className={styles.pbar}><ProgressBar value={done} max={items.length || 1} tone="success" label="바자회 준비 완료율" valueText={`${items.length}개 중 ${done}개 완료`} /></span>
       </div>
 
       <div className={`${styles.cats} stagger`}>

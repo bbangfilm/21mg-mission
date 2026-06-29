@@ -6,7 +6,7 @@ import styles from './Venue.module.css'
 const PHOTO = {
   church: 'img/worship.jpg',
   hostel: 'img/room.jpg',
-  pool: 'img/festival.jpg',
+  pool: 'img/pool.jpg',
 }
 
 export default function Venue() {
@@ -16,9 +16,13 @@ export default function Venue() {
         {venue.places.map((p) => (
           <article key={p.id} className={`${styles.card} lift`}>
             <div className={styles.photo}>
-              {PHOTO[p.id]
-                ? <img src={asset(PHOTO[p.id])} alt={p.name} loading="lazy" />
-                : <span aria-hidden="true">{p.emoji}</span>}
+              {/* 이모지는 항상 폴백으로 깔고, 사진이 있으면 위에 덮음. 사진 로드 실패 시 onError 로 숨겨 이모지 노출 */}
+              <span aria-hidden="true">{p.emoji}</span>
+              {PHOTO[p.id] && (
+                <img src={asset(PHOTO[p.id])} alt={p.name} loading="lazy"
+                  onError={(e) => { e.currentTarget.style.display = 'none' }}
+                  onLoad={(e) => { if (!e.currentTarget.naturalWidth) e.currentTarget.style.display = 'none' }} />
+              )}
               <span className={styles.tag}>{p.emoji} {p.meta}</span>
             </div>
             <div className={styles.body}>

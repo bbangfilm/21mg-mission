@@ -24,7 +24,7 @@
 }
 .body { flex: 1; min-width: 0; }
 .pinTag {
-  display: inline-block; font-size: 0.68rem; font-weight: 800; color: #8a6400;
+  display: inline-block; font-size: 0.68rem; font-weight: 800; color: var(--accent-ink);
   background: color-mix(in srgb, var(--accent) 30%, transparent);
   padding: 2px 8px; border-radius: var(--radius-pill); margin-bottom: 6px;
 }

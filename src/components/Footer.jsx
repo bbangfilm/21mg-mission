@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <p className={styles.team}>21MG · {event.team}</p>
+        <p className={styles.team}>{event.team} · 마을 나눔 잔치</p>
         <p className={styles.meta}>{event.title} · {event.subtitle}</p>
         <p className={styles.credit}>제작 21MG (이영천 · 신나희) · 2026 국내단기선교</p>
       </div>

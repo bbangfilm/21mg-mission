@@ -10,7 +10,7 @@
 .editable .main:hover { border-color: var(--violet); background: var(--paper-2); }
 
 .check {
-  flex: none; width: 20px; height: 20px; border-radius: 6px;
+  flex: none; width: 20px; height: 20px; border-radius: var(--radius-xs);
   border: 2px solid var(--line); display: grid; place-items: center;
   color: #fff; font-size: 0.74rem; font-weight: 700;
 }

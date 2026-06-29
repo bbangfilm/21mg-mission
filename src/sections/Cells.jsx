@@ -26,7 +26,6 @@ export default function Cells() {
       <div className={`${styles.totalBar} reveal`}>
         <span>총 참가</span>
         <strong className="tnum">{total}명</strong>
-        <em>덕인셀 1명은 회비 재산정 미반영 (표시 45 · 회비 산정 44)</em>
       </div>
     </Section>
   )

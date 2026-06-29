@@ -6,7 +6,12 @@
 .top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
 .note { font-size: 0.82rem; color: var(--on-ink-muted); }
 
-.amounts { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.amounts { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+/* 좁은 화면: 누적/목표가 한 줄에 안 들어가 가로 오버플로 → 세로 스택 */
+@media (max-width: 600px) {
+  .amounts { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .goalWrap { text-align: left; }
+}
 .lbl { display: block; font-size: 0.74rem; font-weight: 700; color: var(--on-ink-muted); margin-bottom: 4px; }
 .cur { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 11vw, 3.6rem); color: var(--sunny); line-height: 0.9; }
 .goalWrap { text-align: right; }

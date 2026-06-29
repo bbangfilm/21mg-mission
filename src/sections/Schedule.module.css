@@ -11,7 +11,7 @@
 }
 .date { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--navy); }
 .dow { color: var(--muted); font-size: 0.85rem; }
-.dayLabel { margin-left: auto; font-size: 0.72rem; font-weight: 700; color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); padding: 3px 8px; border-radius: var(--radius-pill); }
+.dayLabel { margin-left: auto; font-size: 0.72rem; font-weight: 700; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 20%, transparent); padding: 3px 8px; border-radius: var(--radius-pill); }
 
 .items { display: flex; flex-direction: column; gap: 4px; }
 .item {
@@ -27,5 +27,5 @@
   background: color-mix(in srgb, var(--accent) 18%, transparent);
   border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
 }
-.highlight .time { color: #8a6400; }
+.highlight .time { color: var(--accent-ink); }
 .star { margin-left: auto; }

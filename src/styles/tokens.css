@@ -17,15 +17,19 @@
   --violet-soft: #ECE7FF;
   --sunny:    #FFCE2E;  /* 에너지·D-Day·열매·하이라이트 */
   --mint:     #15C6A0;  /* 완료/달성 (기획서 연속성) */
+  --mint-2:   #2BD4AE;  /* mint 그라데이션 밝은 끝 */
   --mint-ink: #0A6F58;
   --coral:    #FF5A6E;  /* 손하트·온기·강조 */
+  --coral-2:  #FF7A8A;  /* coral 그라데이션 밝은 끝 */
+  --danger:   #E5484D;  /* 위험·삭제·오류 신호 (paper 위 AA 충족) */
 
   /* Text */
   --text:     #1B1A22;  /* paper 위 본문 */
   --muted:    #6B6976;  /* paper 위 보조 (AA) */
   --on-ink:   #F1ECE1;  /* ink 위 본문 */
   --on-ink-muted: #A29DB4;
-  --on-sunny: #2A2300;  /* sunny 위 텍스트 */
+  --on-sunny: #2A2300;  /* 솔리드 sunny 위 텍스트 */
+  --accent-ink: #6E5200; /* 노랑 틴트 카드/칩 위 텍스트 (paper 위 AA) */
   --line:     #E3DCCC;  /* paper 위 경계 */
   --line-ink: #322E3F;  /* ink 위 경계 */
 
@@ -36,6 +40,7 @@
   /* Shape */
   --radius:    22px;
   --radius-sm: 13px;
+  --radius-xs: 7px;   /* 체크박스 등 소형 컨트롤 */
   --radius-pill: 999px;
   --gap:       16px;
 

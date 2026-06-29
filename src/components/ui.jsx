@@ -12,7 +12,7 @@ export function Badge({ children, tone = 'muted' }) {
 }
 
 /** 진행률 바 (value/max → %) — 마운트 시 0에서 차오름 */
-export function ProgressBar({ value, max = 100, tone = 'primary', showPct = true }) {
+export function ProgressBar({ value, max = 100, tone = 'primary', showPct = true, label, valueText }) {
   const pct = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 0
   const [w, setW] = useState(0)
   useEffect(() => {
@@ -21,7 +21,7 @@ export function ProgressBar({ value, max = 100, tone = 'primary', showPct = true
   }, [pct])
   return (
     <div className={styles.progress}>
-      <div className={styles.track} role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+      <div className={styles.track} role="progressbar" aria-label={label} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={valueText || pct + '%'}>
         <div className={`${styles.fill} ${styles['fill_' + tone] || ''}`} style={{ width: w + '%' }} />
       </div>
       {showPct && <span className={`${styles.pct} tnum`}>{pct}%</span>}

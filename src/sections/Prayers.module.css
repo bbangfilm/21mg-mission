@@ -1,5 +1,6 @@
 .verse {
-  background: var(--navy); color: #EAF0FF;
+  background: var(--ink-2); color: var(--on-ink);
+  border: 1px solid var(--line-ink);
   border-radius: var(--radius); padding: 24px;
   margin-bottom: 18px;
 }

@@ -43,7 +43,7 @@ export default function Sponsorship() {
           </div>
         </div>
 
-        <ProgressBar value={currentAmount} max={goalAmount || 1} tone="accent" />
+        <ProgressBar value={currentAmount} max={goalAmount || 1} tone="accent" label="선교헌금 모금률" valueText={`목표 ${won(goalAmount)} 중 ${won(currentAmount)} 모금`} />
 
         {editable && (
           <form className={styles.editRow} onSubmit={save}>
@@ -61,7 +61,13 @@ export default function Sponsorship() {
         {hasAccount
           ? <span className={styles.accNum}>{accountBank} {accountNumber} ({accountHolder})</span>
           : <span className={styles.accPlaceholder}>계좌 정보는 곧 등록됩니다</span>}
-        <button className={`${styles.copyBtn} pressable`} disabled aria-label="계좌 복사">복사</button>
+        {hasAccount && (
+          <button
+            className={`${styles.copyBtn} pressable`}
+            onClick={() => navigator.clipboard?.writeText(`${accountBank} ${accountNumber} ${accountHolder}`)}
+            aria-label="계좌번호 복사"
+          >복사</button>
+        )}
       </div>
 
       <p className={styles.pending}>

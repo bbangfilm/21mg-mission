@@ -10,7 +10,7 @@
   .chip:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: color-mix(in srgb, var(--violet) 40%, var(--line)); }
 }
 .chip_leader { background: color-mix(in srgb, var(--primary) 12%, var(--surface-2)); border-color: color-mix(in srgb, var(--primary) 30%, var(--line)); color: var(--primary); font-weight: 600; }
-.chip_accent { background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); color: #8a6400; font-weight: 600; }
+.chip_accent { background: color-mix(in srgb, var(--accent) 22%, var(--surface-2)); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); color: var(--accent-ink); font-weight: 600; }
 .chip_role   { background: var(--navy); border-color: var(--navy); color: #fff; }
 
 /* ── Badge ── */
@@ -23,7 +23,7 @@
 .badge_muted   { background: color-mix(in srgb, var(--muted) 14%, transparent); color: var(--muted); }
 .badge_primary { background: color-mix(in srgb, var(--primary) 14%, transparent); color: var(--primary); }
 .badge_success { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--success-ink); }
-.badge_accent  { background: color-mix(in srgb, var(--accent) 26%, transparent); color: #8a6400; }
+.badge_accent  { background: var(--sunny); color: var(--on-sunny); }
 
 /* ── ProgressBar ── */
 .progress { display: flex; align-items: center; gap: 10px; }

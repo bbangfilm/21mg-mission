@@ -20,4 +20,4 @@
   background: var(--navy); color: #fff; border-radius: var(--radius);
 }
 .totalBar strong { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: var(--accent); }
-.totalBar em { font-style: normal; font-size: 0.78rem; color: #B9C6E6; margin-left: auto; }
+.totalBar em { font-style: normal; font-size: 0.78rem; color: var(--on-ink-muted); margin-left: auto; }

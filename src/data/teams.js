@@ -28,7 +28,7 @@ export const teams = [
   },
   {
     id: 'team-food', order: 3, emoji: '🍜',
-    name: '음식팀', role: '금 저녁 · 토 점심 준비',
+    name: '음식팀', role: '금 저녁 · 토 먹거리 나눔',
     leader: '정재선', members: ['이정수', '정연설', '공미혜'],
     note: '',
     checklist: [

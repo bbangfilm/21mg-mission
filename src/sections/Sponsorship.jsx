@@ -1,8 +1,9 @@
 import Section from '../components/Section.jsx'
-import { Badge, ProgressBar, won } from '../components/ui.jsx'
+import { Badge, ProgressBar, CountUp, won } from '../components/ui.jsx'
 import { sponsorshipFallback } from '../data/sponsorship.js'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useDoc } from '../lib/useFirestore.js'
+import { useInView } from '../lib/useInView.js'
 import { setDocData } from '../lib/mutations.js'
 import styles from './Sponsorship.module.css'
 
@@ -15,6 +16,7 @@ export default function Sponsorship() {
   const s = data || sponsorshipFallback
   const { goalAmount, currentAmount, accountBank, accountNumber, accountHolder, note } = s
   const hasAccount = accountBank && accountNumber
+  const [viewRef, plays] = useInView()  // 스크롤로 재등장할 때마다 +1 → 수치·그래프 재생
 
   const save = (e) => {
     e.preventDefault()
@@ -26,7 +28,7 @@ export default function Sponsorship() {
 
   return (
     <Section id="sponsorship" eyebrow="Support · 선교헌금" title="함께 채우는 오병이어" desc="회비와 별도로 모으는 선교헌금입니다" tone="violet">
-      <div className={`${styles.card} reveal`}>
+      <div ref={viewRef} className={`${styles.card} reveal`}>
         <div className={styles.top}>
           <Badge tone="accent">모금중</Badge>
           <span className={styles.note}>{note}</span>
@@ -35,7 +37,9 @@ export default function Sponsorship() {
         <div className={styles.amounts}>
           <div>
             <span className={styles.lbl}>누적</span>
-            <strong className={`${styles.cur} tnum`}>{won(currentAmount)}</strong>
+            <strong className={`${styles.cur} tnum`}>
+              <CountUp key={plays} value={currentAmount} play={plays > 0} format={won} />
+            </strong>
           </div>
           <div className={styles.goalWrap}>
             <span className={styles.lbl}>목표</span>
@@ -43,7 +47,7 @@ export default function Sponsorship() {
           </div>
         </div>
 
-        <ProgressBar value={currentAmount} max={goalAmount || 1} tone="accent" label="선교헌금 모금률" valueText={`목표 ${won(goalAmount)} 중 ${won(currentAmount)} 모금`} />
+        <ProgressBar key={plays} value={currentAmount} max={goalAmount || 1} tone="accent" label="선교헌금 모금률" valueText={`목표 ${won(goalAmount)} 중 ${won(currentAmount)} 모금`} />
 
         {editable && (
           <form className={styles.editRow} onSubmit={save}>

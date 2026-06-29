@@ -6,7 +6,7 @@ import styles from './EditMode.module.css'
 const roleLabel = (r) => (r === 'admin' ? '관리자' : r === 'team' ? '팀장' : '')
 
 export default function EditMode() {
-  const { role, name, unlock, setName, lock, can } = useEditMode()
+  const { role, name, verifyPin, enter, setName, lock, can } = useEditMode()
   const unlocked = can('team')
 
   const [open, setOpen] = useState(false)       // 모달
@@ -16,6 +16,7 @@ export default function EditMode() {
   const [error, setError] = useState(false)
   const [custom, setCustom] = useState('')
   const [free, setFree] = useState(false)
+  const [pendingRole, setPendingRole] = useState(null) // PIN 검증됨·이름 대기 중(아직 진입 전)
   const inputRef = useRef(null)
 
   // 모달 열릴 때 입력 포커스 + Esc 닫기
@@ -28,7 +29,7 @@ export default function EditMode() {
   }, [open, step])
 
   function closeAll() {
-    setOpen(false); setPanel(false); setStep('pin'); setPin(''); setError(false); setFree(false); setCustom('')
+    setOpen(false); setPanel(false); setStep('pin'); setPin(''); setError(false); setFree(false); setCustom(''); setPendingRole(null)
   }
 
   function onFab() {
@@ -38,17 +39,18 @@ export default function EditMode() {
 
   function submitPin(e) {
     e?.preventDefault()
-    const r = unlock(pin)
+    const r = verifyPin(pin)
     if (!r) { setError(true); setPin(''); return }
     setError(false)
-    if (!name) setStep('name')   // 이름 아직 → 이름 선택
-    else closeAll()
+    if (name) { enter(r, name); closeAll() }     // 이미 이름 있음 → 바로 진입
+    else { setPendingRole(r); setStep('name') }  // ★이름 확정 전엔 진입 불가
   }
 
   function pick(n) {
     const v = (n || '').trim()
     if (!v) return
-    setName(v)
+    if (pendingRole) enter(pendingRole, v)  // 최초 진입: role+name 동시 커밋(이름 없으면 진입 안 됨)
+    else setName(v)                         // 이름 변경(이미 진입 상태)
     closeAll()
   }
 
@@ -98,9 +100,9 @@ export default function EditMode() {
             {step === 'name' && (
               <div>
                 <h3 className={styles.mTitle}>누구신가요?</h3>
-                <p className={styles.mSub}>체크·메모에 <b>이름</b>이 표시됩니다 — {roleLabel(role || 'team')}</p>
+                <p className={styles.mSub}>이름을 선택해야 편집 모드로 들어갑니다 — {roleLabel(pendingRole || role || 'team')}</p>
                 <div className={styles.chips}>
-                  {editorsFor(role === 'reader' ? 'team' : role).map((n) => (
+                  {editorsFor(pendingRole || (role === 'reader' ? 'team' : role)).map((n) => (
                     <button key={n} className={`${styles.nameChip} pressable`} onClick={() => pick(n)}>{n}</button>
                   ))}
                   <button className={`${styles.nameChip} ${styles.more}`} onClick={() => setFree((v) => !v)}>직접 입력</button>

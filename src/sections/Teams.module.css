@@ -91,4 +91,30 @@
 .supportChips { display: flex; flex-wrap: wrap; gap: 14px; }
 .supportItem { display: inline-flex; align-items: center; gap: 7px; }
 .supportPeople { font-size: 0.82rem; color: var(--navy); }
+
+/* 지원역할 편집(팀장) */
+.supportEdit { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.supportRow { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.supportInput {
+  flex: 1; min-width: 110px; height: 40px; padding: 0 12px; font-size: 0.86rem;
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--white); color: var(--text);
+}
+.supportInput:focus { outline: none; border-color: var(--violet); }
+.supportRoleInput { flex: 0 1 130px; min-width: 96px; font-weight: 700; }
+.supportSave {
+  flex: none; height: 40px; padding: 0 16px; border-radius: var(--radius-sm);
+  background: var(--violet); color: #fff; font-weight: 700; font-size: 0.84rem;
+}
+.supportDel {
+  flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm);
+  display: grid; place-items: center; color: var(--muted); font-size: 0.82rem;
+  border: 1px solid var(--line); background: var(--surface-2);
+  transition: color .15s var(--ease), background .15s var(--ease), border-color .15s var(--ease);
+}
+.supportDel:hover { color: #fff; background: var(--danger); border-color: var(--danger); }
+.supportSeedBtn {
+  margin-top: 10px; padding: 9px 15px; border-radius: var(--radius-sm);
+  background: var(--violet-soft); color: var(--violet); font-weight: 700; font-size: 0.84rem;
+}
+
 .note { margin-top: 14px; font-size: 0.78rem; color: var(--muted); }

@@ -56,6 +56,15 @@ service cloud.firestore {
       allow delete: if signed();
     }
 
+    // 지원 역할 (팀장 편집 — 역할명/담당자 추가·수정)
+    match /supportRoles/{id} {
+      allow read: if true;
+      allow create, update: if signed()
+        && request.resource.data.role is string
+        && request.resource.data.role.size() > 0 && request.resource.data.role.size() < 100;
+      allow delete: if signed();
+    }
+
     // 그 외 모든 경로 차단(명시되지 않음 = 기본 거부)
   }
 }

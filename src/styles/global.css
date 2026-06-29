@@ -3,7 +3,7 @@
 /* ── reset ── */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; touch-action: manipulation; }
 
 body {
   font-family: var(--font-body);
@@ -98,4 +98,28 @@ img { outline: 1px solid rgba(0,0,0,.08); outline-offset: -1px; }
 
   /* 헤더는 약간 먼저, 본문 블록은 뒤따라 */
   [data-reveal] > .container > .reveal { transition-delay: 0ms; }
+}
+
+/* ── 탭 파티클 버스트 (Ministry 카드 터치) ── */
+.burst-layer { position: fixed; inset: 0; pointer-events: none; z-index: 80; overflow: hidden; }
+.burst-particle {
+  position: fixed; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+  animation: burstPop 660ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes burstPop {
+  0%   { opacity: 1; transform: translate(-50%, -50%) translate(0, 0) scale(1); }
+  70%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0)) scale(0.2); }
+}
+.burst-ring {
+  position: fixed; width: 22px; height: 22px; border-radius: 50%;
+  border: 3px solid #fff; pointer-events: none; will-change: transform, opacity;
+  animation: burstRing 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes burstRing {
+  0%   { opacity: 0.75; transform: translate(-50%, -50%) scale(0.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .burst-layer { display: none; }
 }

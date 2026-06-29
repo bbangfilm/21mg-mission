@@ -17,4 +17,4 @@ export const bazaarSeed = [
   { id: 'bz5', category: '먹거리', name: '김밥 재료', done: false },
   { id: 'bz6', category: '먹거리', name: '떡볶이·어묵 재료', done: false },
 ]
-export const bazaarCategories = ['의류', '생활용품', '먹거리']
+export const bazaarCategories = ['의류', '생활용품', '먹거리', '기타']

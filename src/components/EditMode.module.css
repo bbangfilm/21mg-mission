@@ -9,6 +9,7 @@
   display: inline-flex; align-items: center; gap: 8px;
   height: 48px; padding: 0 18px; border-radius: var(--radius-pill);
   background: var(--ink); color: #fff; font-weight: 700; font-size: 0.92rem;
+  border: 2px solid #fff;
   box-shadow: var(--shadow-lg);
 }
 .fab.on { background: var(--violet); box-shadow: var(--shadow-violet); }

@@ -1,5 +1,6 @@
 import Section from '../components/Section.jsx'
 import { ministry } from '../data/ministry.js'
+import { burst } from '../lib/burst.js'
 import styles from './Ministry.module.css'
 
 export default function Ministry() {
@@ -7,7 +8,11 @@ export default function Ministry() {
     <Section id="ministry" eyebrow="The Heart · 오병이어" title="마을이 모이는 나눔 잔치" desc={ministry.intro} tone="ink">
       <div className={`${styles.grid} stagger`}>
         {ministry.pillars.map((p, i) => (
-          <article key={p.no} className={`${styles.card} ${styles['c' + i]} lift`}>
+          <article
+            key={p.no}
+            className={`${styles.card} ${styles['c' + i]} lift pressable`}
+            onPointerDown={(e) => burst(e.clientX, e.clientY)}
+          >
             <span className={styles.emoji} aria-hidden="true">{p.emoji}</span>
             <h3 className={styles.cardTitle}>{p.title}</h3>
             <p className={styles.cardDesc}>{p.desc}</p>

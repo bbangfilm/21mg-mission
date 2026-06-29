@@ -24,14 +24,20 @@ export function EditModeProvider({ children }) {
     try { sessionStorage.setItem(KEY, JSON.stringify(state)) } catch { /* private mode */ }
   }, [state])
 
-  /** PIN 비교 → 'admin' | 'team' | null. 관리자 우선(상위집합). */
-  const unlock = useCallback((pin) => {
+  /** PIN 검증만 (상태 변경 없음) → 'admin' | 'team' | null. 관리자 우선(상위집합). */
+  const verifyPin = useCallback((pin) => {
     const p = String(pin || '').trim()
-    let role = null
-    if (ADMIN_PIN && p === ADMIN_PIN) role = 'admin'
-    else if (TEAM_PIN && p === TEAM_PIN) role = 'team'
-    if (role) setState((s) => ({ ...s, role }))
-    return role
+    if (ADMIN_PIN && p === ADMIN_PIN) return 'admin'
+    if (TEAM_PIN && p === TEAM_PIN) return 'team'
+    return null
+  }, [])
+
+  /** 이름까지 확정해야 편집 모드 진입(role+name 동시 커밋). 이름 없으면 진입 거부. */
+  const enter = useCallback((role, name) => {
+    const nm = String(name || '').trim()
+    if (!role || !nm) return false
+    setState((s) => ({ ...s, role, name: nm }))
+    return true
   }, [])
 
   const setName = useCallback((name) => setState((s) => ({ ...s, name: name || null })), [])
@@ -43,7 +49,7 @@ export function EditModeProvider({ children }) {
   }, [state.role])
 
   return (
-    <Ctx.Provider value={{ ...state, unlock, setName, lock, can }}>
+    <Ctx.Provider value={{ ...state, verifyPin, enter, setName, lock, can }}>
       {children}
     </Ctx.Provider>
   )

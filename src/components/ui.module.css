@@ -28,7 +28,7 @@
 /* ── ProgressBar ── */
 .progress { display: flex; align-items: center; gap: 10px; }
 .track { flex: 1; height: 10px; background: color-mix(in srgb, var(--navy) 8%, var(--surface-2)); border-radius: var(--radius-pill); overflow: hidden; }
-.fill { height: 100%; border-radius: var(--radius-pill); transition: width 600ms var(--ease); }
+.fill { height: 100%; border-radius: var(--radius-pill); }
 .fill_primary { background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--success))); }
 .fill_success { background: var(--success); }
 .fill_accent  { background: var(--accent); }

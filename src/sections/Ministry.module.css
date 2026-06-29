@@ -6,6 +6,7 @@
   border-radius: var(--radius); padding: 22px;
   min-height: 168px; display: flex; flex-direction: column;
   color: #fff; box-shadow: var(--shadow);
+  cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
 }
 /* 레퍼런스풍 그라데이션 컬러 카드 */
 .c0 { background: linear-gradient(150deg, var(--violet-2), var(--violet)); }

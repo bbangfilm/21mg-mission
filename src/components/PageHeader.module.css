@@ -1,0 +1,13 @@
+.header {
+  position: sticky; top: 0; z-index: 30;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top);
+}
+.inner { display: flex; align-items: center; gap: 12px; height: var(--navh); }
+.back {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 14px; font-weight: 600; color: var(--violet);
+  text-decoration: none; flex: 0 0 auto;
+}
+.title { font-family: var(--font-display); font-weight: 800; font-size: 18px; margin: 0; }

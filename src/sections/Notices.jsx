@@ -15,17 +15,24 @@ const fmt = (ts) => {
   return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
 }
 
-export default function Notices() {
+export default function Notices({ limit }) {
   const { can, name } = useEditMode()
   const editable = can('admin')
   const { items, loading } = useCollection(PATH)
   const [draft, setDraft] = useState('')
+  const [expanded, setExpanded] = useState(false)
 
   // 고정 먼저, 그 안에서 최신순
   const sorted = [...items].sort((a, b) => {
     if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1
     return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
   })
+
+  // 컴팩트(홈): 고정 + 최신 비고정 limit건. 더보기로 전체 펼침.
+  const pinned = sorted.filter((n) => n.pinned)
+  const rest = sorted.filter((n) => !n.pinned)
+  const visible = (limit == null || expanded) ? sorted : [...pinned, ...rest.slice(0, limit)]
+  const hidden = sorted.length - visible.length
 
   const add = (e) => { e.preventDefault(); const text = draft.trim(); if (!text) return; addItem(PATH, { text, pinned: false, by: name || '관리자' }); setDraft('') }
   const remove = (id) => removeItem(PATH, id)
@@ -53,7 +60,7 @@ export default function Notices() {
         <p className={styles.empty}>등록된 공지가 없습니다{editable ? ' — 위에서 작성해 보세요.' : '.'}</p>
       ) : (
         <ul className={`${styles.list} stagger`}>
-          {sorted.map((n) => (
+          {visible.map((n) => (
             <li key={n.id} className={`${styles.item} ${n.pinned ? styles.pinned : ''}`}>
               <div className={styles.body}>
                 {n.pinned && <span className={styles.pinTag}>📌 고정</span>}
@@ -69,6 +76,12 @@ export default function Notices() {
             </li>
           ))}
         </ul>
+      )}
+
+      {limit != null && hidden > 0 && (
+        <button type="button" className={`${styles.more} pressable`} onClick={() => setExpanded(true)}>
+          공지 더보기 ({hidden})
+        </button>
       )}
 
       <p className={styles.hint}>

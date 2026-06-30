@@ -1,46 +1,49 @@
+import { useEffect, useRef } from 'react'
 import { EditModeProvider } from './context/EditModeContext.jsx'
 import EditMode from './components/EditMode.jsx'
-import Hero from './components/Hero.jsx'
-import AnchorNav from './components/AnchorNav.jsx'
-import PhotoBand from './components/PhotoBand.jsx'
 import Footer from './components/Footer.jsx'
+import { useRoute, ROUTES, saveScroll, getScroll } from './lib/router.jsx'
 
-import Notices from './sections/Notices.jsx'
-import Ministry from './sections/Ministry.jsx'
-import Schedule from './sections/Schedule.jsx'
-import Cells from './sections/Cells.jsx'
-import Teams from './sections/Teams.jsx'
-import Bazaar from './sections/Bazaar.jsx'
-import Todos from './sections/Todos.jsx'
-import Sponsorship from './sections/Sponsorship.jsx'
-import Budget from './sections/Budget.jsx'
-import Venue from './sections/Venue.jsx'
-import Prayers from './sections/Prayers.jsx'
+import Home from './pages/Home.jsx'
+import MinistryPage from './pages/MinistryPage.jsx'
+import PeoplePage from './pages/PeoplePage.jsx'
+import SchedulePage from './pages/SchedulePage.jsx'
+import FinancePage from './pages/FinancePage.jsx'
+import TodoPage from './pages/TodoPage.jsx'
+
+const PAGES = {
+  '': Home,
+  ministry: MinistryPage,
+  people: PeoplePage,
+  schedule: SchedulePage,
+  finance: FinancePage,
+  todo: TodoPage,
+}
 
 export default function App() {
+  const route = useRoute()
+  const prev = useRef(route)
+
+  useEffect(() => {
+    saveScroll(prev.current)                          // 떠나는 페이지 스크롤 저장
+    const y = route === '' ? (getScroll('') ?? 0) : 0 // 서브=상단, 홈=복원
+    window.scrollTo(0, y)
+    document.title = route === ''
+      ? '21MG 국내선교'
+      : `${ROUTES[route].title} · 21MG 국내선교`
+    prev.current = route
+  }, [route])
+
+  const Page = PAGES[route] || Home
+
   return (
     <EditModeProvider>
-      <Hero />
-      <AnchorNav />
-      <main>
-        <Notices />      {/* 01 🔓 관리자 */}
-        <Ministry />     {/* 02 */}
-        <PhotoBand
-          img="img/market.jpg"
-          alt="오병이어 나눔 장터 — 천막과 좌판"
-          tag="작년 오병이어"
-          caption="천막을 펴고, 마을을 초대합니다"
-        />
-        <Schedule />     {/* 03 */}
-        <Cells />        {/* 04 */}
-        <Teams />        {/* 05 🔓 팀장 */}
-        <Bazaar />       {/* 06 🔓 팀장 */}
-        <Todos />        {/* 07 🔓 팀장 */}
-        <Sponsorship />  {/* 08 🔓 관리자 */}
-        <Budget />       {/* 09 */}
-        <Venue />        {/* 10 */}
-        <Prayers />      {/* 11 */}
-      </main>
+      {/* key={route}는 의도적 — 라우트마다 페이지를 리마운트해 .routeView 진입
+          애니메이션을 재생한다. 부수효과로 Firestore 구독 재시작 + 미제출 입력 초기화
+          (작은 컬렉션·짧은 방문이라 수용). 이 key를 제거하면 전환 애니메이션이 깨진다. */}
+      <div className="routeView" key={route}>
+        <Page />
+      </div>
       <Footer />
       <EditMode />
     </EditModeProvider>

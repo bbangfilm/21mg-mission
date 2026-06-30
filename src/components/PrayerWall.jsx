@@ -24,7 +24,7 @@ const loadAmen = () => {
   try { return new Set(JSON.parse(localStorage.getItem(AMEN_KEY)) || []) } catch { return new Set() }
 }
 
-export default function PrayerWall() {
+export default function PrayerWall({ limit }) {
   const { can } = useEditMode()
   const editable = can('team')              // 삭제(모더레이션)는 팀장·관리자만
   const { items, loading } = useCollection(PATH)
@@ -34,8 +34,11 @@ export default function PrayerWall() {
   const [sending, setSending] = useState(false)
   const [err, setErr] = useState('')
   const [amened, setAmened] = useState(loadAmen)
+  const [expanded, setExpanded] = useState(false)
 
   const sorted = useMemo(() => [...items].sort((a, b) => tsOf(b) - tsOf(a)), [items])
+  const visible = (limit == null || expanded) ? sorted : sorted.slice(0, limit)
+  const hidden = sorted.length - visible.length
 
   const submit = async (e) => {
     e.preventDefault()
@@ -129,7 +132,7 @@ export default function PrayerWall() {
         <p className={styles.empty}>아직 남겨진 기도가 없어요 — 첫 기도를 남겨보세요.</p>
       ) : (
         <ul className={styles.list}>
-          {sorted.map((p) => {
+          {visible.map((p) => {
             const done = amened.has(p.id)
             return (
               <li key={p.id} className={styles.item}>
@@ -159,6 +162,12 @@ export default function PrayerWall() {
             )
           })}
         </ul>
+      )}
+
+      {limit != null && hidden > 0 && (
+        <button type="button" className={`${styles.more} pressable`} onClick={() => setExpanded(true)}>
+          기도 더보기 ({hidden})
+        </button>
       )}
 
       <p className={styles.foot}>부적절한 글은 팀에서 정리할 수 있어요.</p>

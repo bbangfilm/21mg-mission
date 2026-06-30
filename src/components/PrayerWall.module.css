@@ -92,6 +92,13 @@
 }
 .foot { margin-top: 14px; font-size: 0.76rem; color: var(--on-ink-muted); }
 
+.more {
+  margin: 4px 0 10px; width: 100%;
+  border: 1px solid var(--line-ink); background: var(--ink-2);
+  border-radius: var(--radius-sm); padding: 9px 12px;
+  font: inherit; font-size: 13px; color: var(--on-ink); cursor: pointer;
+}
+
 @media (max-width: 480px) {
   .controls { flex-wrap: wrap; }
   .name { flex: 1 1 60%; }

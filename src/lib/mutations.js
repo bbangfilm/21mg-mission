@@ -1,5 +1,5 @@
 import {
-  collection, doc, addDoc, updateDoc, deleteDoc, setDoc, serverTimestamp,
+  collection, doc, addDoc, updateDoc, deleteDoc, setDoc, serverTimestamp, increment,
 } from 'firebase/firestore'
 import { db, auth, ensureAnonAuth, isFirebaseConfigured } from './firebase.js'
 
@@ -30,6 +30,13 @@ export async function removeItem(path, id) {
   if (!ready()) return null
   await ensureAnonAuth()
   return deleteDoc(doc(db, path, id))
+}
+
+/** 숫자 필드 원자적 증가(예: 방명록 amen +1). 규칙에서 정확히 +1 만 허용. */
+export async function bumpField(path, id, field, by = 1) {
+  if (!ready()) return null
+  await ensureAnonAuth()
+  return updateDoc(doc(db, path, id), { [field]: increment(by) })
 }
 
 /** 단일 문서 set(merge). docPath 는 'config/sponsorship' 처럼 짝수 세그먼트. */

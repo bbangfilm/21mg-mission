@@ -1,4 +1,5 @@
 import Section from '../components/Section.jsx'
+import PrayerWall from '../components/PrayerWall.jsx'
 import { verse, prayers } from '../data/prayers.js'
 import styles from './Prayers.module.css'
 
@@ -17,6 +18,7 @@ export default function Prayers() {
           </li>
         ))}
       </ul>
+      <PrayerWall />
     </Section>
   )
 }

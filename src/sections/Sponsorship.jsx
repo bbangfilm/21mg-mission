@@ -1,6 +1,6 @@
 import Section from '../components/Section.jsx'
 import { Badge, ProgressBar, CountUp, won } from '../components/ui.jsx'
-import { sponsorshipFallback } from '../data/sponsorship.js'
+import { sponsorshipFallback, account } from '../data/sponsorship.js'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useDoc } from '../lib/useFirestore.js'
 import { useInView } from '../lib/useInView.js'
@@ -14,8 +14,8 @@ export default function Sponsorship() {
   const editable = can('admin')
   const { data } = useDoc(DOC)
   const s = data || sponsorshipFallback
-  const { goalAmount, currentAmount, accountBank, accountNumber, accountHolder, note } = s
-  const hasAccount = accountBank && accountNumber
+  const { goalAmount, currentAmount, note } = s
+  const hasAccount = account.bank && account.number
   const [viewRef, plays] = useInView()  // 스크롤로 재등장할 때마다 +1 → 수치·그래프 재생
 
   const save = (e) => {
@@ -63,12 +63,12 @@ export default function Sponsorship() {
       <div className={`${styles.account} reveal`}>
         <span className={styles.accLbl}>후원계좌</span>
         {hasAccount
-          ? <span className={styles.accNum}>{accountBank} {accountNumber} ({accountHolder})</span>
+          ? <span className={styles.accNum}>{account.bank} {account.number} ({account.holder})</span>
           : <span className={styles.accPlaceholder}>계좌 정보는 곧 등록됩니다</span>}
         {hasAccount && (
           <button
             className={`${styles.copyBtn} pressable`}
-            onClick={() => navigator.clipboard?.writeText(`${accountBank} ${accountNumber} ${accountHolder}`)}
+            onClick={() => navigator.clipboard?.writeText(`${account.bank} ${account.number} ${account.holder}`)}
             aria-label="계좌번호 복사"
           >복사</button>
         )}

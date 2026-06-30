@@ -12,12 +12,12 @@ const CATS = [
 
 export default function CategoryGrid() {
   return (
-    <nav className={`${styles.grid} reveal`} aria-label="메뉴">
+    <nav className={styles.grid} aria-label="메뉴">
       {CATS.map((c) => (
         <Link
           key={c.to}
           to={c.to}
-          className={`${styles.card} ${styles[c.cls]} ${c.wide ? styles.wide : ''} lift pressable`}
+          className={`${styles.card} ${styles[c.cls]}${c.wide ? ` ${styles.wide}` : ''} lift pressable`}
         >
           <span className={styles.icon} aria-hidden="true">{c.icon}</span>
           <span className={styles.text}>

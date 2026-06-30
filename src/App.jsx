@@ -38,6 +38,9 @@ export default function App() {
 
   return (
     <EditModeProvider>
+      {/* key={route}는 의도적 — 라우트마다 페이지를 리마운트해 .routeView 진입
+          애니메이션을 재생한다. 부수효과로 Firestore 구독 재시작 + 미제출 입력 초기화
+          (작은 컬렉션·짧은 방문이라 수용). 이 key를 제거하면 전환 애니메이션이 깨진다. */}
       <div className="routeView" key={route}>
         <Page />
       </div>

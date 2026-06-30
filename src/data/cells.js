@@ -6,7 +6,7 @@
 export const cells = [
   {
     id: 'cell-yc',
-    name: '영천셀',
+    name: '영천/나희셀',
     leaders: ['이영천', '신나희'], // 신나희 = MG리더 겸임
     order: 1,
     members: [
@@ -16,7 +16,7 @@ export const cells = [
   },
   {
     id: 'cell-st',
-    name: '성태셀',
+    name: '성태/하나셀',
     leaders: ['김성태', '이하나'],
     order: 2,
     members: [
@@ -26,7 +26,7 @@ export const cells = [
   },
   {
     id: 'cell-di',
-    name: '덕인셀',
+    name: '덕인/선희셀',
     leaders: ['전덕인', '전선희'],
     order: 3,
     members: [

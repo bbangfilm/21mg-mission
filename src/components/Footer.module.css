@@ -1,6 +1,6 @@
 .footer {
   background: var(--ink); color: var(--on-ink-muted);
-  padding-block: 32px; margin-top: 24px;
+  padding-block: 32px; margin-top: 8px;
   text-align: center;
 }
 .team { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: var(--on-ink); }

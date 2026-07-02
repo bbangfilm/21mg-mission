@@ -31,12 +31,12 @@ export default function Bazaar() {
   }
 
   return (
-    <Section id="bazaar" eyebrow="Bazaar" title="오병이어 바자회 품목" desc="의류 · 생활용품 · 먹거리">
+    <Section id="bazaar" eyebrow="Bazaar" title="오병이어 나눔 장터 품목" desc="의류 · 생활용품 · 먹거리">
       <div className={`${styles.head} reveal`}>
         {editable
           ? <Badge tone="success">편집 모드 · {name || '이름 미설정'}</Badge>
           : <Badge tone="muted">실시간</Badge>}
-        <span className={styles.pbar}><ProgressBar value={done} max={items.length || 1} tone="success" label="바자회 준비 완료율" valueText={`${items.length}개 중 ${done}개 완료`} /></span>
+        <span className={styles.pbar}><ProgressBar value={done} max={items.length || 1} tone="success" label="나눔 장터 준비 완료율" valueText={`${items.length}개 중 ${done}개 완료`} /></span>
       </div>
 
       <div className={`${styles.cats} stagger`}>
@@ -58,7 +58,7 @@ export default function Bazaar() {
               <form className={styles.addRow} onSubmit={(e) => addToCat(cat, e)}>
                 <input className={styles.addInput} value={drafts[cat] || ''}
                   onChange={(e) => setDrafts((d) => ({ ...d, [cat]: e.target.value }))}
-                  placeholder={`+ ${cat} 품목 추가`} aria-label={`${cat} 품목 추가`} />
+                  placeholder={`+ ${cat} 품목 추가`} aria-label={`${cat} 품목 추가`} maxLength={199} />
                 <button type="submit" className={`${styles.addBtn} pressable`}>추가</button>
               </form>
             )}

@@ -29,7 +29,8 @@
 }
 .dday b { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; }
 .dday i { font-style: normal; font-size: 0.64rem; font-weight: 700; margin-top: 3px; opacity: .8; }
-.dday[data-phase='during'] { background: var(--coral); color: #fff; }
+.dday[data-phase='during'] { background: var(--coral); color: var(--on-coral); }
+.dday[data-phase='during'] i { opacity: 1; } /* on-coral을 .8로 흐리면 3.8:1로 AA 미달 */
 .dday[data-phase='after']  { background: var(--ink-2); color: var(--on-ink); }
 
 .content { position: relative; z-index: 1; padding-bottom: 40px; padding-top: 80px; color: var(--on-ink); }

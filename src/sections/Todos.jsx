@@ -52,7 +52,7 @@ export default function Todos() {
 
       {editable && (
         <form className={styles.addRow} onSubmit={add}>
-          <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="+ 할 일 추가" />
+          <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="+ 할 일 추가" aria-label="할 일 추가" maxLength={299} />
           <button type="submit" className={`${styles.addBtn} pressable`}>추가</button>
         </form>
       )}

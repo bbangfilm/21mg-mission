@@ -59,16 +59,17 @@ export default function EditMode() {
       {/* 플로팅 편집 버튼 */}
       <div className={styles.fabWrap}>
         {panel && unlocked && (
-          <div className={styles.panel} role="menu">
+          <div className={styles.panel} role="group" aria-label="편집 모드 메뉴">
             <p className={styles.panelWho}>
               <b>{name || '이름 미설정'}</b>
               <span className={`${styles.roleBadge} ${styles['role_' + role]}`}>{roleLabel(role)}</span>
             </p>
             <button className="pressable" onClick={() => { setStep('name'); setOpen(true); setPanel(false) }}>이름 변경</button>
-            <button className={`pressable ${styles.lockBtn}`} onClick={() => { lock(); setPanel(false) }}>잠금 해제(나가기)</button>
+            <button className={`pressable ${styles.lockBtn}`} onClick={() => { lock(); setPanel(false) }}>편집 종료(잠그기)</button>
           </div>
         )}
-        <button className={`${styles.fab} pressable ${unlocked ? styles.on : ''}`} onClick={onFab} aria-haspopup="dialog">
+        <button className={`${styles.fab} pressable ${unlocked ? styles.on : ''}`} onClick={onFab}
+          aria-haspopup="dialog" aria-expanded={unlocked ? panel : open}>
           <span aria-hidden="true">{unlocked ? '✏️' : '🔒'}</span>
           {unlocked ? <span className={styles.fabName}>{name || roleLabel(role)}</span> : <span>편집 모드</span>}
         </button>
@@ -89,9 +90,9 @@ export default function EditMode() {
                   className={`${styles.pinInput} ${error ? styles.shake : ''}`}
                   inputMode="numeric" autoComplete="off"
                   value={pin} onChange={(e) => { setPin(e.target.value); setError(false) }}
-                  placeholder="• • • •"
+                  placeholder="• • • •" aria-label="PIN" aria-invalid={error}
                 />
-                {error && <p className={styles.err}>PIN이 일치하지 않습니다</p>}
+                {error && <p className={styles.err} role="alert">PIN이 일치하지 않습니다</p>}
                 <button type="submit" className={`${styles.primary} pressable`}>확인</button>
                 <p className={styles.note}>PIN을 아는 팀장·관리자가 함께 씁니다. (개인 가입 없음)</p>
               </form>
@@ -109,7 +110,7 @@ export default function EditMode() {
                 </div>
                 {free && (
                   <form className={styles.freeRow} onSubmit={(e) => { e.preventDefault(); pick(custom) }}>
-                    <input className={styles.freeInput} value={custom} onChange={(e) => setCustom(e.target.value)} placeholder="이름 입력" autoFocus />
+                    <input className={styles.freeInput} value={custom} onChange={(e) => setCustom(e.target.value)} placeholder="이름 입력" aria-label="이름 입력" maxLength={40} autoFocus />
                     <button type="submit" className={`${styles.primary} pressable`}>확인</button>
                   </form>
                 )}

@@ -9,5 +9,7 @@
   display: inline-flex; align-items: center; gap: 4px;
   font-size: 14px; font-weight: 600; color: var(--violet);
   text-decoration: none; flex: 0 0 auto;
+  /* 히트영역 확장 — 텍스트(29×22px)만으론 서브페이지 유일 내비가 탭하기 어려움 */
+  align-self: stretch; padding-inline: 10px; margin-left: -10px;
 }
 .title { font-family: var(--font-display); font-weight: 800; font-size: 18px; margin: 0; }

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useCollection } from '../lib/useFirestore.js'
 import { addItem, bumpField, removeItem } from '../lib/mutations.js'
+import { isFirebaseConfigured } from '../lib/firebase.js'
 import styles from './PrayerWall.module.css'
 
 // 한 줄 기도 방명록 — 로그인 없이 누구나 작성(익명인증). amen='함께 기도' 카운트.
@@ -44,6 +45,8 @@ export default function PrayerWall({ limit }) {
     e.preventDefault()
     const t = text.trim()
     if (!t || sending) return
+    // 미설정 빌드에서 addItem은 조용한 no-op — 성공처럼 입력을 비우면 방문자 글이 유실되므로 명시 안내
+    if (!isFirebaseConfigured) { setErr('실시간 연결이 설정되지 않아 지금은 기도를 남길 수 없어요.'); return }
     // 경량 도배 방지(우발적 연타·직전 동일문구) — 스크립트 스팸은 막지 못하나 일상 오남용 차단
     let last = {}
     try { last = JSON.parse(localStorage.getItem(COOLDOWN_KEY)) || {} } catch { /* private mode */ }

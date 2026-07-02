@@ -57,7 +57,7 @@ export default function Sponsorship() {
           </form>
         )}
 
-        <p className={styles.ref}>참고: 작년 약 300만원 규모 · 우리 상황과 마음에 맞게 함께 채워갑니다.</p>
+        <p className={styles.ref}>우리 상황과 마음에 맞게 함께 채워갑니다.</p>
       </div>
 
       <div className={`${styles.account} reveal`}>

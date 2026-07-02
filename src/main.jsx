@@ -17,13 +17,9 @@ ensureAnonAuth().catch(() => {})
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault()
   })
-  // 더블탭 줌 방지(모바일)
-  let lastTouch = 0
-  document.addEventListener('touchend', (e) => {
-    const now = Date.now()
-    if (now - lastTouch <= 300) e.preventDefault()
-    lastTouch = now
-  }, { passive: false })
+  // 더블탭 줌은 global.css `html { touch-action: manipulation }` 이 차단.
+  // (JS touchend preventDefault 가드는 300ms 내 서로 다른 버튼 연속 탭의 click까지
+  //  삼켜 빠른 체크리스트 조작이 무반응이 되므로 사용하지 않는다.)
 }
 
 // 개발 모드에서 데이터 정합성 검증 로그 (45명·팀명단·미배정·다중소속)

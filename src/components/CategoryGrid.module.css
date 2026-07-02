@@ -11,10 +11,10 @@
 .wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 12px; min-height: 0; }
 .wide .text { flex: 1; }
 .chev { font-size: 20px; opacity: .7; }
-.coral  { background: var(--coral);  color: #fff; }
+.coral  { background: var(--coral);  color: var(--on-coral); }
 .violet { background: var(--violet); color: #fff; }
 .sunny  { background: var(--sunny);  color: var(--on-sunny); }
-.mint   { background: var(--mint);   color: #04342C; }
+.mint   { background: var(--mint);   color: var(--on-mint); }
 .ink    { background: var(--ink);    color: var(--on-ink); }
 @media (min-width: 720px) {
   .grid { grid-template-columns: repeat(3, 1fr); }

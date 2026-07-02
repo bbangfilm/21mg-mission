@@ -49,7 +49,7 @@ export default function Notices({ limit }) {
 
       {editable && (
         <form className={styles.addRow} onSubmit={add}>
-          <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="공지 작성…" />
+          <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="공지 작성…" aria-label="공지 내용" maxLength={1999} />
           <button type="submit" className={`${styles.addBtn} pressable`}>등록</button>
         </form>
       )}
@@ -87,7 +87,7 @@ export default function Notices({ limit }) {
       <p className={styles.hint}>
         {editable
           ? '✏️ 등록·고정(📌)·삭제가 실시간 저장됩니다.'
-          : '리더가 올리는 변경·긴급 공지가 여기에 상단 고정으로 표시됩니다.'}
+          : '새 공지가 올라오면 여기에 표시됩니다. 중요 공지는 📌 상단에 고정돼요.'}
       </p>
     </Section>
   )

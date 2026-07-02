@@ -7,7 +7,8 @@ import react from '@vitejs/plugin-react'
 //    (배포 base 오설정 시 CSS/JS 404 → 흰 화면. 빈 페이지 실배포로 가장 먼저 검증.)
 const PROD_BASE = '/21mg-mission/'
 
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? PROD_BASE : '/',
+// preview 는 command='serve'로 들어오므로 isPreview 로 분기해야 dist(base 포함)가 열린다.
+export default defineConfig(({ command, isPreview }) => ({
+  base: command === 'build' || isPreview ? PROD_BASE : '/',
   plugins: [react()],
 }))

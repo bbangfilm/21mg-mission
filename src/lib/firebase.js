@@ -7,7 +7,7 @@
 //  → 나중에 .env.local 만 채우면 추가 리팩터 없이 실시간 레이어가 켜진다.
 // ──────────────────────────────────────────────────────────────
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore'
 import { getAuth, signInAnonymously } from 'firebase/auth'
 
 const cfg = {
@@ -29,7 +29,16 @@ let auth = null
 
 if (isFirebaseConfigured) {
   app = initializeApp(cfg)
-  db = getFirestore(app)
+  // IndexedDB 영속 캐시 — 행사장(농촌·저속/불안정 신호)에서 신호가 끊겨도
+  // 마지막 동기화 데이터를 표시하고, 오프라인 쓰기를 탭 종료 후에도 큐에 보존한다.
+  // (IndexedDB 불가(사생활 모드 등)는 SDK가 첫 사용 시점에 메모리 캐시로 자체 폴백.)
+  try {
+    db = initializeFirestore(app, {
+      localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+    })
+  } catch {
+    db = getFirestore(app) // 재초기화 등 동기 예외(dev HMR) → 기존 인스턴스 재사용
+  }
   auth = getAuth(app)
 } else {
   // 개발 중 자주 보게 될 안내 — 정상 동작(정적은 살아있음)

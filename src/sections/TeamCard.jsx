@@ -65,7 +65,7 @@ export default function TeamCard({ team, editable, name }) {
         </ul>
         {editable && (
           <form className={styles.addRow} onSubmit={addCl}>
-            <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="+ 항목 추가" />
+            <input className={styles.addInput} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="+ 항목 추가" aria-label="체크리스트 항목 추가" maxLength={299} />
             <button type="submit" className={`${styles.addBtn} pressable`}>추가</button>
           </form>
         )}
@@ -89,7 +89,7 @@ export default function TeamCard({ team, editable, name }) {
         )}
         {editable ? (
           <form className={styles.addRow} onSubmit={addMemo}>
-            <input className={styles.addInput} value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="메모 남기기…" />
+            <input className={styles.addInput} value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="메모 남기기…" aria-label="팀 메모 입력" maxLength={999} />
             <button type="submit" className={`${styles.addBtn} pressable`}>등록</button>
           </form>
         ) : (sortedMemos.length === 0 && <p className={styles.memoEmpty}>편집 모드(팀장)에서 진행상황·메모를 남길 수 있어요</p>)}

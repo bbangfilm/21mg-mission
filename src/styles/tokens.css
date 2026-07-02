@@ -21,7 +21,7 @@
   --mint-ink: #0A6F58;
   --coral:    #FF5A6E;  /* 손하트·온기·강조 */
   --coral-2:  #FF7A8A;  /* coral 그라데이션 밝은 끝 */
-  --danger:   #E5484D;  /* 위험·삭제·오류 신호 (paper 위 AA 충족) */
+  --danger:   #C0262C;  /* 위험·삭제·오류 신호 (paper 5.0:1 · white 5.9:1 — AA) */
 
   /* Text */
   --text:     #1B1A22;  /* paper 위 본문 */
@@ -29,6 +29,8 @@
   --on-ink:   #F1ECE1;  /* ink 위 본문 */
   --on-ink-muted: #A29DB4;
   --on-sunny: #2A2300;  /* 솔리드 sunny 위 텍스트 */
+  --on-mint:  #04342C;  /* mint/mint-2 위 텍스트 (6.3:1 — AA) */
+  --on-coral: #4A0710;  /* coral/coral-2 위 텍스트 (5.2:1 — AA) */
   --accent-ink: #6E5200; /* 노랑 틴트 카드/칩 위 텍스트 (paper 위 AA) */
   --line:     #E3DCCC;  /* paper 위 경계 */
   --line-ink: #322E3F;  /* ink 위 경계 */

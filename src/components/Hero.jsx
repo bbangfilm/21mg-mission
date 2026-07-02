@@ -1,14 +1,14 @@
 import { event } from '../data/event.js'
-import { computeDDay } from '../lib/useDDay.js'
+import { useDDay } from '../lib/useDDay.js'
 import { asset } from '../lib/asset.js'
 import styles from './Hero.module.css'
 
 export default function Hero() {
-  const dday = computeDDay(event.dateStart, event.dateEnd)
+  const dday = useDDay(event.dateStart, event.dateEnd)
 
   return (
     <header id="hero" className={styles.hero}>
-      <img className={styles.photo} src={asset('img/hero.jpg')} alt="홍산은혜교회 앞에서 손하트 하는 21MG 팀" />
+      <img className={styles.photo} src={asset('img/hero.jpg')} alt="홍산은혜교회 앞에서 손하트 하는 21MG 팀" fetchpriority="high" />
       <div className={styles.scrim} aria-hidden="true" />
 
       <span className={`${styles.dday} tnum`} data-phase={dday.phase}>

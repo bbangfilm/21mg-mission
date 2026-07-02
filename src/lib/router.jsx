@@ -39,6 +39,17 @@ const scrollPositions = new Map()
 export function saveScroll(key) { scrollPositions.set(key, window.scrollY) }
 export function getScroll(key) { return scrollPositions.get(key) }
 
+// 떠나는 라우트의 스크롤은 hashchange 시점(React 리렌더 전, 이전 DOM 그대로일 때)에 저장.
+// 렌더 후 저장하면 새 페이지가 더 짧을 때 브라우저가 scrollY를 클램프한 값이 저장돼 복원이 틀어진다.
+// 이 리스너는 모듈 로드 시 등록되어 React 구독(cb)보다 먼저 실행된다.
+let departing = parseHash(typeof window !== 'undefined' ? window.location.hash : '')
+if (typeof window !== 'undefined') {
+  window.addEventListener('hashchange', () => {
+    saveScroll(departing)
+    departing = parseHash(window.location.hash)
+  })
+}
+
 // 접근성/공유용 링크 — 실제 <a href>라 미들클릭·새탭·스크린리더 OK
 export function Link({ to = '', className, children, ...rest }) {
   return <a href={to ? `#/${to}` : '#/'} className={className} {...rest}>{children}</a>

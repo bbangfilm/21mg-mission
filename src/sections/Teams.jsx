@@ -4,7 +4,7 @@ import { Chip } from '../components/ui.jsx'
 import { teams, supportRoles } from '../data/teams.js'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useCollection } from '../lib/useFirestore.js'
-import { addItem, updateItem, removeItem } from '../lib/mutations.js'
+import { addItem, updateItem, removeItem, setDocData } from '../lib/mutations.js'
 import TeamCard from './TeamCard.jsx'
 import styles from './Teams.module.css'
 
@@ -24,6 +24,7 @@ export default function Teams() {
   const who = () => name || '익명'
   const [drafts, setDrafts] = useState({})
   const [adding, setAdding] = useState({ role: '', people: '' })
+  const [seeding, setSeeding] = useState(false)
 
   const upd = (it, field, val) =>
     setDrafts((s) => ({ ...s, [it.id]: { role: it.role, people: (it.people || []).join(' · '), ...s[it.id], [field]: val } }))
@@ -33,8 +34,15 @@ export default function Teams() {
     updateItem(PATH, it.id, { role: (d.role || '').trim() || it.role, people: parsePeople(d.people) })
     setDrafts((s) => { const n = { ...s }; delete n[it.id]; return n })
   }
-  const seedAll = () => supportRoles.forEach((r, i) =>
-    addItem(PATH, { role: r.role, people: r.people, order: i, addedBy: who() }))
+  // 결정적 ID(seed-i) setDoc = 멱등 — 연타·두 기기 동시 클릭에도 중복 생성 없음(addDoc이면 2벌 생김)
+  const seedAll = async () => {
+    if (seeding) return
+    setSeeding(true)
+    try {
+      await Promise.all(supportRoles.map((r, i) =>
+        setDocData(`${PATH}/seed-${i}`, { role: r.role, people: r.people, order: i, addedBy: who() })))
+    } finally { setSeeding(false) }
+  }
   const addRole = (e) => {
     e.preventDefault()
     const role = adding.role.trim()
@@ -59,19 +67,19 @@ export default function Teams() {
             {list.map((it) => (
               <div key={it.id} className={styles.supportRow}>
                 <input className={`${styles.supportInput} ${styles.supportRoleInput}`}
-                  value={drafts[it.id]?.role ?? it.role}
+                  value={drafts[it.id]?.role ?? it.role} maxLength={99}
                   onChange={(e) => upd(it, 'role', e.target.value)} aria-label="역할명" />
                 <input className={styles.supportInput}
                   value={drafts[it.id]?.people ?? (it.people || []).join(' · ')}
                   onChange={(e) => upd(it, 'people', e.target.value)} placeholder="이름 · 이름" aria-label="담당자" />
                 <button className={`${styles.supportSave} pressable`} onClick={() => saveRole(it)}>저장</button>
-                <button className={`${styles.supportDel} pressable`} onClick={() => removeRole(it.id)} aria-label="역할 삭제">✕</button>
+                <button className={`${styles.supportDel} pressable`} onClick={() => removeItem(PATH, it.id)} aria-label="역할 삭제">✕</button>
               </div>
             ))}
             <form className={styles.supportRow} onSubmit={addRole}>
               <input className={`${styles.supportInput} ${styles.supportRoleInput}`}
                 value={adding.role} onChange={(e) => setAdding((a) => ({ ...a, role: e.target.value }))}
-                placeholder="+ 새 역할" aria-label="새 역할명" />
+                placeholder="+ 새 역할" aria-label="새 역할명" maxLength={99} />
               <input className={styles.supportInput}
                 value={adding.people} onChange={(e) => setAdding((a) => ({ ...a, people: e.target.value }))}
                 placeholder="이름 · 이름" aria-label="새 역할 담당자" />
@@ -90,8 +98,8 @@ export default function Teams() {
         )}
 
         {editable && !seeded && (
-          <button className={`${styles.supportSeedBtn} pressable`} onClick={seedAll}>
-            ✏️ 편집하려면 기본 역할 불러오기
+          <button className={`${styles.supportSeedBtn} pressable`} onClick={seedAll} disabled={seeding}>
+            {seeding ? '불러오는 중…' : '✏️ 편집하려면 기본 역할 불러오기'}
           </button>
         )}
 

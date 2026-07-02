@@ -1,6 +1,7 @@
 // D-Day 계산 — KST(+09:00) 고정.
 // ⚠️ new Date('2026-08-14') 는 UTC 자정 파싱이라 KST에서 하루 어긋남 → 명시 오프셋 파싱.
 // 규칙: 시작 전 'D-n' / 행사 기간(start~end) 'D-DAY' / 종료 후 보관 문구.
+import { useEffect, useState } from 'react'
 
 /** 'YYYY-MM-DD' → KST 자정 기준 Date */
 function kstMidnight(ymd) {
@@ -37,4 +38,24 @@ export function computeDDay(dateStart, dateEnd = dateStart, now = new Date()) {
     return { label: dn === 0 ? 'D-DAY' : `행사 ${dn + 1}일차`, sub: '진행 중', phase: 'during', days: 0 }
   }
   return { label: '행사 종료', sub: '함께한 은혜에 감사', phase: 'after', days: Math.round((today - end) / DAY) }
+}
+
+/**
+ * D-Day 구독 훅 — 렌더 1회 계산이 아니라 시간 경과·앱 복귀에 반응한다.
+ * iOS 홈 화면 앱은 리로드 없이 메모리 복원되므로, 자정을 넘겨 다시 열면
+ * 1분 인터벌 + visibilitychange 재계산이 없을 경우 전날 'D-1'이 그대로 남는다.
+ */
+export function useDDay(dateStart, dateEnd = dateStart) {
+  const [dday, setDday] = useState(() => computeDDay(dateStart, dateEnd))
+  useEffect(() => {
+    const update = () => setDday((prev) => {
+      const next = computeDDay(dateStart, dateEnd)
+      return prev.label === next.label && prev.sub === next.sub ? prev : next // 불변이면 리렌더 생략
+    })
+    const id = setInterval(update, 60_000)
+    const onVis = () => { if (document.visibilityState === 'visible') update() }
+    document.addEventListener('visibilitychange', onVis)
+    return () => { clearInterval(id); document.removeEventListener('visibilitychange', onVis) }
+  }, [dateStart, dateEnd])
+  return dday
 }

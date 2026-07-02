@@ -76,7 +76,7 @@
 .memoBody { flex: 1; min-width: 0; }
 .memoBody em { display: block; font-style: normal; font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
 .memoDel {
-  flex: none; width: 28px; height: 28px; border-radius: 8px; margin-top: -1px;
+  flex: none; width: 36px; height: 36px; border-radius: 8px; margin-top: -1px;
   display: grid; place-items: center; color: var(--muted); font-size: 0.74rem;
   transition: color .15s var(--ease), background .15s var(--ease);
 }

@@ -1,0 +1,132 @@
+/* ── 팀장 모임 — 진행 보드 · 확정 안건 · 분임/준비 (세 섹션 공유 모듈) ── */
+
+/* 개요 카드 */
+.overview {
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 12px;
+}
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.metaItem { font-size: 13.5px; color: var(--muted); }
+.metaItem strong { color: var(--text); font-family: var(--font-display); font-weight: 800; font-size: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* 사회자 컨트롤 */
+.controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0 10px; }
+.ctrlBtn {
+  border: 1px solid var(--line); background: var(--white); color: var(--text);
+  border-radius: var(--radius-pill); padding: 9px 16px;
+  font: inherit; font-weight: 700; font-size: 14px; cursor: pointer;
+}
+.ctrlPrimary { background: var(--violet); border-color: var(--violet); color: #fff; box-shadow: var(--shadow-violet); }
+.ctrlBtn:disabled { opacity: .4; cursor: default; box-shadow: none; }
+
+/* 단계 타임라인 */
+.phases { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
+.phase {
+  display: flex; gap: 12px; align-items: flex-start; width: 100%;
+  border: 1px solid var(--line); background: var(--paper-2);
+  border-radius: var(--radius-sm); padding: 13px 14px;
+  font: inherit; color: inherit; text-align: left;
+}
+button.phase { cursor: pointer; }
+.phaseIdx {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--white); border: 1px solid var(--line);
+  font-family: var(--font-display); font-weight: 800; font-size: 14px;
+}
+.phaseBody { flex: 1; min-width: 0; display: block; }
+.phaseTop { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.phaseTitle { font-family: var(--font-display); font-weight: 800; font-size: 15.5px; }
+.phaseTime { font-size: 12.5px; color: var(--muted); }
+.phaseDetail { display: block; margin-top: 3px; font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+.phaseDone { opacity: .5; }
+.phaseDone .phaseIdx { background: var(--mint); border-color: var(--mint); color: var(--on-mint); }
+.phaseActive { border-color: var(--violet); background: var(--violet-soft); box-shadow: var(--shadow-sm); }
+.phaseActive .phaseIdx { background: var(--violet); border-color: var(--violet); color: #fff; }
+.elapsed { font-size: 12.5px; font-weight: 800; color: var(--violet); }
+.elapsedOver { color: var(--danger); }
+
+/* 전체/팀별 태그 */
+.kind {
+  font-size: 11.5px; font-weight: 700; border-radius: var(--radius-pill);
+  padding: 2px 9px; vertical-align: middle;
+}
+.kindAll  { background: var(--violet-soft); color: var(--violet); }
+.kindTeam { background: color-mix(in srgb, var(--sunny) 32%, var(--white)); color: var(--accent-ink); }
+
+/* 안건 보드 헤드 */
+.boardHead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.count { font-size: 13.5px; color: var(--muted); font-weight: 700; }
+.copyBtn {
+  margin-left: auto; border: 1px solid var(--line); background: var(--white); color: var(--text);
+  border-radius: var(--radius-pill); padding: 8px 14px;
+  font: inherit; font-weight: 700; font-size: 13px; cursor: pointer;
+}
+
+/* 안건 그룹 */
+.group { margin-top: 22px; }
+.groupTitle { font-family: var(--font-display); font-weight: 800; font-size: 17px; margin: 0; }
+.groupDesc { margin: 3px 0 10px; font-size: 13px; color: var(--muted); }
+.decisions { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.dec {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 13px 14px;
+}
+.decDone {
+  background: color-mix(in srgb, var(--mint) 8%, var(--paper-2));
+  border-color: color-mix(in srgb, var(--mint) 38%, var(--line));
+}
+.decCheck {
+  flex: none; width: 27px; height: 27px; margin-top: 1px;
+  border-radius: var(--radius-xs); border: 2px solid var(--line); background: var(--white);
+  display: grid; place-items: center;
+  font-weight: 900; font-size: 15px; color: var(--on-mint); cursor: pointer;
+}
+.decCheck:disabled { cursor: default; }
+.decDone .decCheck { background: var(--mint); border-color: var(--mint); }
+.decBody { flex: 1; min-width: 0; }
+.decTop { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
+.decTitle { font-family: var(--font-display); font-weight: 800; font-size: 15.5px; }
+.decTag {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 1px 8px;
+}
+.decHint { margin: 4px 0 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+.decOwner { margin: 5px 0 0; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+.decNote {
+  margin: 8px 0 0; font-size: 14px; line-height: 1.5;
+  background: var(--white); border: 1px dashed var(--line);
+  border-radius: var(--radius-xs); padding: 8px 10px;
+}
+.noteForm { display: flex; gap: 6px; margin-top: 8px; }
+.noteInput {
+  flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: var(--radius-xs);
+  padding: 8px 10px; font: inherit; font-size: 13.5px; background: var(--white);
+}
+.noteInput:focus { outline: 2px solid var(--violet); outline-offset: -1px; }
+.noteSave {
+  flex: none; border: none; background: var(--ink); color: var(--on-ink);
+  border-radius: var(--radius-xs); padding: 0 14px;
+  font: inherit; font-weight: 700; font-size: 13px; cursor: pointer;
+}
+
+/* 분임 코너 · 준비 · 마감 */
+.subhead { font-family: var(--font-display); font-weight: 800; font-size: 17px; margin: 26px 0 10px; }
+.subhead:first-of-type { margin-top: 0; }
+.subheadSub { font-size: 13px; color: var(--muted); font-weight: 600; }
+.corners { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 720px) { .corners { grid-template-columns: 1fr 1fr; } }
+.corner {
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 14px;
+}
+.cornerHead { display: flex; gap: 8px; align-items: center; font-family: var(--font-display); font-weight: 800; font-size: 15px; }
+.cornerTask { margin: 6px 0 10px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+.prepList { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.milestones { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.ms { display: flex; gap: 12px; align-items: baseline; font-size: 14px; line-height: 1.5; }
+.msDate { flex: none; min-width: 76px; font-family: var(--font-display); font-weight: 800; font-size: 13px; color: var(--violet); }
+
+.hintText { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); }

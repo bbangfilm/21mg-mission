@@ -65,6 +65,27 @@ service cloud.firestore {
       allow delete: if signed();
     }
 
+    // 팀장 모임 — 진행 단계 포인터 (사회자가 넘기면 전원 실시간 동기화)
+    //   phase: -1(시작 전) ~ 단계 수(종료). phaseAt = 단계 시작 시각(경과 표시용)
+    match /config/meeting {
+      allow read: if true;
+      allow write: if signed()
+        && request.resource.data.phase is number
+        && request.resource.data.phase >= -1 && request.resource.data.phase <= 30;
+    }
+
+    // 팀장 모임 — 안건 확정 체크 · 결정 메모 (문서 id = src/data/meeting.js 정적 안건 id)
+    match /meeting/{id} {
+      allow read: if true;
+      allow write: if signed()
+        && (!('done' in request.resource.data) || request.resource.data.done is bool)
+        && (!('note' in request.resource.data)
+            || (request.resource.data.note is string && request.resource.data.note.size() <= 500))
+        && (!('by' in request.resource.data)
+            || request.resource.data.by == null
+            || (request.resource.data.by is string && request.resource.data.by.size() <= 40));
+    }
+
     // 한 줄 기도 방명록 (로그인 없이 누구나 작성 — 익명인증 + 스키마/길이 검증).
     //   create: 허용 키만 + text 1~150자 + by ≤40자 + amen 0 + 작성자uid·서버시각 고정
     //   update: '함께 기도'(amen) 필드 1개만 정확히 +1 (createdAt/by 등 변조·필드 주입 차단)

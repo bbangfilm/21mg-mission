@@ -8,6 +8,7 @@ export const ROUTES = {
   schedule: { title: '일정·장소' },
   finance:  { title: '재정' },
   todo:     { title: '준비 To-Do' },
+  meeting:  { title: '팀장 모임' },
 }
 
 // '#/ministry' → 'ministry' / '#/','','#hero' 등 미등록 → ''(홈 폴백)

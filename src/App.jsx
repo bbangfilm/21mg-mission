@@ -10,6 +10,7 @@ import PeoplePage from './pages/PeoplePage.jsx'
 import SchedulePage from './pages/SchedulePage.jsx'
 import FinancePage from './pages/FinancePage.jsx'
 import TodoPage from './pages/TodoPage.jsx'
+import MeetingPage from './pages/MeetingPage.jsx'
 
 const PAGES = {
   '': Home,
@@ -18,6 +19,7 @@ const PAGES = {
   schedule: SchedulePage,
   finance: FinancePage,
   todo: TodoPage,
+  meeting: MeetingPage,
 }
 
 // 구형 엔진(iOS Safari ≤15.3 등)은 behavior:'instant' enum을 몰라 TypeError를 던진다

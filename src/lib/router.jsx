@@ -29,6 +29,13 @@ export function useRoute() {
   return parseHash(hash)
 }
 
+// 두 번째 세그먼트 구독 — '#/meeting/m1' → 'm1', 없으면 ''.
+// 같은 라우트 key 안의 서브 뷰(목록↔상세) 전환용 — App의 key={route} 리마운트는 발생하지 않는다.
+export function useRouteParam() {
+  const hash = useSyncExternalStore(subscribe, getSnapshot, () => '')
+  return (hash || '').replace(/^#\/?/, '').split('?')[0].split('/')[1] || ''
+}
+
 // 프로그램적 이동
 export function navigate(key) {
   const next = key ? `#/${key}` : '#/'

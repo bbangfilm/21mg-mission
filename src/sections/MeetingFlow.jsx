@@ -4,18 +4,19 @@ import { Chip, Badge } from '../components/ui.jsx'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useDoc } from '../lib/useFirestore.js'
 import { setDocData, serverTimestamp } from '../lib/mutations.js'
-import { meetingInfo, attendees, phases } from '../data/meeting.js'
+import { meetingPaths } from '../data/meetings.js'
 import styles from './Meeting.module.css'
 
-const DOC = 'config/meeting'
 const KIND = { all: '전체', team: '팀별' }
 
-// 진행 보드 — 사회자가 단계를 넘기면 config/meeting.phase 로 전원 화면 실시간 동기화.
+// 진행 보드 — 사회자가 단계를 넘기면 stateDoc.phase 로 전원 화면 실시간 동기화.
 // phase: -1(시작 전) → 0..N-1(진행) → N(종료). phaseAt 으로 현재 단계 경과 분 표시.
-export default function MeetingFlow() {
+export default function MeetingFlow({ meeting }) {
+  const { attendees, phases } = meeting
+  const { stateDoc } = meetingPaths(meeting)
   const { can } = useEditMode()
   const editable = can('team')
-  const { data } = useDoc(DOC)
+  const { data } = useDoc(stateDoc)
   const phase = typeof data?.phase === 'number' ? data.phase : -1
   const running = phase >= 0 && phase < phases.length
   const finished = phase >= phases.length
@@ -28,7 +29,7 @@ export default function MeetingFlow() {
     return () => clearInterval(id)
   }, [running])
 
-  const go = (idx) => setDocData(DOC, { phase: idx, phaseAt: serverTimestamp() })
+  const go = (idx) => setDocData(stateDoc, { phase: idx, phaseAt: serverTimestamp() })
 
   // serverTimestamp 는 서버 확정 전 스냅샷에서 null — toMillis 가드
   let elapsed = null
@@ -37,12 +38,12 @@ export default function MeetingFlow() {
   }
 
   return (
-    <Section id="meeting-flow" eyebrow="Meeting" title="진행 보드" desc={meetingInfo.goal}>
+    <Section id="meeting-flow" eyebrow="Meeting" title="진행 보드" desc={meeting.goal}>
       <div className={`${styles.overview} reveal`}>
         <div className={styles.meta}>
-          <span className={styles.metaItem}><strong>{meetingInfo.date}</strong></span>
-          <span className={styles.metaItem}>{meetingInfo.duration}</span>
-          <span className={`${styles.metaItem} tnum`}>참석 {attendees.length}명 — 팀장 + MG리더 (겸임 병기)</span>
+          <span className={styles.metaItem}><strong>{meeting.date}</strong></span>
+          <span className={styles.metaItem}>{meeting.duration}</span>
+          <span className={`${styles.metaItem} tnum`}>참석 {attendees.length}명{meeting.attendeesNote ? ` — ${meeting.attendeesNote}` : ''}</span>
         </div>
         <div className={styles.chips}>
           {attendees.map((a) => (

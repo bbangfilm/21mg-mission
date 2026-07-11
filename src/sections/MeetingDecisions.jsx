@@ -4,31 +4,32 @@ import { Badge, ProgressBar } from '../components/ui.jsx'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useCollection } from '../lib/useFirestore.js'
 import { setDocData } from '../lib/mutations.js'
-import { meetingInfo, decisions } from '../data/meeting.js'
+import { meetingPaths } from '../data/meetings.js'
 import styles from './Meeting.module.css'
 
-const PATH = 'meeting'
 const GROUPS = [
   { key: 'all',  label: '전체 논의', desc: '1~3부 — 일정·예산·조사, 틀을 먼저 확정' },
   { key: 'team', label: '팀별 논의', desc: '분임 — 확정된 틀 안에서 팀별 실행 계획' },
 ]
 
-// 확정할 안건 — 안건 정의는 정적(meeting.js), 체크·결정 메모만 meeting/{id} 오버레이.
+// 확정할 안건 — 안건 정의는 정적(meetings.js), 체크·결정 메모만 itemsCol/{id} 오버레이.
 // 회의 끝에 '결정사항 복사'로 그대로 회의록(단톡방 공유)이 된다.
-export default function MeetingDecisions() {
+export default function MeetingDecisions({ meeting }) {
+  const { decisions } = meeting
+  const { itemsCol } = meetingPaths(meeting)
   const { can, name } = useEditMode()
   const editable = can('team')
-  const { items } = useCollection(PATH)
+  const { items } = useCollection(itemsCol)
   const state = useMemo(() => Object.fromEntries(items.map((d) => [d.id, d])), [items])
   const doneCount = decisions.filter((d) => state[d.id]?.done).length
   const who = () => name || '익명'
   const [copied, setCopied] = useState(false)
 
-  const toggle = (d) => setDocData(`${PATH}/${d.id}`, { done: !state[d.id]?.done, by: who() })
-  const saveNote = (d, note) => setDocData(`${PATH}/${d.id}`, { note, by: who() })
+  const toggle = (d) => setDocData(`${itemsCol}/${d.id}`, { done: !state[d.id]?.done, by: who() })
+  const saveNote = (d, note) => setDocData(`${itemsCol}/${d.id}`, { note, by: who() })
 
   const copy = async () => {
-    const lines = [`📋 ${meetingInfo.title} 결정사항 — ${meetingInfo.date}`]
+    const lines = [`📋 ${meeting.title} 결정사항 — ${meeting.date}`]
     GROUPS.forEach((g) => {
       lines.push('', `[${g.label}]`)
       decisions.filter((d) => d.scope === g.key).forEach((d) => {

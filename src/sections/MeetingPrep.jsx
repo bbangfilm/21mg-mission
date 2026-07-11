@@ -5,19 +5,19 @@ import CheckRow from '../components/CheckRow.jsx'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useCollection } from '../lib/useFirestore.js'
 import { setDocData } from '../lib/mutations.js'
-import { corners, prepItems, milestones } from '../data/meeting.js'
+import { meetingPaths } from '../data/meetings.js'
 import styles from './Meeting.module.css'
 
-const PATH = 'meeting'
-
-// 분임 4코너(정적) + 회의 전 준비 체크(meeting/{id} 오버레이) + D-Day 역산 마감(정적)
-export default function MeetingPrep() {
+// 분임 4코너(정적) + 회의 전 준비 체크(itemsCol/{id} 오버레이) + D-Day 역산 마감(정적)
+export default function MeetingPrep({ meeting }) {
+  const { corners, prepItems, milestones } = meeting
+  const { itemsCol } = meetingPaths(meeting)
   const { can, name } = useEditMode()
   const editable = can('team')
-  const { items } = useCollection(PATH)
+  const { items } = useCollection(itemsCol)
   const state = useMemo(() => Object.fromEntries(items.map((d) => [d.id, d])), [items])
 
-  const toggle = (p) => setDocData(`${PATH}/${p.id}`, state[p.id]?.done
+  const toggle = (p) => setDocData(`${itemsCol}/${p.id}`, state[p.id]?.done
     ? { done: false, by: null }
     : { done: true, by: name || '익명' })
 

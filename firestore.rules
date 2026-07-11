@@ -74,8 +74,28 @@ service cloud.firestore {
         && request.resource.data.phase >= -1 && request.resource.data.phase <= 30;
     }
 
-    // 팀장 모임 — 안건 확정 체크 · 결정 메모 (문서 id = src/data/meeting.js 정적 안건 id)
+    // 팀장 모임 — 안건 확정 체크 · 결정 메모 (문서 id = src/data/meetings.js 정적 안건 id)
     match /meeting/{id} {
+      allow read: if true;
+      allow write: if signed()
+        && (!('done' in request.resource.data) || request.resource.data.done is bool)
+        && (!('note' in request.resource.data)
+            || (request.resource.data.note is string && request.resource.data.note.size() <= 500))
+        && (!('by' in request.resource.data)
+            || request.resource.data.by == null
+            || (request.resource.data.by is string && request.resource.data.by.size() <= 40));
+    }
+
+    // 팀장 모임 2차부터 — 회의별 경로: meetings/{mid} 진행 단계 + items/{안건id} 오버레이.
+    // (1차 7/12 모임은 위 레거시 경로 config/meeting · meeting/{id} 그대로 — 기록 보존)
+    // 이 두 블록만 게시해 두면 이후 회의는 규칙 변경 없이 무제한 추가 가능.
+    match /meetings/{mid} {
+      allow read: if true;
+      allow write: if signed()
+        && request.resource.data.phase is number
+        && request.resource.data.phase >= -1 && request.resource.data.phase <= 30;
+    }
+    match /meetings/{mid}/items/{id} {
       allow read: if true;
       allow write: if signed()
         && (!('done' in request.resource.data) || request.resource.data.done is bool)

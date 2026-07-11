@@ -32,7 +32,6 @@ const teamChecklists = {
   'team-rec': [{ id: 'rec1', text: '실내 레크 프로그램 확정' }, { id: 'rec2', text: '음향·도구·상품 준비' }],
   'team-food': [{ id: 'fd1', text: '메뉴 선정 문의 / 확정' }, { id: 'fd2', text: '식자재 구매 리스트 작성' }],
   'team-sales': [{ id: 'sl1', text: '물품 구입 리스트(예: 냉감요)' }, { id: 'sl2', text: '물품후원·헌금모금 포스터 제작' }],
-  'team-foodtruck': [{ id: 'ft1', text: '푸드트럭 섭외 · 메뉴 확정' }],
   'team-facility': [{ id: 'fc1', text: '교회 필요 가정 조사(방충망·전등·콘센트)' }, { id: 'fc2', text: '간단 수리 도구 준비' }],
 }
 

@@ -52,7 +52,7 @@ export default function Teams() {
   }
 
   return (
-    <Section id="teams" eyebrow="Serving Teams" title="여섯 팀, 한 사역" desc="6팀 + 지원역할 · 오병이어 운영">
+    <Section id="teams" eyebrow="Serving Teams" title="다섯 팀, 한 사역" desc="5팀 + 지원역할 · 오병이어 운영">
       <div className={`${styles.grid} stagger`}>
         {teams.map((t) => (
           <TeamCard key={t.id} team={t} editable={editable} name={name} />

@@ -29,7 +29,8 @@ export const teams = [
   {
     id: 'team-food', order: 3, emoji: '🍜',
     name: '음식팀', role: '금 저녁 · 토 먹거리 나눔',
-    leader: '정재선', members: ['이정수', '정연설', '공미혜'],
+    // 2026-07-12 푸드트럭팀 해체 → 박용림·전덕인·이민지 합류(잠정)
+    leader: '정재선', members: ['이정수', '정연설', '공미혜', '박용림', '전덕인', '이민지'],
     note: '',
     checklist: [
       { id: 'fd1', text: '메뉴 선정 문의 / 확정' },
@@ -47,16 +48,7 @@ export const teams = [
     ],
   },
   {
-    id: 'team-foodtruck', order: 5, emoji: '🚚',
-    name: '푸드트럭팀', role: '푸드트럭 운영',
-    leader: '박용림', members: ['전덕인', '이민지'],
-    note: '',
-    checklist: [
-      { id: 'ft1', text: '푸드트럭 섭외 · 메뉴 확정' },
-    ],
-  },
-  {
-    id: 'team-facility', order: 6, emoji: '🔧',
+    id: 'team-facility', order: 5, emoji: '🔧',
     name: '설비팀', role: '교회 시설 점검 · 수리',
     leader: '이인현', members: ['정표수', '권옥경', '최성곤'],
     note: '',

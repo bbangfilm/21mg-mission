@@ -2,6 +2,7 @@ import Section from '../components/Section.jsx'
 import { Badge } from '../components/ui.jsx'
 import { Link } from '../lib/router.jsx'
 import { meetings, meetingStatus } from '../data/meetings.js'
+import { minutesFor } from '../data/minutes.js'
 import styles from './Meeting.module.css'
 
 const STATUS = {
@@ -18,6 +19,7 @@ export default function MeetingList() {
       <ul className={`${styles.mList} stagger`}>
         {meetings.map((m) => {
           const st = STATUS[meetingStatus(m)]
+          const minutes = minutesFor(m.id)
           return (
             <li key={m.id}>
               {/* aria-label 없이 내용 전체를 링크 이름으로 — 상태 배지·메타까지 스크린리더에 전달 */}
@@ -35,6 +37,20 @@ export default function MeetingList() {
                 </span>
                 <span className={styles.mChev} aria-hidden="true">→</span>
               </Link>
+              {/* 하부 트리 — 회의록이 정리된 회의만 노출 */}
+              {minutes && (
+                <Link to={`meeting/${m.id}/minutes`} className={`${styles.mSub} lift pressable`}>
+                  <span className={styles.mSubBranch} aria-hidden="true">└</span>
+                  <span aria-hidden="true">📝</span>
+                  <span className={styles.mSubBody}>
+                    <span className={styles.mSubTitle}>회의록</span>
+                    <span className={`${styles.mSubMeta} tnum`}>
+                      결정 {minutes.items.length} · 액션 {minutes.actions.length} · 회의 후 최종 확정 반영
+                    </span>
+                  </span>
+                  <span className={styles.mChev} aria-hidden="true">→</span>
+                </Link>
+              )}
             </li>
           )
         })}

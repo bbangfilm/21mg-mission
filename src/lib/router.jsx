@@ -36,6 +36,13 @@ export function useRouteParam() {
   return (hash || '').replace(/^#\/?/, '').split('?')[0].split('/')[1] || ''
 }
 
+// 세 번째 세그먼트 구독 — '#/meeting/m1/minutes' → 'minutes', 없으면 ''.
+// 상세 안의 하위 뷰(보드↔회의록) 전환용.
+export function useRouteSub() {
+  const hash = useSyncExternalStore(subscribe, getSnapshot, () => '')
+  return (hash || '').replace(/^#\/?/, '').split('?')[0].split('/')[2] || ''
+}
+
 // 프로그램적 이동
 export function navigate(key) {
   const next = key ? `#/${key}` : '#/'

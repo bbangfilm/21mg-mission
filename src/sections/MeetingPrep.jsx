@@ -23,7 +23,7 @@ export default function MeetingPrep({ meeting }) {
 
   return (
     <Section id="meeting-prep" eyebrow="Breakout · Prep" title="분임 코너 · 준비">
-      <h3 className={styles.subhead}>팀별 분임 4코너 <span className={styles.subheadSub}>· 25분</span></h3>
+      <h3 className={styles.subhead}>팀별 분임 {corners.length}코너 <span className={styles.subheadSub}>· 25분</span></h3>
       <div className={`${styles.corners} stagger`}>
         {corners.map((c) => (
           <div key={c.id} className={styles.corner}>

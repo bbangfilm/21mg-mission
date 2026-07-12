@@ -48,6 +48,7 @@ export default function TeamCard({ team, editable, name }) {
       </div>
 
       {team.reassignNote && <p className={styles.reassign}>🔄 {team.reassignNote}</p>}
+      {team.note && <p className={styles.teamNote}>ℹ️ {team.note}</p>}
 
       {/* 체크리스트 */}
       <div className={styles.block}>

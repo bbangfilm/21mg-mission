@@ -111,6 +111,74 @@ export const meetings = [
       { date: '8/14 (금)', text: '국내단기선교 출발 — D-Day' },
     ],
   },
+
+  // 2차 — 예정(일정 미정). 회의 후 공지: "다음 팀장 회의는 8월 둘째 주 MG 전체모임 후".
+  // ★placeholder: 안건은 1차 '미결 6건'을 이월. 일정 확정 시 date/dateISO 만 갱신.
+  // ⚠️ meetings/m2 규약 사용 — 편집(진행 저장)은 firestore.rules 의 meetings/{mid} 두 블록을
+  //    Firebase 콘솔에 게시해야 동작(미게시면 읽기 전용 정적 폴백으로만 표시).
+  {
+    id: 'm2', seq: 2,
+    title: '단기선교 팀장 모임 (2차)',
+    date: '8월 둘째 주', dateISO: '2026-08-09',
+    duration: '미정',
+    goal: '8월 둘째 주 MG 전체모임 후 잠깐 — 1차 미결 안건 점검 + 팀별 준비 현황 공유. 일정 확정 시 다시 안내합니다.',
+
+    attendeesNote: '팀장 + MG리더 (일정 확정 후 최종)',
+    attendees: [
+      { name: '이영천', role: '디렉터 · MG리더' },
+      { name: '신나희', role: '디렉터 · MG리더' },
+      { name: '김하연', role: '전도·돌봄팀장' },
+      { name: '이성근', role: '레크팀장' },
+      { name: '정재선', role: '음식팀장' },
+      { name: '이하나', role: '판매팀장 · MG리더' },
+      { name: '이인현', role: '수리팀장' },
+      { name: '김성태', role: 'MG리더' },
+      { name: '전덕인', role: 'MG리더' },
+      { name: '전선희', role: 'MG리더 · 회계' },
+    ],
+
+    phases: [
+      { id: 'p1', time: '0:00', min: 5,  kind: 'all',  title: '오프닝 · 기도',     detail: 'MG 전체모임 직후 — 짧게' },
+      { id: 'p2', time: '0:05', min: 15, kind: 'all',  title: '1차 미결 점검',     detail: '홍보 활동 · 찬양 인도자 · 특송/축복송 · 경품 · 나눔 · 우천 대안' },
+      { id: 'p3', time: '0:20', min: 15, kind: 'team', title: '팀별 준비 현황',    detail: '팀별 진행률 공유 + 남은 구매·발주 확인' },
+      { id: 'p4', time: '0:35', min: 5,  kind: 'all',  title: '마무리',            detail: '역할 재확인 · 마무리 기도' },
+    ],
+
+    decisions: [
+      { id: 'd2-promo',  scope: 'all',  tag: '일정', title: '금요 홍보 활동 실행 여부',
+        hint: '현장 판단 · 홍보물(현지 제작/자체) 확보 경로', owner: '전도·돌봄팀 · 디렉터' },
+      { id: 'd2-praise', scope: 'all',  tag: '배정', title: '금요 찬양 인도자 · 세션 최종 구성',
+        hint: '드럼 김예준 확정 · 인도자/세션 미정 · 드럼 작동 확인', owner: '찬양팀' },
+      { id: 'd2-song',   scope: 'all',  tag: '배정', title: '특송 · 축복송 곡 · 반주 방식',
+        hint: 'MR/건반 · 8/2 MG모임 연습 반영', owner: '전덕인 · 이민지' },
+      { id: 'd2-prize',  scope: 'team', tag: '분임', title: '경품 품목 · 재원',
+        hint: '선교헌금 잔여(~50만) 내 배분 · 후원 새 물건 활용', owner: '레크팀' },
+      { id: 'd2-share',  scope: 'all',  tag: '일정', title: '토 저녁 전체 나눔 진행 방식',
+        hint: '개인/그룹 · 식후 30분', owner: '인도자' },
+      { id: 'd2-rain',   scope: 'team', tag: '분임', title: '우천 시 수영장 대안',
+        hint: '주변 대체 시설 조사', owner: '디렉터' },
+    ],
+
+    corners: [
+      { id: 'c2-food',  emoji: '🍜', name: '음식·식사 코너',   people: ['정재선', '전덕인'], task: '금 고기 수량 · 토 분식 일손 · 불판·부탄가스 지참 안내' },
+      { id: 'c2-sales', emoji: '🛍️', name: '판매·후원 코너',   people: ['이하나'], task: '후원품 리스트 · 경품 선별 · 현지 물품 위임(250만) 확인' },
+      { id: 'c2-prog',  emoji: '🎉', name: '프로그램·전도 코너', people: ['이성근', '김하연'], task: '10~11시 홀딩 프로그램 · 경품 추첨 · 홍보 동선' },
+      { id: 'c2-fac',   emoji: '🔧', name: '수리·현장 코너',   people: ['이인현', '이영천'], task: '수리 대상 가정 회신 · 현수막 · 팀별 영상 기록' },
+    ],
+
+    prepItems: [
+      { id: 'prep2-status', text: '각 팀 준비 현황(진행률·남은 구매·발주) 정리해 오기' },
+      { id: 'prep2-survey', text: '1박 가정 · 금요 도착시간 조사 결과 취합' },
+    ],
+
+    milestones: [
+      { date: '7월 말',    text: '회비 마감 · 수리 회신 · 현수막 발주' },
+      { date: '8월 첫 주', text: '물품 구매 완료 · 후원 새 물건 취합' },
+      { date: '8/2 (일)',  text: '특송 · 축복송 연습 (MG 전체모임)' },
+      { date: '8/9 (일)',  text: '2차 팀장 모임 예정 (MG 전체모임 후)' },
+      { date: '8/14 (금)', text: '국내단기선교 출발 — D-Day' },
+    ],
+  },
 ]
 
 export const meetingById = (id) => meetings.find((m) => m.id === id)

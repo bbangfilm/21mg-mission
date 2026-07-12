@@ -25,6 +25,11 @@
   border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
   border-radius: var(--radius-sm); padding: 8px 10px;
 }
+.teamNote {
+  font-size: 0.78rem; color: var(--muted); line-height: 1.5;
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 8px 10px;
+}
 
 /* ── 체크리스트 · 메모 블록 ── */
 .block { padding-top: 12px; border-top: 1px dashed var(--line); }

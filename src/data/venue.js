@@ -7,7 +7,7 @@ export const venue = {
     },
     {
       id: 'hostel', emoji: '🏠', name: '부여군유스호스텔',
-      meta: '4인실', desc: '숙소. 숙소비는 회비와 별도 — 가정별로 걷어 한꺼번에 납부합니다.',
+      meta: '4인실 13 · 2인실 2', desc: '숙소. 숙박(2박)과 식사 3식은 회비에서 일괄 납부합니다.',
     },
     {
       id: 'pool', emoji: '🏊', name: '수영장',

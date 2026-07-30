@@ -8,7 +8,7 @@ export const event = {
   churchNote: '창립 9주년',
   location: '충남 부여',
   accommodation: '부여군유스호스텔 (4인실)',
-  accommodationNote: '숙소비 별도 · 각자 부담',
+  accommodationNote: '숙소비 별도 · 가정별 정산 후 일괄 납부',
   mainMinistry: '오병이어 나눔축제',
   dateStart: '2026-08-14', // 금
   dateEnd: '2026-08-16',   // 일

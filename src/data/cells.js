@@ -1,7 +1,7 @@
-// 부록 B — 참가 명단 / 셀 매핑 (45명)
+// 부록 B — 참가 명단 / 셀 매핑 (53명 = 셀 52 + 사역자 1)
 // 명단 순서 기준: 셀리더 아래부터 다음 셀리더 전까지가 그 셀.
 // cells/{cellId} 와 동일 shape. count.total = leaders.length + members.length.
-// ⚠️ 참가 합계(45)는 어디에도 하드코딩하지 않는다 — cellTotal()로 런타임 합산(오타 즉시 노출).
+// ⚠️ 참가 합계(53)는 어디에도 하드코딩하지 않는다 — totalHeadcount()로 런타임 합산(오타 즉시 노출).
 
 export const cells = [
   {
@@ -22,6 +22,7 @@ export const cells = [
     members: [
       '이인현', '권옥경', '정표수', '정재선', '이정수', '은정원', '최경연',
       '김예준', '김예온', '이수현', '이선유', '이유안', '박시온',
+      '송현주', '이예나', '이시윤',
     ],
   },
   {
@@ -32,15 +33,22 @@ export const cells = [
     members: [
       '이성근', '정연설', '최성곤', '한상원', '공미혜', '전유은',
       '이지유', '이지민', '최민준', '한사랑', '한소망', '한믿음',
+      '박일규', '손영혜', '박채은', '박시은',
     ],
   },
+]
+
+/** 셀에 속하지 않는 동행 사역자 — 참가 합계에는 포함된다. */
+export const ministers = [
+  { name: '박한별 목사님', role: '인솔 교역자' },
 ]
 
 /** 셀 1개의 총원 (리더 + 셀원) */
 export const cellTotal = (cell) => cell.leaders.length + cell.members.length
 
-/** 전체 참가 인원 — 세 셀 합산(하드코딩 금지) */
-export const totalHeadcount = () => cells.reduce((sum, c) => sum + cellTotal(c), 0)
+/** 전체 참가 인원 — 세 셀 + 사역자 합산(하드코딩 금지) */
+export const totalHeadcount = () =>
+  cells.reduce((sum, c) => sum + cellTotal(c), 0) + ministers.length
 
 /** 전체 명단(리더+셀원) 평면 집합 — 팀 명단 정합 검증의 단일 출처 */
 export const allRoster = () =>

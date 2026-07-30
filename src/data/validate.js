@@ -4,8 +4,11 @@
 //   (1) 팀 이름 ⊆ 셀 명단 단일출처 (오타 탐지)
 //   (2) 미배정 인원 리스트 출력 (어린이·가족 ~20명, 실패 아님 — 의도된 상태)
 //   (3) 다중 팀/역할 소속자 출력 (전선희·전덕인·이민지 등, 중복은 의도)
-import { cells, cellTotal, totalHeadcount, allRoster } from './cells.js'
+import { cells, ministers, cellTotal, totalHeadcount, allRoster } from './cells.js'
 import { teams, teamRoster, supportRoles } from './teams.js'
+
+// 참가 확정 인원 — 명단이 바뀌면 이 값도 같이 바꾼다(오타로 인원이 흔들리면 즉시 실패).
+const EXPECTED_TOTAL = 53
 
 export function runValidation() {
   const report = { ok: true, errors: [], info: [] }
@@ -14,11 +17,13 @@ export function runValidation() {
 
   // (0) 참가 합계
   const total = totalHeadcount()
-  if (total !== 45) {
+  if (total !== EXPECTED_TOTAL) {
     report.ok = false
-    report.errors.push(`참가 합계가 45가 아님: ${total} (셀별 인원 확인 필요)`)
+    report.errors.push(`참가 합계가 ${EXPECTED_TOTAL}이 아님: ${total} (셀별 인원 확인 필요)`)
   }
-  report.info.push(`참가 합계 ${total}명 (영천 ${cellTotal(cells[0])} · 성태 ${cellTotal(cells[1])} · 덕인 ${cellTotal(cells[2])})`)
+  report.info.push(
+    `참가 합계 ${total}명 (영천 ${cellTotal(cells[0])} · 성태 ${cellTotal(cells[1])} · 덕인 ${cellTotal(cells[2])} · 사역자 ${ministers.length})`
+  )
 
   // 명단 내 중복 이름(동명이인 주의)
   if (rosterSet.size !== roster.length) {

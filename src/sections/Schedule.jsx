@@ -1,5 +1,6 @@
 import Section from '../components/Section.jsx'
 import { schedule } from '../data/schedule.js'
+import { asset } from '../lib/asset.js'
 import styles from './Schedule.module.css'
 
 export default function Schedule() {
@@ -20,6 +21,12 @@ export default function Schedule() {
                   <span className={styles.body}>
                     <b>{it.title}</b>
                     {it.sub && <em>{it.sub}</em>}
+                    {it.doc && (
+                      <a className={`${styles.docBtn} pressable`} href={asset(it.doc.href)}
+                        target="_blank" rel="noreferrer">
+                        <span aria-hidden="true">🎼</span> {it.doc.label}
+                      </a>
+                    )}
                   </span>
                   {it.highlight && <span className={styles.star} aria-hidden="true">⭐</span>}
                 </li>

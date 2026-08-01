@@ -1,6 +1,6 @@
 import Section from '../components/Section.jsx'
 import PrayerWall from '../components/PrayerWall.jsx'
-import { verse, prayers } from '../data/prayers.js'
+import { verse, prayerGroups, prayerClosing } from '../data/prayers.js'
 import styles from './Prayers.module.css'
 
 export default function Prayers({ wallLimit }) {
@@ -10,14 +10,23 @@ export default function Prayers({ wallLimit }) {
         <p>“{verse.text}”</p>
         <cite>— {verse.ref}</cite>
       </blockquote>
-      <ul className={`${styles.list} stagger`}>
-        {prayers.map((p) => (
-          <li key={p.id} className={styles.item}>
-            <span className={styles.bullet} aria-hidden="true">🙏</span>
-            <span>{p.text}</span>
+      <ol className={`${styles.groups} stagger`}>
+        {prayerGroups.map((g) => (
+          <li key={g.id} className={styles.groupCard} data-tone={g.tone}>
+            <div className={styles.groupHead}>
+              <span className={`${styles.groupNo} tnum`} aria-hidden="true">{g.no}</span>
+              <h3 className={styles.groupTitle}>{g.title}</h3>
+              <span className={styles.groupIcon} aria-hidden="true">{g.icon}</span>
+            </div>
+            <ul className={styles.groupItems}>
+              {g.items.map((text, i) => (
+                <li key={i}>{text}</li>
+              ))}
+            </ul>
           </li>
         ))}
-      </ul>
+      </ol>
+      <p className={`${styles.closing} reveal`}>“{prayerClosing}”</p>
       <PrayerWall limit={wallLimit} />
     </Section>
   )

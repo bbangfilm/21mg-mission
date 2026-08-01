@@ -47,6 +47,9 @@ export default function MeetingDecisions({ meeting }) {
     }
   }
 
+  // 전체모임 등 안건이 없는 회의는 섹션 자체를 생략 (훅 호출 뒤 — rules of hooks)
+  if (decisions.length === 0) return null
+
   return (
     <Section id="meeting-decisions" eyebrow="Decisions" title="확정할 안건"
       desc="체크 = 확정 · 메모 = 결정 내용 — 그대로 회의록이 됩니다">

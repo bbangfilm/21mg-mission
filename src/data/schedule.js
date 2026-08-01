@@ -9,7 +9,9 @@ export const schedule = [
       { time: '17:00', title: '조별 활동', sub: '식사 준비 · 마을 홍보 · 수리 답사' },
       { time: '17:30', title: '저녁식사 · 2차 도착 8명', sub: '성도들과 함께 (~19:00) · 2가정 합류' },
       { time: '19:00', title: '찬양과 경배 · 3차 도착 4명', sub: '21MG 인도 · 1가정 합류' },
-      { time: '20:30', title: '금요심야기도회', sub: '이후 숙소 이동' },
+      // doc — 항목에 문서(악보 등) 버튼. href 는 public/ 기준 경로(asset() 으로 base 처리)
+      { time: '20:30', title: '금요심야기도회', sub: '이후 숙소 이동',
+        doc: { label: '악보 보기', href: 'docs/hongsan-friday-prayer-sheets.pdf' } },
     ],
   },
   {

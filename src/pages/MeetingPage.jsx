@@ -19,12 +19,15 @@ export default function MeetingPage() {
   const minutes = meeting ? minutesFor(meeting.id) : null
   const showMinutes = !!(meeting && minutes && sub === 'minutes')
 
+  // 전체모임(assembly)은 '팀장 모임 N차' 대신 회의 제목을 그대로 쓴다
+  const heading = meeting && (meeting.kind === 'assembly' ? meeting.title : `팀장 모임 ${meeting.seq}차`)
+
   useEffect(() => {
     try { window.scrollTo({ top: 0, behavior: 'instant' }) } catch { window.scrollTo(0, 0) }
     document.title = meeting
-      ? `팀장 모임 ${meeting.seq}차${showMinutes ? ' 회의록' : ''} (${meeting.date}) · 21MG 국내선교`
+      ? `${heading}${showMinutes ? ' 회의록' : ''} (${meeting.date}) · 21MG 국내선교`
       : '팀장 모임 · 21MG 국내선교' // 목록·미등록 id — 다른 라우트로 나가면 App effect가 다시 설정
-  }, [id, meeting, showMinutes])
+  }, [id, meeting, heading, showMinutes])
 
   if (!meeting) {
     return (
@@ -46,7 +49,7 @@ export default function MeetingPage() {
   return (
     // key={meeting.id} — 회의 전환 시 보드 리마운트로 Firestore 재구독 + 리빌 애니메이션 재생
     <div key={meeting.id}>
-      <PageHeader title={`팀장 모임 ${meeting.seq}차 · ${meeting.date}`} backTo="meeting" backLabel="목록" />
+      <PageHeader title={`${heading} · ${meeting.date}`} backTo="meeting" backLabel="목록" />
       {minutes && (
         <div className="container">
           <Link to={`meeting/${meeting.id}/minutes`} className={`${styles.minutesBanner} pressable`}>

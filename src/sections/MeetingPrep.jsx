@@ -21,6 +21,9 @@ export default function MeetingPrep({ meeting }) {
     ? { done: false, by: null }
     : { done: true, by: name || '익명' })
 
+  // 전체모임 등 분임·준비·마감이 모두 없는 회의는 섹션 자체를 생략 (훅 호출 뒤 — rules of hooks)
+  if (corners.length === 0 && prepItems.length === 0 && milestones.length === 0) return null
+
   return (
     <Section id="meeting-prep" eyebrow="Breakout · Prep" title="분임 코너 · 준비">
       <h3 className={styles.subhead}>팀별 분임 {corners.length}코너 <span className={styles.subheadSub}>· 25분</span></h3>

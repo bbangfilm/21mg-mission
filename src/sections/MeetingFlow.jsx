@@ -38,12 +38,15 @@ export default function MeetingFlow({ meeting }) {
   }
 
   return (
-    <Section id="meeting-flow" eyebrow="Meeting" title="진행 보드" desc={meeting.goal}>
+    <Section id="meeting-flow" eyebrow="Meeting"
+      title={meeting.kind === 'assembly' ? '타임테이블' : '진행 보드'} desc={meeting.goal}>
       <div className={`${styles.overview} reveal`}>
         <div className={styles.meta}>
           <span className={styles.metaItem}><strong>{meeting.date}</strong></span>
           <span className={styles.metaItem}>{meeting.duration}</span>
-          <span className={`${styles.metaItem} tnum`}>참석 {attendees.length}명{meeting.attendeesNote ? ` — ${meeting.attendeesNote}` : ''}</span>
+          {attendees.length > 0 && (
+            <span className={`${styles.metaItem} tnum`}>참석 {attendees.length}명{meeting.attendeesNote ? ` — ${meeting.attendeesNote}` : ''}</span>
+          )}
         </div>
         <div className={styles.chips}>
           {attendees.map((a) => (
@@ -86,13 +89,14 @@ export default function MeetingFlow({ meeting }) {
               <span className={styles.phaseBody}>
                 <span className={styles.phaseTop}>
                   <span className={styles.phaseTitle}>{p.title}</span>
-                  <span className={`${styles.phaseTime} tnum`}>{p.time} · {p.min}분</span>
+                  {/* min=0 — 배정 분이 없는 항목(수시 접수·연습 등)은 시각만 */}
+                  <span className={`${styles.phaseTime} tnum`}>{p.time}{p.min > 0 ? ` · ${p.min}분` : ''}</span>
                   <span className={`${styles.kind} ${p.kind === 'team' ? styles.kindTeam : styles.kindAll}`}>{KIND[p.kind]}</span>
                   {isActive && elapsed != null && (
                     <span className={`${styles.elapsed} ${elapsed > p.min ? styles.elapsedOver : ''} tnum`}>{elapsed}분 경과</span>
                   )}
                 </span>
-                <span className={styles.phaseDetail}>{p.detail}</span>
+                {p.detail && <span className={styles.phaseDetail}>{p.detail}</span>}
               </span>
             </>
           )

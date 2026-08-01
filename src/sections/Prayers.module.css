@@ -7,12 +7,44 @@
 .verse p { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; line-height: 1.5; }
 .verse cite { display: block; margin-top: 12px; font-style: normal; color: var(--accent); font-size: 0.9rem; }
 
-.list { display: grid; grid-template-columns: 1fr; gap: 10px; }
-@media (min-width: 760px) { .list { grid-template-columns: 1fr 1fr; } }
-.item {
-  display: flex; gap: 12px; align-items: flex-start;
-  background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--radius-sm); padding: 12px 14px;
-  font-size: 0.92rem; color: var(--text);
+/* 기도제목 그룹 — 8/2 배포 포스터의 5개 항목·색상 톤을 따른다 */
+.groups { list-style: none; display: grid; grid-template-columns: 1fr; gap: 12px; padding: 0; }
+.groupCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-ink);
+  border-radius: var(--radius); padding: 16px 18px;
 }
-.bullet { flex: none; }
+.groupCard[data-tone='blue']   { --gc: #6ea8ff; }
+.groupCard[data-tone='green']  { --gc: #5ecb8f; }
+.groupCard[data-tone='amber']  { --gc: #ffb35c; }
+.groupCard[data-tone='purple'] { --gc: #b492ff; }
+.groupCard[data-tone='navy']   { --gc: #62c0e8; }
+
+.groupHead { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.groupNo {
+  flex: none; width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 0.85rem;
+  color: var(--gc);
+  background: color-mix(in srgb, var(--gc) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gc) 45%, transparent);
+}
+.groupTitle { font-size: 1.02rem; font-weight: 700; color: var(--gc); line-height: 1.35; }
+.groupIcon { margin-left: auto; flex: none; font-size: 1.1rem; opacity: 0.9; }
+
+.groupItems { list-style: none; display: grid; gap: 7px; padding: 0; }
+.groupItems li {
+  position: relative; padding-left: 16px;
+  font-size: 0.92rem; line-height: 1.6;
+  color: color-mix(in srgb, var(--on-ink) 92%, transparent);
+}
+.groupItems li::before {
+  content: '•'; position: absolute; left: 2px;
+  color: var(--gc); font-weight: 700;
+}
+
+.closing {
+  margin: 20px 4px 28px; text-align: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+  line-height: 1.6; color: var(--accent);
+}

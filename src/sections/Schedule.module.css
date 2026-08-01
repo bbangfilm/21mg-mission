@@ -19,9 +19,21 @@
   padding: 8px; border-radius: var(--radius-sm);
 }
 .time { font-size: 0.8rem; font-weight: 700; color: var(--muted); min-width: 84px; flex: none; padding-top: 1px; }
-.body { display: flex; flex-direction: column; }
+.body { display: flex; flex-direction: column; align-items: flex-start; }
 .body b { font-size: 0.92rem; color: var(--navy); font-weight: 600; }
 .body em { font-style: normal; font-size: 0.8rem; color: var(--muted); }
+
+/* 항목 문서 버튼 (악보 등) — 새 탭으로 PDF 열기 */
+.docBtn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 7px; padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem; font-weight: 700; text-decoration: none;
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.docBtn:hover { background: color-mix(in srgb, var(--accent) 28%, transparent); }
 
 .highlight {
   background: color-mix(in srgb, var(--accent) 18%, transparent);

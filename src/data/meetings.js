@@ -112,6 +112,27 @@ export const meetings = [
     ],
   },
 
+  // 8/2 전체 모임 — 팀장 모임이 아닌 '준비 전체 모임'(kind:'assembly'). 보드는 타임테이블(phases)만 사용.
+  // 안건·분임·준비 체크는 없음 — 빈 배열이면 해당 섹션은 렌더되지 않는다(MeetingDecisions/Prep 가드).
+  {
+    id: 'a1', seq: 0, kind: 'assembly', seqLabel: '전체',
+    title: '21MG 국내선교 준비 전체 모임',
+    date: '8/2 (일)', dateISO: '2026-08-02',
+    duration: '14:00 시작',
+    goal: '주일 오후 전 가정 — 회비·선교후원금 입금, 전체 브리핑 후 특송 연습과 팀별 모임, 청소 후 금요예배 밴드 연습',
+
+    attendees: [], decisions: [], corners: [], prepItems: [], milestones: [],
+
+    /** 타임테이블 — time 은 실제 시각 표기, min=0 이면 배정 분 표기를 생략 */
+    phases: [
+      { id: 'a1p1', time: '수시',  min: 0,  kind: 'all',  title: '회비 입금 · 선교후원금', detail: '모임 전후 수시 접수 — 회계 전선희' },
+      { id: 'a1p2', time: '14:00', min: 10, kind: 'all',  title: '전체 브리핑' },
+      { id: 'a1p3', time: '14:10', min: 60, kind: 'all',  title: '특송 연습' },
+      { id: 'a1p4', time: '15:10', min: 30, kind: 'team', title: '팀별 모임' },
+      { id: 'a1p5', time: '15:40', min: 0,  kind: 'all',  title: '청소 후 금요예배 밴드 연습', detail: '전체 정리 후 — 찬양팀(밴드)' },
+    ],
+  },
+
   // 2차 — 예정(일정 미정). 회의 후 공지: "다음 팀장 회의는 8월 둘째 주 MG 전체모임 후".
   // ★placeholder: 안건은 1차 '미결 6건'을 이월. 일정 확정 시 date/dateISO 만 갱신.
   // ⚠️ meetings/m2 규약 사용 — 편집(진행 저장)은 firestore.rules 의 meetings/{mid} 두 블록을

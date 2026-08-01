@@ -20,20 +20,25 @@ export default function MeetingList() {
         {meetings.map((m) => {
           const st = STATUS[meetingStatus(m)]
           const minutes = minutesFor(m.id)
+          // 전체모임(assembly)은 참석·안건 대신 타임테이블 순서 수를 보여준다
+          const meta = [
+            m.attendees.length > 0 && `참석 ${m.attendees.length}명`,
+            m.decisions.length > 0 && `안건 ${m.decisions.length}건`,
+            m.decisions.length === 0 && m.phases.length > 0 && `순서 ${m.phases.length}단계`,
+            m.duration,
+          ].filter(Boolean).join(' · ')
           return (
             <li key={m.id}>
               {/* aria-label 없이 내용 전체를 링크 이름으로 — 상태 배지·메타까지 스크린리더에 전달 */}
               <Link to={`meeting/${m.id}`} className={`${styles.mCard} lift pressable`}>
-                <span className={`${styles.mSeq} tnum`}>{m.seq}차</span>
+                <span className={`${styles.mSeq} tnum`}>{m.seqLabel || `${m.seq}차`}</span>
                 <span className={styles.mBody}>
                   <span className={styles.mTop}>
                     <span className={styles.mDate}>{m.date}</span>
                     <Badge tone={st.tone}>{st.label}</Badge>
                   </span>
                   <span className={styles.mTitle}>{m.title}</span>
-                  <span className={`${styles.mMeta} tnum`}>
-                    참석 {m.attendees.length}명 · 안건 {m.decisions.length}건 · {m.duration}
-                  </span>
+                  <span className={`${styles.mMeta} tnum`}>{meta}</span>
                 </span>
                 <span className={styles.mChev} aria-hidden="true">→</span>
               </Link>

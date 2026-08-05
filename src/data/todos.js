@@ -8,13 +8,4 @@ export const todosSeed = [
   { id: 't5', order: 5, text: '팀장 채팅방 개설', done: false, assignee: '전체' },
 ]
 
-// 06. 오병이어 바자회 품목 — 초기 리스트 미정(11장). 아래는 카테고리 예시 시드(편집 모드 미리보기용).
-export const bazaarSeed = [
-  { id: 'bz1', category: '의류', name: '여름 의류 (성인·아동)', done: false },
-  { id: 'bz2', category: '의류', name: '신발·가방', done: false },
-  { id: 'bz3', category: '생활용품', name: '수건·주방용품', done: false },
-  { id: 'bz4', category: '생활용품', name: '냉감요·여름 침구', done: false },
-  { id: 'bz5', category: '먹거리', name: '김밥 재료', done: false },
-  { id: 'bz6', category: '먹거리', name: '떡볶이·어묵 재료', done: false },
-]
-export const bazaarCategories = ['의류', '생활용품', '먹거리', '기타']
+// 06. 오병이어 바자회 품목 — src/data/bazaar.js 로 이관(2026-08-05 실제 후원 물품 확정).

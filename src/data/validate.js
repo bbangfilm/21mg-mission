@@ -6,9 +6,16 @@
 //   (3) 다중 팀/역할 소속자 출력 (전선희·전덕인·이민지 등, 중복은 의도)
 import { cells, ministers, cellTotal, totalHeadcount, allRoster } from './cells.js'
 import { teams, teamRoster, supportRoles } from './teams.js'
+import { budget } from './budget.js'
+import { bazaarPlan, validateBazaar } from './bazaar.js'
 
 // 참가 확정 인원 — 명단이 바뀌면 이 값도 같이 바꾼다(오타로 인원이 흔들리면 즉시 실패).
 const EXPECTED_TOTAL = 53
+
+// 예산 확정 총액(2026-08-05 회계 확정) — budget.js 는 행에서 런타임 합산하므로
+// 여기서 확정액과 대조해야 행 하나를 잘못 고쳤을 때 즉시 드러난다.
+const EXPECTED_INCOME = 7530000
+const EXPECTED_EXPENSE = 6423500
 
 export function runValidation() {
   const report = { ok: true, errors: [], info: [] }
@@ -52,6 +59,41 @@ export function runValidation() {
   ;[...teamPeople, ...supportPeople].forEach((n) => (count[n] = (count[n] || 0) + 1))
   const multi = Object.entries(count).filter(([, c]) => c > 1).map(([n, c]) => `${n}(${c})`)
   if (multi.length) report.info.push(`다중 팀/역할 소속(의도): ${multi.join(', ')}`)
+
+  // (4) 예산 — 행 합산이 회계 확정 총액과 일치하는가
+  const inc = budget.incomeTotal.amount
+  const exp = budget.expenseTotal
+  if (inc !== EXPECTED_INCOME) {
+    report.ok = false
+    report.errors.push(`수입 합계 불일치: ${inc.toLocaleString()} ≠ 확정 ${EXPECTED_INCOME.toLocaleString()}`)
+  }
+  if (exp !== EXPECTED_EXPENSE) {
+    report.ok = false
+    report.errors.push(`지출 합계 불일치: ${exp.toLocaleString()} ≠ 확정 ${EXPECTED_EXPENSE.toLocaleString()}`)
+  }
+  if (budget.balance !== inc - exp) {
+    report.ok = false
+    report.errors.push(`잔액이 수입−지출과 다름: ${budget.balance.toLocaleString()}`)
+  }
+  if (budget.incomeTotal.people !== EXPECTED_TOTAL) {
+    report.ok = false
+    report.errors.push(`회비 기준 인원(${budget.incomeTotal.people})이 참가 합계(${EXPECTED_TOTAL})와 다름`)
+  }
+  report.info.push(
+    `예산 수입 ${inc.toLocaleString()} − 지출 ${exp.toLocaleString()} = 잔액 ${budget.balance.toLocaleString()}`
+  )
+
+  // (5) 나눔 장터 품목 — 카테고리 오타 / ID 중복
+  const bzErrors = validateBazaar()
+  if (bzErrors.length) {
+    report.ok = false
+    report.errors.push(...bzErrors)
+  }
+  const prizes = bazaarPlan.filter((i) => i.category === '경품').length
+  const kept = bazaarPlan.filter((i) => i.existing).length
+  report.info.push(
+    `장터 품목 ${bazaarPlan.length}건 (경품 ${prizes} · 판매 ${bazaarPlan.length - prizes}) — 기존 후원 기록 ${kept}건 보존`
+  )
 
   return report
 }

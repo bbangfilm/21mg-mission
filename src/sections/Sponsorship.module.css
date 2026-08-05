@@ -17,6 +17,13 @@
 .goalWrap { text-align: right; }
 .goal { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: #fff; }
 
+/* 확정 상태 — 진행바 자리에 후원 구성 내역 */
+.breakdown { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid var(--line-ink); }
+.breakdown li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 0; }
+.breakdown li + li { border-top: 1px solid var(--line-ink); }
+.breakdown span { font-size: 0.85rem; color: var(--on-ink-muted); }
+.breakdown strong { font-size: 0.98rem; font-weight: 700; color: #fff; }
+
 .ref { margin-top: 16px; font-size: 0.8rem; color: var(--on-ink-muted); }
 
 /* 관리자 인라인 편집 (목표·누적) */

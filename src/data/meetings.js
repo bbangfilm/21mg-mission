@@ -173,7 +173,7 @@ export const meetings = [
       { id: 'd2-song',   scope: 'all',  tag: '배정', title: '특송 · 축복송 곡 · 반주 방식',
         hint: 'MR/건반 · 8/2 MG모임 연습 반영', owner: '전덕인 · 이민지' },
       { id: 'd2-prize',  scope: 'team', tag: '분임', title: '경품 품목 · 재원',
-        hint: '선교헌금 잔여(~50만) 내 배분 · 후원 새 물건 활용', owner: '레크팀' },
+        hint: '후원 물품으로 경품 16종 확보 — 추첨 방식·순서만 확정 (추가 구매는 예비비 110만 내)', owner: '레크팀' },
       { id: 'd2-share',  scope: 'all',  tag: '일정', title: '토 저녁 전체 나눔 진행 방식',
         hint: '개인/그룹 · 식후 30분', owner: '인도자' },
       { id: 'd2-rain',   scope: 'team', tag: '분임', title: '우천 시 수영장 대안',
@@ -182,7 +182,7 @@ export const meetings = [
 
     corners: [
       { id: 'c2-food',  emoji: '🍜', name: '음식·식사 코너',   people: ['정재선', '전덕인'], task: '금 고기 수량 · 토 분식 일손 · 불판·부탄가스 지참 안내' },
-      { id: 'c2-sales', emoji: '🛍️', name: '판매·후원 코너',   people: ['이하나'], task: '후원품 리스트 · 경품 선별 · 현지 물품 위임(250만) 확인' },
+      { id: 'c2-sales', emoji: '🛍️', name: '판매·후원 코너',   people: ['이하나'], task: '후원품 분류 완료(경품 16 · 판매 17) — 매대 구성 · 가격 책정 · 현지 물품 위임(250만) 확인' },
       { id: 'c2-prog',  emoji: '🎉', name: '프로그램·전도 코너', people: ['이성근', '김하연'], task: '10~11시 홀딩 프로그램 · 경품 추첨 · 홍보 동선' },
       { id: 'c2-fac',   emoji: '🔧', name: '수리·현장 코너',   people: ['이인현', '이영천'], task: '수리 대상 가정 회신 · 현수막 · 팀별 영상 기록' },
     ],

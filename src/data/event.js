@@ -14,5 +14,6 @@ export const event = {
   dateEnd: '2026-08-16',   // 일
   durationLabel: '2박 3일',
   verse: '사도행전 1:8',
-  headcount: 45, // 참가 표시 인원 (회비도 45명 기준 — budget.js)
+  // 참가 인원은 여기에 두지 않는다 — cells.js 의 totalHeadcount() 가 유일한 출처.
+  // (45로 굳어 있던 값이 53명 확정 후에도 남아 스테일이 됐던 자리)
 }

@@ -5,17 +5,16 @@ import styles from './Budget.module.css'
 
 export default function Budget() {
   return (
-    <Section id="budget" eyebrow="Budget" title="회비, 이렇게 씁니다" desc="수입 · 지출 · 잔액">
+    <Section id="budget" eyebrow="Budget" title="예산, 이렇게 씁니다" desc="수입 · 지출 · 잔액">
       <div className={`${styles.grid} stagger`}>
         {/* 수입 */}
         <div className={styles.tableCard}>
-          <h3 className={styles.tableTitle}>수입 (회비)</h3>
+          <h3 className={styles.tableTitle}>수입 (회비 · 후원)</h3>
           <table className={styles.table}>
             <tbody>
               {budget.income.map((r) => (
                 <tr key={r.label}>
-                  <td>{r.label}</td>
-                  <td className="tnum">{r.people}명 × {won(r.unit)}</td>
+                  <td>{r.label}{r.note && <em className={styles.note}>{r.note}</em>}</td>
                   <td className={`tnum ${styles.amt}`}>{won(r.amount)}</td>
                 </tr>
               ))}
@@ -23,7 +22,6 @@ export default function Budget() {
             <tfoot>
               <tr>
                 <td>합계</td>
-                <td className="tnum">{budget.incomeTotal.people}명</td>
                 <td className={`tnum ${styles.amt}`}>{won(budget.incomeTotal.amount)}</td>
               </tr>
             </tfoot>

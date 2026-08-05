@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Section from '../components/Section.jsx'
 import { Badge, ProgressBar } from '../components/ui.jsx'
 import CheckRow from '../components/CheckRow.jsx'
-import { bazaarCategories } from '../data/todos.js'
+import { bazaarCategories } from '../data/bazaar.js'
 import { useEditMode } from '../context/EditModeContext.jsx'
 import { useCollection } from '../lib/useFirestore.js'
 import { addItem, updateItem, removeItem, serverTimestamp } from '../lib/mutations.js'
@@ -18,6 +18,13 @@ export default function Bazaar() {
   const done = items.filter((i) => i.done).length
   const who = () => name || '익명'
 
+  // 알려진 카테고리에 안 잡히는 문서(옛 카테고리·오타·누락)를 '미분류' 매대로 흡수한다.
+  // 이게 없으면 카테고리 이름을 바꾼 순간 해당 품목이 화면에서 조용히 사라진다.
+  const known = new Set(bazaarCategories)
+  const orphans = items.filter((i) => !known.has(i.category))
+  const cats = orphans.length ? [...bazaarCategories, '미분류'] : bazaarCategories
+  const inCat = (cat) => (cat === '미분류' ? orphans : items.filter((i) => i.category === cat))
+
   const toggle = (it) => updateItem(PATH, it.id, it.done
     ? { done: false, doneBy: null, doneAt: null }
     : { done: true, doneBy: who(), doneAt: serverTimestamp() })
@@ -31,7 +38,7 @@ export default function Bazaar() {
   }
 
   return (
-    <Section id="bazaar" eyebrow="Bazaar" title="오병이어 나눔 장터 품목" desc="의류 · 생활용품 · 먹거리">
+    <Section id="bazaar" eyebrow="Bazaar" title="오병이어 나눔 장터 품목" desc="경품 · 생활용품 · 의류 · 먹거리">
       <div className={`${styles.head} reveal`}>
         {editable
           ? <Badge tone="success">편집 모드 · {name || '이름 미설정'}</Badge>
@@ -40,21 +47,21 @@ export default function Bazaar() {
       </div>
 
       <div className={`${styles.cats} stagger`}>
-        {bazaarCategories.map((cat) => (
+        {cats.map((cat) => (
           <div key={cat} className={styles.cat}>
             <h3 className={styles.catTitle}>{cat}</h3>
             <ul className={styles.list}>
-              {items.filter((i) => i.category === cat).map((it) => (
+              {inCat(cat).map((it) => (
                 <li key={it.id}>
                   <CheckRow text={it.name} done={it.done} doneBy={it.doneBy} editable={editable}
                     onToggle={() => toggle(it)} onRemove={() => remove(it.id)} />
                 </li>
               ))}
             </ul>
-            {!loading && items.filter((i) => i.category === cat).length === 0 && (
+            {!loading && inCat(cat).length === 0 && (
               <p className={styles.catEmpty}>아직 품목이 없습니다</p>
             )}
-            {editable && (
+            {editable && cat !== '미분류' && (
               <form className={styles.addRow} onSubmit={(e) => addToCat(cat, e)}>
                 <input className={styles.addInput} value={drafts[cat] || ''}
                   onChange={(e) => setDrafts((d) => ({ ...d, [cat]: e.target.value }))}

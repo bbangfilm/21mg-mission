@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21MG 국내선교 최종 보고 모임 · 진행 화면 (온라인)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css">
+<style>
+/* ── 폰트: 대시보드와 동일하게 jsDelivr (온라인 버전) ── */
+
+/* ── 토큰: 대시보드(src/styles/tokens.css)와 동일 팔레트 ── */
+:root{
+  --ink:#16151D;--ink-2:#221F2C;--paper:#F1ECE1;--paper-2:#FBF8F1;--white:#FFFFFF;
+  --violet:#5B3DF5;--violet-2:#7C63FF;--violet-soft:#ECE7FF;
+  --sunny:#FFCE2E;--mint:#15C6A0;--mint-ink:#0A6F58;--coral:#FF5A6E;--danger:#C0262C;
+  --text:#1B1A22;--muted:#6B6976;--on-ink:#F1ECE1;--on-ink-muted:#A29DB4;
+  --line:#E3DCCC;--line-ink:#322E3F;--accent-ink:#6E5200;
+  --font-display:'Paperlogy','Pretendard','Apple SD Gothic Neo',sans-serif;
+  --font-body:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --c-step:var(--violet);          /* 현재 단계 색 — 슬라이드별로 덮어씀 */
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);overflow:hidden}
+body{font-family:var(--font-body);color:var(--text);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+ul,ol{margin:0;padding:0;list-style:none}
+p,h1,h2,h3{margin:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+
+/* ── 무대: 1920×1080 고정 캔버스를 창 크기에 맞춰 스케일 ── */
+#viewport{position:fixed;inset:0;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;margin:-540px 0 0 -960px;overflow:hidden;background:var(--paper);transform-origin:center center;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+
+/* ── 슬라이드 ── */
+.slide{position:absolute;inset:0;padding:92px 112px 190px;opacity:0;visibility:hidden;transform:translateY(16px);
+  transition:opacity .34s var(--ease),transform .46s var(--ease),visibility 0s linear .34s}
+.slide.is-active{opacity:1;visibility:visible;transform:none;transition-delay:0s,0s,0s}
+.slide--ink{background:var(--ink);color:var(--on-ink)}
+.slide--full{padding:0}
+
+.eyebrow{display:inline-flex;align-items:center;gap:16px;font-weight:800;font-size:28px;letter-spacing:.01em;color:var(--c-step)}
+.eyebrow::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--c-step)}
+.slide--ink .eyebrow{color:var(--on-ink)}
+.slide--ink .eyebrow::before{background:var(--c-step)}
+.eyebrow small{font-weight:600;color:var(--muted);font-size:26px}
+.slide--ink .eyebrow small{color:var(--on-ink-muted)}
+.title{font-family:var(--font-display);font-weight:900;font-size:108px;line-height:1.08;letter-spacing:-.022em;margin-top:16px}
+.title--xl{font-size:150px;line-height:1.0}
+.title--sm{font-size:84px}
+.lead{font-size:44px;line-height:1.45;color:var(--muted);margin-top:22px;font-weight:500}
+.slide--ink .lead{color:var(--on-ink-muted)}
+.note{position:absolute;left:112px;right:112px;bottom:190px;font-size:30px;color:var(--muted);font-weight:500;line-height:1.45}
+.slide--ink .note{color:var(--on-ink-muted)}
+.accent{color:var(--c-step)}
+
+/* 표지 / 마지막 */
+.cover{background:var(--ink)}
+.cover__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 72%}
+.cover__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,21,29,.90) 0%,rgba(22,21,29,.72) 42%,rgba(22,21,29,.22) 75%,rgba(22,21,29,.45) 100%)}
+.cover__body{position:absolute;left:112px;right:112px;top:92px;color:var(--on-ink)}
+.cover__bar{width:140px;height:14px;background:var(--sunny);border-radius:999px;margin:0 0 30px}
+.cover .eyebrow{color:var(--on-ink);font-size:30px}
+.cover .eyebrow::before{background:var(--sunny)}
+.cover .eyebrow small{color:var(--on-ink-muted)}
+.cover .title{margin-top:14px}
+.cover__date{margin-top:30px;font-family:var(--font-display);font-weight:800;font-size:52px;letter-spacing:-.01em}
+.cover__date span{color:var(--sunny)}
+.cover__sub{margin-top:14px;font-size:34px;color:var(--on-ink-muted);font-weight:500}
+
+/* 순서 */
+.order{margin-top:34px;display:grid;grid-template-columns:100px 1fr 270px 300px;align-items:center;row-gap:0}
+.order__row{display:contents}
+.order__row>*{padding:13px 0;border-bottom:2px solid var(--line)}
+.order__n{font-family:var(--font-display);font-weight:900;font-size:54px;line-height:1;letter-spacing:-.02em}
+.order__t{font-family:var(--font-display);font-weight:800;font-size:48px;letter-spacing:-.015em;line-height:1.15}
+.order__t small{display:inline;font-family:var(--font-body);font-weight:500;font-size:27px;color:var(--muted);margin-left:18px;letter-spacing:0}
+.order__m{font-weight:700;font-size:36px;color:var(--muted)}
+.order__m b{color:var(--text);font-weight:800}
+.order__w{font-weight:600;font-size:30px;color:var(--muted);text-align:right}
+.order__row[data-c="1"] .order__n{color:var(--violet)}
+.order__row[data-c="2"] .order__n{color:var(--accent-ink)}
+.order__row[data-c="3"] .order__n{color:var(--coral)}
+.order__row[data-c="4"] .order__n{color:var(--violet-2)}
+.order__row[data-c="5"] .order__n{color:var(--mint-ink)}
+.order__row[data-c="6"] .order__n{color:var(--text)}
+
+/* 팀 테이블 */
+.teams{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.team{background:var(--paper-2);border:2px solid var(--line);border-radius:28px;padding:26px 30px 28px;min-height:250px}
+.team__head{display:flex;align-items:center;gap:16px}
+.team__emoji{font-size:54px;line-height:1}
+.team__name{font-family:var(--font-display);font-weight:800;font-size:44px;letter-spacing:-.01em}
+.team__name small{font-family:var(--font-body);font-weight:700;font-size:26px;color:var(--muted);margin-left:10px}
+.team__people{margin-top:14px;font-size:35px;line-height:1.4;font-weight:600;color:#3A3745;word-break:keep-all}
+.team--misc{background:color-mix(in srgb,var(--sunny) 22%,var(--paper-2));border-color:color-mix(in srgb,var(--sunny) 55%,var(--line))}
+
+/* 사진 슬라이드쇼 */
+.photos{background:#000}
+.photos::after{content:"";position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,rgba(22,21,29,0),rgba(22,21,29,.78));pointer-events:none}
+.ph{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease}
+.ph.is-on{opacity:1}
+.ph__bg{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(38px) brightness(.55);transform:scale(1.04)}
+.ph__fg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.photos__cap{position:absolute;left:112px;bottom:170px;color:var(--on-ink);font-weight:700;font-size:30px;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.photos__cap b{font-family:var(--font-display);font-weight:800;font-size:34px;margin-right:16px}
+
+/* 영상 */
+.video{background:#000}
+.video video{position:absolute;inset:0;width:100%;height:100%;background:#000}
+.vOverlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--on-ink);
+  background:radial-gradient(60% 60% at 50% 50%,rgba(22,21,29,.45),rgba(22,21,29,.82));transition:opacity .3s var(--ease)}
+.vOverlay.is-hidden{opacity:0;pointer-events:none}
+.vOverlay__play{width:200px;height:200px;border-radius:50%;background:var(--coral);display:grid;place-items:center;margin:0 auto 34px;
+  box-shadow:0 20px 60px rgba(255,90,110,.45);transition:transform .25s var(--ease-spring,var(--ease))}
+.vOverlay__play:hover{transform:scale(1.06)}
+.vOverlay__play svg{width:86px;height:86px;fill:#fff;margin-left:12px}
+.vOverlay h2{font-family:var(--font-display);font-weight:900;font-size:84px;letter-spacing:-.02em}
+.vOverlay p{margin-top:16px;font-size:36px;color:var(--on-ink-muted);font-weight:500}
+.vOverlay kbd{font:inherit;font-weight:800;color:var(--on-ink);background:rgba(255,255,255,.14);border-radius:12px;padding:2px 16px}
+
+/* 기도회 */
+.verse{margin-top:56px;max-width:1500px}
+.verse__text{font-size:54px;line-height:1.5;font-weight:500;word-break:keep-all}
+.verse__ref{margin-top:22px;font-family:var(--font-display);font-weight:800;font-size:36px;color:var(--violet-2)}
+.pray{margin-top:110px;display:grid;grid-template-columns:270px 1fr;gap:40px;align-items:start}
+.pray__n{font-family:var(--font-display);font-weight:900;font-size:230px;line-height:.86;letter-spacing:-.04em;color:var(--violet-2)}
+.pray__n small{display:block;font-size:30px;line-height:1.3;letter-spacing:0;color:var(--on-ink-muted);margin-top:22px;font-weight:700;word-break:keep-all}
+.pray__t{font-family:var(--font-display);font-weight:900;font-size:86px;letter-spacing:-.02em;line-height:1.1}
+.pray__b{margin-top:34px;font-size:50px;line-height:1.55;font-weight:500;color:var(--on-ink);word-break:keep-all;max-width:1450px}
+.pray__b em{font-style:normal;color:var(--sunny);font-weight:700}
+
+/* 팀별 모임 */
+.tm{margin-top:36px;display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:start}
+.tm__step{display:flex;gap:26px;align-items:flex-start;padding:24px 0;border-bottom:2px solid var(--line)}
+.tm__step:last-child{border-bottom:0}
+.tm__mark{flex:none;width:64px;height:64px;border-radius:50%;background:var(--mint);color:var(--mint-ink,#04342C);display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:900;font-size:34px;margin-top:6px}
+.tm__q{font-family:var(--font-display);font-weight:800;font-size:46px;letter-spacing:-.015em;line-height:1.2}
+.tm__q small{font-family:var(--font-body);font-weight:700;font-size:28px;color:var(--mint-ink);margin-left:14px}
+.tm__s{margin-top:10px;font-size:33px;line-height:1.45;color:var(--muted);font-weight:500;word-break:keep-all}
+.timer{background:var(--paper-2);border:2px solid var(--line);border-radius:36px;padding:44px 40px 40px;text-align:center}
+.timer__label{font-weight:800;font-size:30px;color:var(--mint-ink);letter-spacing:.02em}
+.timer__num{margin-top:6px;font-family:var(--font-display);font-weight:900;font-size:236px;line-height:1;letter-spacing:-.04em;color:var(--mint-ink)}
+.timer__bar{height:16px;border-radius:999px;background:var(--line);margin:28px 10px 0;overflow:hidden}
+.timer__fill{height:100%;width:0;background:var(--mint);border-radius:999px;transition:width .5s linear}
+.timer__hint{margin-top:26px;font-size:28px;color:var(--muted);font-weight:600}
+.timer__hint kbd{font:inherit;font-weight:800;color:var(--text);background:var(--white);border:2px solid var(--line);border-radius:10px;padding:2px 14px}
+.timer.is-running .timer__label::after{content:" · 진행 중"}
+.timer.is-paused .timer__label::after{content:" · 일시정지"}
+.timer.is-over .timer__label::after{content:" · 시간 끝"}
+.timer.is-warn .timer__num,.timer.is-warn .timer__label{color:var(--accent-ink)}
+.timer.is-warn .timer__fill{background:var(--sunny)}
+.timer.is-over .timer__num,.timer.is-over .timer__label{color:var(--danger)}
+.timer.is-over .timer__fill{background:var(--danger)}
+
+/* 랩업 */
+.wrap{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--paper-2);border:2px solid var(--line);border-radius:28px;padding:28px 32px 30px;min-height:290px}
+.card__t{font-family:var(--font-display);font-weight:800;font-size:40px;letter-spacing:-.01em;display:flex;align-items:center;gap:14px}
+.card__t::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--coral)}
+.card__b{margin-top:16px;font-size:34px;line-height:1.45;font-weight:500;color:#3A3745;word-break:keep-all}
+.card__b b{font-weight:800;color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.chip{border:2px solid var(--line);background:var(--white);border-radius:999px;padding:8px 22px;font-weight:700;font-size:30px}
+.card--qr{display:grid;grid-template-columns:1fr 250px;gap:24px;align-items:center}
+.card--qr .qr{width:250px;height:250px;background:var(--white);border-radius:18px;padding:12px;border:2px solid var(--line)}
+.card--qr .qr svg{width:100%;height:100%;display:block}
+.fin{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fin div{background:var(--white);border:2px solid var(--line);border-radius:18px;padding:14px 18px}
+.fin small{display:block;font-size:24px;color:var(--muted);font-weight:700}
+.fin b{display:block;font-family:var(--font-display);font-weight:900;font-size:44px;letter-spacing:-.02em;margin-top:2px}
+.fin b.accent{color:var(--coral)}
+
+/* 회계 표 */
+.slide--dense{padding-bottom:168px}
+.title--fin{font-size:64px;line-height:1.15}
+.title--fin b{color:var(--coral)}
+.finsub{margin-top:10px;font-size:27px;color:var(--muted);font-weight:500}
+.fin2{margin-top:24px;display:grid;grid-template-columns:1fr 1.18fr;gap:26px;align-items:start}
+.ftable{width:100%;border-collapse:separate;border-spacing:0;background:var(--paper-2);border:2px solid var(--line);border-radius:22px;overflow:hidden}
+.ftable th{padding:11px 22px;font-family:var(--font-display);font-weight:800;font-size:29px;text-align:left;background:color-mix(in srgb,var(--coral) 12%,var(--paper-2));color:var(--text)}
+.ftable td{padding:7px 22px;border-top:1px solid var(--line);font-size:29px;font-weight:700;vertical-align:top;line-height:1.2}
+.ftable td small{display:block;font-size:20px;color:var(--muted);font-weight:500;margin-top:3px;line-height:1.25;word-break:keep-all}
+.ftable td:last-child{text-align:right;white-space:nowrap;font-weight:800;padding-left:10px}
+.ftable tr.sum td{background:var(--white);font-weight:800;font-size:31px;padding:10px 22px}
+.ftable tr.sum td:last-child{color:var(--coral)}
+.ledger{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
+.lrow{display:grid;grid-template-columns:86px 150px 1fr 176px;gap:0 14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);font-size:27px;font-weight:600;color:#3A3745}
+.lrow .ld{color:var(--muted);font-weight:700;font-size:24px}
+.lrow .lc{font-size:22px;font-weight:800;color:var(--accent-ink);background:color-mix(in srgb,var(--sunny) 28%,var(--white));border-radius:999px;padding:2px 12px;text-align:center;white-space:nowrap}
+.lrow .lt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .la{text-align:right;font-weight:800;color:var(--text);white-space:nowrap}
+.lrow.sum{border-bottom:0;border-top:2px solid var(--text);margin-top:4px}
+.lrow.sum .la{color:var(--coral);font-size:30px}
+
+/* 마지막 */
+.end .title{font-size:132px}
+.end .cover__sub{font-size:40px;margin-top:22px}
+.end__cam{position:absolute;right:112px;bottom:170px;display:inline-flex;align-items:center;gap:18px;font-family:var(--font-display);font-weight:800;font-size:56px;color:var(--sunny);text-shadow:0 2px 14px rgba(0,0,0,.5)}
+
+/* ── 진행 레일: 6단계, 폭 = 배정 분 ── */
+#rail{position:absolute;left:112px;right:112px;bottom:52px;height:96px;display:grid;grid-template-columns:1fr 400px;gap:36px;align-items:end;transition:opacity .4s var(--ease)}
+body.norail #rail{opacity:0;pointer-events:none}
+body.rail-hidden #rail{opacity:0;pointer-events:none}
+.segs{display:flex;gap:10px;align-items:flex-end;height:96px}
+.seg{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;min-width:150px;cursor:pointer;color:var(--muted)}
+.seg__lab{font-weight:700;font-size:23px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;gap:9px;align-items:baseline}
+.seg__lab b{font-family:var(--font-display);font-weight:900;font-size:26px}
+.seg__lab small{font-weight:600;font-size:22px;opacity:.85}
+.seg__bar{height:16px;border-radius:999px;background:color-mix(in srgb,var(--text) 12%,transparent);overflow:hidden}
+.seg__fill{height:100%;width:0;background:var(--seg-c);border-radius:999px;transition:width .6s linear}
+.seg.is-done{color:var(--muted)}
+.seg.is-done .seg__fill{width:100%;background:color-mix(in srgb,var(--text) 32%,transparent)}
+.seg.is-active{color:var(--text)}
+.seg.is-active .seg__lab b{color:var(--seg-c)}
+.seg.is-over .seg__fill{background:var(--danger)}
+body.ink #rail .seg{color:var(--on-ink-muted)}
+body.ink #rail .seg.is-active{color:var(--on-ink)}
+body.ink #rail .seg__bar{background:rgba(241,236,225,.16)}
+body.ink #rail .seg.is-done .seg__fill{background:rgba(241,236,225,.4)}
+.railMeta{text-align:right;line-height:1.1;padding-bottom:2px}
+.railMeta__elapsed{font-weight:700;font-size:28px;color:var(--muted)}
+.railMeta__elapsed b{font-family:var(--font-display);font-weight:900;font-size:34px;color:var(--text)}
+.railMeta__elapsed b.is-over{color:var(--danger)}
+.railMeta__clock{margin-top:8px;font-family:var(--font-display);font-weight:900;font-size:60px;letter-spacing:-.02em;color:var(--text);line-height:1}
+.railMeta__clock small{font-family:var(--font-body);font-weight:700;font-size:24px;color:var(--muted);margin-left:14px;letter-spacing:0}
+body.ink .railMeta__elapsed{color:var(--on-ink-muted)}
+body.ink .railMeta__elapsed b,body.ink .railMeta__clock{color:var(--on-ink)}
+body.ink .railMeta__clock small{color:var(--on-ink-muted)}
+
+/* ── 도움말 ── */
+#help{position:absolute;inset:0;background:rgba(22,21,29,.94);color:var(--on-ink);display:none;place-items:center;z-index:50}
+#help.is-open{display:grid}
+.help__box{width:1180px}
+.help__box h2{font-family:var(--font-display);font-weight:900;font-size:72px;letter-spacing:-.02em}
+.help__grid{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:16px 60px;font-size:32px;font-weight:500}
+.help__grid div{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line-ink);padding:12px 0}
+.help__grid kbd{font:inherit;font-weight:800;background:rgba(255,255,255,.12);border-radius:10px;padding:2px 16px;white-space:nowrap}
+.help__foot{margin-top:30px;font-size:28px;color:var(--on-ink-muted)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ── 인쇄(PDF): 슬라이드마다 1920×1080 한 페이지 ── */
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{overflow:visible;height:auto;background:#fff}
+  #viewport{position:static;overflow:visible}
+  #stage{position:static;margin:0;transform:none!important;width:1920px;height:auto;overflow:visible;box-shadow:none}
+  .slide{position:relative;inset:auto;width:1920px;height:1080px;opacity:1!important;visibility:visible!important;transform:none!important;overflow:hidden;break-after:page;page-break-after:always;background:var(--paper)}
+  .slide--ink,.cover,.photos,.video{background:var(--ink)}
+  .slide:last-of-type{break-after:auto;page-break-after:auto}
+  #rail,#help{display:none!important}
+  .ph{opacity:1}
+  .ph:not(.is-on){display:none}
+}
+</style>
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+
+<!-- ═══ 1 · 표지 (오프닝) ═══ -->
+<section class="slide slide--full cover is-active" data-step="1" data-ink data-norail>
+  <img class="cover__img" src="cover.jpg" alt="">
+  <div class="cover__shade"></div>
+  <div class="cover__body">
+    <div class="cover__bar"></div>
+    <p class="eyebrow">더행복한교회 21MG <small>·</small> 2026 국내단기선교 <small>·</small> 충남 부여 홍산은혜교회</p>
+    <h1 class="title title--xl">국내선교<br>최종 보고 모임</h1>
+    <p class="cover__date">2026년 9월 13일 <span>주일</span></p>
+    <p class="cover__sub">함께 밥 먹고 · 영상 보고 · 기도하고 · 팀별로 나눕니다</p>
+  </div>
+</section>
+
+<!-- ═══ 2 · 오늘 순서 ═══ -->
+<section class="slide" data-step="1" style="--c-step:var(--violet)">
+  <p class="eyebrow">오늘 순서 <small>· 약 85분</small></p>
+  <h1 class="title title--sm">발표 없이, 먹고 보고 기도하고 나눕니다</h1>
+  <div class="order" id="order">
+    <div class="order__row" data-c="1"><span class="order__n">1</span><span class="order__t">오프닝 · 식사 기도</span><span class="order__m" data-t="0"><b>5</b>분</span><span class="order__w">이영천</span></div>
+    <div class="order__row" data-c="2"><span class="order__n">2</span><span class="order__t">식사 <small>팀별 테이블 · 떡볶이 · 유부초밥 · 치킨</small></span><span class="order__m" data-t="5"><b>30</b>분</span><span class="order__w">이하나 · 음식팀</span></div>
+    <div class="order__row" data-c="3"><span class="order__n">3</span><span class="order__t">스케치영상 관람</span><span class="order__m" data-t="35"><b>5</b>분</span><span class="order__w">2분 · '오병이어의 여름'</span></div>
+    <div class="order__row" data-c="4"><span class="order__n">4</span><span class="order__t">짧은 감사 기도회</span><span class="order__m" data-t="40"><b>10</b>분</span><span class="order__w">인도 전덕인 리더</span></div>
+    <div class="order__row" data-c="5"><span class="order__n">5</span><span class="order__t">팀별 모임 <small>소감 · 내년 선교 마음</small></span><span class="order__m" data-t="50"><b>25</b>분</span><span class="order__w">팀장</span></div>
+    <div class="order__row" data-c="6"><span class="order__n">6</span><span class="order__t">마무리 랩업 · 단체사진</span><span class="order__m" data-t="75"><b>10</b>분</span><span class="order__w">이영천</span></div>
+  </div>
+</section>
+
+<!-- ═══ 3 · 식사 · 팀별 테이블 ═══ -->
+<section class="slide" data-step="2" style="--c-step:var(--accent-ink)">
+  <p class="eyebrow">식사 <small>· 팀별 테이블 · 30분</small></p>
+  <h1 class="title">팀별로 앉아 맛있게 드세요</h1>
+  <div class="teams">
+    <div class="team"><div class="team__head"><span class="team__emoji">📣</span><h2 class="team__name">전도·돌봄팀<small>3</small></h2></div><p class="team__people">김하연 · 전선희 · 함대희</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🎉</span><h2 class="team__name">레크팀<small>5</small></h2></div><p class="team__people">이성근 · 이정수 · 김성태 · 홍석일 · 한상원</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🍜</span><h2 class="team__name">음식팀<small>6</small></h2></div><p class="team__people">정재선 · 정연설 · 공미혜 · 이민지 · 박용림 · 전덕인</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🛍️</span><h2 class="team__name">판매팀<small>4</small></h2></div><p class="team__people">이하나 · 은정원 · 최경연 · 송혜란</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🔧</span><h2 class="team__name">수리팀<small>4</small></h2></div><p class="team__people">이인현 · 정표수 · 권옥경 · 최성곤</p></div>
+    <div class="team team--misc"><div class="team__head"><span class="team__emoji">👨‍👩‍👧‍👦</span><h2 class="team__name">디렉터 · 목사님 · 아이들</h2></div><p class="team__people">이영천 · 신나희 · 박한별 목사님 · 아이들과 팀 미소속 가족</p></div>
+  </div>
+  <p class="note">부부가 팀이 다르면 각자 팀 테이블로 · 아이들은 부모 곁이나 아이 테이블에 · 메뉴: 떡볶이(순한맛·짜장) · 유부초밥 · 치킨 · 음료</p>
+</section>
+
+<!-- ═══ 4 · 식사 중 사진 ═══ -->
+<section class="slide slide--full photos" data-step="2" data-ink data-photos>
+  <div class="ph" id="phA"><img class="ph__bg" alt=""><img class="ph__fg" alt=""></div>
+  <div class="ph" id="phB"><img class="ph__bg" alt=""><img class="ph__fg" alt=""></div>
+  <p class="photos__cap"><b>2026.8.14–16</b>부여 홍산은혜교회 · 오병이어 나눔축제 <span id="phIdx"></span></p>
+</section>
+
+<!-- ═══ 5 · 스케치영상 ═══ -->
+<section class="slide slide--full video" data-step="3" data-ink data-video>
+  <video id="video" playsinline preload="metadata" poster="poster.jpg"></video>
+  <div class="vOverlay" id="vOverlay">
+    <div>
+      <button class="vOverlay__play" id="vPlay" aria-label="재생"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      <h2>21MG 국내선교 스케치영상</h2>
+      <p>2분 · 노래 '오병이어의 여름' · <kbd>Space</kbd> 재생 · 끝나면 <kbd>→</kbd></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 · 기도회 표지 ═══ -->
+<section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
+  <p class="eyebrow">짧은 감사 기도회 <small>· 10분 · 인도 전덕인 리더</small></p>
+  <h1 class="title">출발 전 구했던 다섯 가지를,<br>감사로 올려드립니다</h1>
+  <div class="verse">
+    <p class="verse__text">오직 성령이 너희에게 임하시면 너희가 권능을 받고 … 땅 끝까지 이르러 내 증인이 되리라</p>
+    <p class="verse__ref">사도행전 1:8</p>
+  </div>
+</section>
+
+<!-- ═══ 7~10 · 감사 기도제목 ═══ -->
+<section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
+  <p class="eyebrow">감사 기도 <small>· 1 / 4</small></p>
+  <div class="pray">
+    <div class="pray__n">1<small>준비와 현장</small></div>
+    <div><h2 class="pray__t">일정 · 팀 · 물품 · 재정을<br>채우셨습니다</h2>
+      <p class="pray__b">후원 <em>365만</em>이 모였고, <em>53명</em> 한 사람도 빠짐없이 함께했습니다. 사흘 내내 날씨와 안전을 지켜주셨습니다.</p></div>
+  </div>
+</section>
+<section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
+  <p class="eyebrow">감사 기도 <small>· 2 / 4</small></p>
+  <div class="pray">
+    <div class="pray__n">2<small>홍산은혜교회와 마을</small></div>
+    <div><h2 class="pray__t">오병이어 축제로<br>마을과 만나게 하셨습니다</h2>
+      <p class="pray__b">장터와 분식과 레크로 주민들을 교회로 부르셨고, 목사님 가정을 섬기게 하셨습니다. <em>심긴 씨앗이 자라게 하옵소서.</em></p></div>
+  </div>
+</section>
+<section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
+  <p class="eyebrow">감사 기도 <small>· 3 / 4</small></p>
+  <div class="pray">
+    <div class="pray__n">3<small>공동체와 다음 세대</small></div>
+    <div><h2 class="pray__t">아이들과 함께,<br>우리 MG가 하나 되었습니다</h2>
+      <p class="pray__b">아이들과 브이틴이 은혜를 경험했고, 낯선 유스호스텔과 시골 교회에서도 <em>불평 대신 감사</em>가 넘쳤습니다.</p></div>
+  </div>
+</section>
+<section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
+  <p class="eyebrow">감사 기도 <small>· 4 / 4</small></p>
+  <div class="pray">
+    <div class="pray__n">4<small>내년을 향하여</small></div>
+    <div><h2 class="pray__t">다음 선교를 향한<br>마음을 주옵소서</h2>
+      <p class="pray__b">함께 가는 다섯 MG와 다섯 교회를 기억하며, <em>은혜의 간증만 남는</em> 다음 여름을 준비하게 하옵소서.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 11 · 팀별 모임 ═══ -->
+<section class="slide" data-step="5" data-team style="--c-step:var(--mint-ink)">
+  <p class="eyebrow">팀별 모임 <small>· 25분 · 발표 없음</small></p>
+  <h1 class="title">팀 테이블에서 나눕니다</h1>
+  <div class="tm">
+    <div>
+      <div class="tm__step"><span class="tm__mark">1</span><div><p class="tm__q">기억에 남는 한 장면<small>5분</small></p><p class="tm__s">한 사람씩 한마디. 길게 말하지 않아도 됩니다.</p></div></div>
+      <div class="tm__step"><span class="tm__mark">2</span><div><p class="tm__q">내년 선교, 내 마음은<small>12분</small></p><p class="tm__s">간다 · 상황 따라 · 어렵다 &nbsp;/&nbsp; 어디로 · 어떤 사역 · 우리 팀이 하고 싶은 것 · 이번에 아쉬웠던 한 가지</p></div></div>
+      <div class="tm__step"><span class="tm__mark">3</span><div><p class="tm__q">취합지 한 장<small>5분</small></p><p class="tm__s">팀장이 정리해 사진 찍어 리더방으로 📸</p></div></div>
+    </div>
+    <div class="timer" id="timer">
+      <p class="timer__label">남은 시간</p>
+      <p class="timer__num" id="timerNum">25:00</p>
+      <div class="timer__bar"><div class="timer__fill" id="timerFill"></div></div>
+      <p class="timer__hint"><kbd>Space</kbd> 시작 · 일시정지 &nbsp; <kbd>R</kbd> 처음으로</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 12 · 회계 보고 · 요약 표 ═══ -->
+<section class="slide slide--dense" data-step="6" style="--c-step:var(--coral)">
+  <p class="eyebrow">회계 보고 <small>· 9/6 정산 최종 · 회계 전선희</small></p>
+  <h1 class="title title--fin">수입 7,990,000 · 지출 7,219,260 · <b>잔액 770,740</b></h1>
+  <p class="finsub">계획(8/5) 대비 수입 +46만(후원 초과) · 지출 +79.6만(특별헌금·세제/청소기·셀 지원금 신설) → 예상 잔액 1,106,500이 770,740으로 · 통장 실잔액 801,035</p>
+  <div class="fin2">
+    <table class="ftable">
+      <thead><tr><th>수입</th><th style="text-align:right">원</th></tr></thead>
+      <tbody>
+        <tr><td>회비<small>인원 회비 + 숙박비 · 교역자 숙박비 12만 포함</small></td><td>4,340,000</td></tr>
+        <tr><td>후원금<small>성도 개인 후원 · 행사 직전 익명 30만 · 10만 추가</small></td><td>1,450,000</td></tr>
+        <tr><td>교회 지원금<small>교회 200만 + 안수집사회 20만</small></td><td>2,200,000</td></tr>
+        <tr class="sum"><td>수입 합계</td><td>7,990,000</td></tr>
+      </tbody>
+    </table>
+    <table class="ftable">
+      <thead><tr><th>지출</th><th style="text-align:right">원</th></tr></thead>
+      <tbody>
+        <tr><td>교회행사비<small>오병이어 물품·식재료 후원 250만 + 세제 30개 30만 + 교회 청소기 2만</small></td><td>2,820,000</td></tr>
+        <tr><td>숙박비<small>부여군유스호스텔 2박</small></td><td>1,560,000</td></tr>
+        <tr><td>식비<small>유스호스텔 식사 953,500 + 금요 석식 고기 272,260 + 식자재 135,100</small></td><td>1,360,860</td></tr>
+        <tr><td>활동비<small>수영장 50만 + 셀 지원금 37.5만(15,000원×25명) + PC방 4.1만 + 수리 자재 4.95만</small></td><td>965,500</td></tr>
+        <tr><td>특별헌금<small>홍산은혜교회 목사님·사모님 후원 (8/16 현장 결정)</small></td><td>500,000</td></tr>
+        <tr><td>기타<small>현수막</small></td><td>12,900</td></tr>
+        <tr class="sum"><td>지출 합계</td><td>7,219,260</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ 13 · 회계 보고 · 지출 상세 ═══ -->
+<section class="slide slide--dense" data-step="6" style="--c-step:var(--coral)">
+  <p class="eyebrow">회계 보고 <small>· 지출 상세 16건 · 영수증 12장은 리더방 파일</small></p>
+  <h1 class="title title--sm">어디에 썼나 — 지출 7,219,260원</h1>
+  <div class="ledger">
+    <div>
+      <div class="lrow"><span class="ld">7/29</span><span class="lc">교회행사비</span><span class="lt">오병이어 물품·식재료비 후원</span><span class="la">2,500,000</span></div>
+      <div class="lrow"><span class="ld">8/07</span><span class="lc">식비</span><span class="lt">금요일 석식 고기</span><span class="la">272,260</span></div>
+      <div class="lrow"><span class="ld">8/10</span><span class="lc">활동비</span><span class="lt">수영장 예약금 (평상 이용료)</span><span class="la">140,000</span></div>
+      <div class="lrow"><span class="ld">8/10</span><span class="lc">기타</span><span class="lt">현수막</span><span class="la">12,900</span></div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">교회행사비</span><span class="lt">세제 30개 구입</span><span class="la">300,000</span></div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">교회행사비</span><span class="lt">교회 청소기 구입</span><span class="la">20,000</span></div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">활동비</span><span class="lt">수영장 잔금</span><span class="la">360,000</span></div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">활동비</span><span class="lt">영천/나희셀 지원금 (8명)</span><span class="la">120,000</span></div>
+    </div>
+    <div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">활동비</span><span class="lt">덕인/선희셀 지원금 (7명)</span><span class="la">105,000</span></div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">활동비</span><span class="lt">성태/하나셀 지원금 (10명)</span><span class="la">150,000</span></div>
+      <div class="lrow"><span class="ld">8/15</span><span class="lc">식비</span><span class="lt">식자재 구입 (14일 석식)</span><span class="la">135,100</span></div>
+      <div class="lrow"><span class="ld">8/16</span><span class="lc">숙박비</span><span class="lt">부여군유스호스텔 숙박</span><span class="la">1,560,000</span></div>
+      <div class="lrow"><span class="ld">8/16</span><span class="lc">식비</span><span class="lt">부여군유스호스텔 식사</span><span class="la">953,500</span></div>
+      <div class="lrow"><span class="ld">8/16</span><span class="lc">특별헌금</span><span class="lt">홍산은혜교회 목사님·사모님 후원</span><span class="la">500,000</span></div>
+      <div class="lrow"><span class="ld">8/16</span><span class="lc">활동비</span><span class="lt">PC방비 지원</span><span class="la">41,000</span></div>
+      <div class="lrow"><span class="ld">8/19</span><span class="lc">활동비</span><span class="lt">수리팀 자재</span><span class="la">49,500</span></div>
+    </div>
+  </div>
+  <p class="note">셀 지원금 = 15,000원 × 인원 · 잔액 <b>770,740원</b>은 추가 헌금과 오늘 식사비로 (리더 결정) · 원본: 자료/4_보고/정산/…예산집행서_최종(9-6, 영수증 포함).xlsx</p>
+</section>
+
+<!-- ═══ 14 · 마무리 랩업 ═══ -->
+<section class="slide" data-step="6" style="--c-step:var(--coral)">
+  <p class="eyebrow">마무리 <small>· 10분</small></p>
+  <h1 class="title">오늘 나눈 것, 다음 걸음</h1>
+  <div class="wrap">
+    <div class="card"><h2 class="card__t">팀별 한 줄</h2><p class="card__b">취합지 3번 <b>내년 마음</b>만 팀장이 30초씩</p>
+      <div class="chips"><span class="chip">📣 전도·돌봄</span><span class="chip">🎉 레크</span><span class="chip">🍜 음식</span><span class="chip">🛍️ 판매</span><span class="chip">🔧 수리</span></div></div>
+    <div class="card"><h2 class="card__t">잔액 처리</h2>
+      <div class="fin"><div><small>수입</small><b>799만</b></div><div><small>지출</small><b>722만</b></div><div><small>잔액</small><b class="accent">77만</b></div></div>
+      <p class="card__b">잔액 <b>770,740원</b> → 추가 헌금 + 오늘 식사비 (리더 결정) · 표는 앞 슬라이드</p></div>
+    <div class="card card--qr"><div><h2 class="card__t">사진 · 영상</h2><p class="card__b">QR로 <b>구글포토 앨범</b> 열기<br>스케치영상 링크는 리더방에</p></div><div class="qr" id="qr"></div></div>
+    <div class="card"><h2 class="card__t">다음 일정</h2><p class="card__b"><b>9월 20일 주일</b> 셀모임 후 리더 모임<br>내년 방향은 취합지를 모아 정리해서 다시 나눕니다</p>
+      <p class="card__b" style="margin-top:22px">마무리 기도 → <b>단체사진 📸</b></p></div>
+  </div>
+</section>
+
+<!-- ═══ 15 · 단체사진 ═══ -->
+<section class="slide slide--full cover end" data-step="6" data-ink data-norail>
+  <img class="cover__img" src="end.jpg" alt="" style="object-position:center 58%">
+  <div class="cover__shade"></div>
+  <div class="cover__body">
+    <div class="cover__bar"></div>
+    <p class="eyebrow">21MG <small>·</small> 2026 국내선교 <small>·</small> 충남 부여 홍산은혜교회</p>
+    <h1 class="title">함께해서<br>감사합니다</h1>
+    <p class="cover__sub">2026.8.14–16 · 53명 · 오병이어 나눔축제</p>
+  </div>
+  <p class="end__cam">📸 단체사진</p>
+</section>
+
+<!-- ═══ 진행 레일 ═══ -->
+<nav id="rail" aria-label="진행 단계">
+  <ol class="segs" id="segs"></ol>
+  <div class="railMeta">
+    <p class="railMeta__elapsed" id="railElapsed"></p>
+    <p class="railMeta__clock" id="railClock"></p>
+  </div>
+</nav>
+
+<!-- ═══ 도움말 ═══ -->
+<div id="help">
+  <div class="help__box">
+    <h2>진행 키</h2>
+    <div class="help__grid">
+      <div><span>다음 · 이전</span><kbd>→ ← · PgDn PgUp · 클릭</kbd></div>
+      <div><span>단계로 바로 가기</span><kbd>1 ~ 6</kbd></div>
+      <div><span>영상 재생 · 일시정지</span><kbd>Space</kbd></div>
+      <div><span>팀별 모임 타이머 시작 · 정지</span><kbd>Space</kbd></div>
+      <div><span>타이머 처음으로</span><kbd>R</kbd></div>
+      <div><span>전체 화면</span><kbd>F</kbd></div>
+      <div><span>사진 슬라이드쇼 다음 장</span><kbd>N</kbd></div>
+      <div><span>단계 시간 전부 초기화 (리허설 후)</span><kbd>0</kbd></div>
+      <div><span>이 도움말</span><kbd>? · Esc</kbd></div>
+    </div>
+    <p class="help__foot">단계 시간은 각 단계에 처음 들어갈 때 자동으로 재기 시작하고, 새로고침해도 유지됩니다(같은 날). 리허설이 끝나면 <b>0</b>으로 초기화하세요.</p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script src="lib/qrcode.js"></script>
+<script>
+/* ═══════════ 설정 — 당일 바뀌는 값은 여기만 고치면 됩니다 ═══════════ */
+const CONFIG = {
+  startTime: '14:00',                    // 순서 슬라이드에 실제 시각 표시 (null 이면 상대 시각)
+  videoFile: '',                         // 온라인 버전: 영상은 현장에서 재생
+  photoCount: 20, photoInterval: 7,     // photos/001.jpg … · 장당 초
+  teamMinutes: 25,
+  albumUrl: 'https://photos.app.goo.gl/F7gvqUFAyxGarU34A',
+};
+/* 6단계 · 배정 분 · 색 (순서 슬라이드·레일이 함께 씁니다) */
+const STEPS = [
+  { n:1, name:'오프닝',   min:5,  c:'#5B3DF5' },
+  { n:2, name:'식사',     min:30, c:'#E0A800' },
+  { n:3, name:'영상',     min:5,  c:'#FF5A6E' },
+  { n:4, name:'기도회',   min:10, c:'#7C63FF' },
+  { n:5, name:'팀별 모임', min:25, c:'#15C6A0' },
+  { n:6, name:'랩업',     min:10, c:'#16151D' },
+];
+
+/* ═══════════ 상태 (같은 날이면 새로고침해도 유지) ═══════════ */
+const KEY = '21mg-final-report-deck';
+const today = new Date().toISOString().slice(0,10);
+let S = null;
+try { S = JSON.parse(localStorage.getItem(KEY)); } catch(e) {}
+if (!S || S.day !== today) S = { day: today, slide: 0, steps: {}, team: { left: CONFIG.teamMinutes*60000, since: null } };
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+
+/* ═══════════ 무대 스케일 ═══════════ */
+const stage = document.getElementById('stage');
+function fit(){ const s = Math.min(innerWidth/1920, innerHeight/1080); stage.style.transform = `scale(${s})`; }
+addEventListener('resize', fit); fit();
+
+/* ═══════════ 슬라이드 ═══════════ */
+const slides = [...document.querySelectorAll('.slide')];
+const video = document.getElementById('video');
+const vOverlay = document.getElementById('vOverlay');
+const hashSlide = parseInt((location.hash||'').slice(1), 10);
+let cur = Math.min(hashSlide >= 1 ? hashSlide-1 : (S.slide || 0), slides.length-1);
+function stepOf(i){ return +slides[i].dataset.step; }
+
+function go(i, opts={}){
+  i = Math.max(0, Math.min(slides.length-1, i));
+  const prev = slides[cur];
+  if (prev.hasAttribute('data-video')) { video.pause(); }
+  if (prev.hasAttribute('data-photos')) stopPhotos();
+  cur = i; S.slide = i; save();
+  try { history.replaceState(null, '', '#' + (i+1)); } catch(e) {}
+  slides.forEach((s,k)=> s.classList.toggle('is-active', k===i));
+  const el = slides[i];
+  document.body.classList.toggle('ink', el.hasAttribute('data-ink'));
+  document.body.classList.toggle('norail', el.hasAttribute('data-norail'));
+  const st = stepOf(i);
+  if (!S.steps[st]) { S.steps[st] = Date.now(); save(); }   // 단계 첫 진입 = 시작
+  if (el.hasAttribute('data-photos')) startPhotos();
+  document.body.classList.toggle('rail-hidden', el.hasAttribute('data-video') && !video.paused);
+  renderRail();
+}
+const next = () => go(cur+1), back = () => go(cur-1);
+function goStep(n){ const i = slides.findIndex(s => +s.dataset.step === n); if (i>=0) go(i); }
+
+/* ═══════════ 순서 슬라이드 시각 ═══════════ */
+(function orderTimes(){
+  if (!CONFIG.startTime) return;
+  const [h,m] = CONFIG.startTime.split(':').map(Number);
+  document.querySelectorAll('.order__m[data-t]').forEach(el=>{
+    const t = h*60 + m + (+el.dataset.t);
+    const hh = Math.floor(t/60), mm = String(t%60).padStart(2,'0');
+    el.innerHTML = `<b>${hh}:${mm}</b> · ${el.innerHTML.replace(/<b>(\d+)<\/b>분/, '$1분')}`;
+  });
+})();
+
+/* ═══════════ 레일 ═══════════ */
+const segsEl = document.getElementById('segs');
+STEPS.forEach(st=>{
+  const li = document.createElement('li'); li.className='seg'; li.style.flex = st.min; li.style.setProperty('--seg-c', st.c);
+  li.innerHTML = `<span class="seg__lab"><b>${st.n}</b>${st.name}<small>${st.min}분</small></span><span class="seg__bar"><span class="seg__fill"></span></span>`;
+  li.addEventListener('click', ()=> goStep(st.n));
+  segsEl.appendChild(li);
+});
+const fmt = ms => { ms = Math.max(0, ms); const s = Math.floor(ms/1000); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
+function renderRail(){
+  const active = stepOf(cur);
+  [...segsEl.children].forEach((li, k)=>{
+    const st = STEPS[k], started = S.steps[st.n];
+    const isActive = st.n === active;
+    const elapsed = started ? Date.now()-started : 0;
+    const ratio = started ? Math.min(elapsed/(st.min*60000), 1) : 0;
+    li.classList.toggle('is-active', isActive);
+    li.classList.toggle('is-done', !isActive && st.n < active);
+    li.classList.toggle('is-over', isActive && elapsed > st.min*60000);
+    li.querySelector('.seg__fill').style.width = (isActive ? ratio*100 : (st.n < active ? 100 : 0)) + '%';
+  });
+  const st = STEPS[active-1], started = S.steps[active];
+  const over = started && Date.now()-started > st.min*60000;
+  document.getElementById('railElapsed').innerHTML = `${st.name} 경과 <b class="${over?'is-over':''}">${fmt(started ? Date.now()-started : 0)}</b> / ${st.min}분`;
+  const d = new Date();
+  document.getElementById('railClock').innerHTML = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}<small>${cur+1} / ${slides.length}</small>`;
+}
+
+/* ═══════════ 팀별 모임 타이머 ═══════════ */
+const timerEl = document.getElementById('timer');
+function teamLeft(){ return S.team.since ? S.team.left - (Date.now()-S.team.since) : S.team.left; }
+function teamToggle(){
+  if (S.team.since) { S.team.left = teamLeft(); S.team.since = null; } else { if (teamLeft() <= 0) S.team.left = CONFIG.teamMinutes*60000; S.team.since = Date.now(); }
+  save(); renderTimer();
+}
+function teamReset(){ S.team = { left: CONFIG.teamMinutes*60000, since: null }; save(); renderTimer(); }
+function renderTimer(){
+  const left = teamLeft(), total = CONFIG.teamMinutes*60000;
+  document.getElementById('timerNum').textContent = fmt(left);
+  document.getElementById('timerFill').style.width = (100 - Math.max(0,left)/total*100) + '%';
+  timerEl.classList.toggle('is-running', !!S.team.since);
+  timerEl.classList.toggle('is-paused', !S.team.since && left < total && left > 0);
+  timerEl.classList.toggle('is-warn', left <= 5*60000 && left > 0);
+  timerEl.classList.toggle('is-over', left <= 0);
+  if (left <= 0 && S.team.since) { S.team.left = 0; S.team.since = null; save(); }
+}
+
+/* ═══════════ 사진 슬라이드쇼 ═══════════ */
+const photos = Array.from({length: CONFIG.photoCount}, (_,i)=> `photos/${String(i+1).padStart(3,'0')}.jpg`);
+let phI = 0, phTimer = null, phLayer = 0;
+const layers = [document.getElementById('phA'), document.getElementById('phB')];
+function showPhoto(step=1){
+  if (!photos.length) return;
+  phI = (phI + step + photos.length) % photos.length;
+  const src = photos[phI], L = layers[phLayer = 1-phLayer];
+  const fg = L.querySelector('.ph__fg'), bg = L.querySelector('.ph__bg');
+  fg.onerror = () => { photos.splice(phI,1); phI--; showPhoto(1); };   // 지운 사진은 건너뜀
+  fg.onload = () => { layers.forEach(l => l.classList.toggle('is-on', l===L)); document.getElementById('phIdx').textContent = `· ${phI+1}/${photos.length}`; };
+  bg.src = src; fg.src = src;
+  const pre = new Image(); pre.src = photos[(phI+1)%photos.length];
+}
+function startPhotos(){ clearInterval(phTimer); phTimer = setInterval(()=>showPhoto(1), CONFIG.photoInterval*1000); }
+function stopPhotos(){ clearInterval(phTimer); phTimer = null; }
+
+/* ═══════════ 영상 ═══════════ */
+if (CONFIG.videoFile) video.src = encodeURI(CONFIG.videoFile);
+else { document.getElementById('vPlay').style.display = 'none'; vOverlay.querySelector('p').innerHTML = '스케치영상은 모임 현장에서 재생합니다 · 다음은 <kbd>→</kbd>'; }
+function videoToggle(){ if (video.paused) video.play(); else video.pause(); }
+video.addEventListener('play', ()=>{ vOverlay.classList.add('is-hidden'); document.body.classList.add('rail-hidden'); });
+video.addEventListener('pause', ()=>{ document.body.classList.remove('rail-hidden'); if (video.ended || video.currentTime === 0) vOverlay.classList.remove('is-hidden'); });
+video.addEventListener('ended', ()=>{ vOverlay.classList.remove('is-hidden'); vOverlay.querySelector('p').innerHTML = '다시 보려면 <kbd>Space</kbd> · 다음은 <kbd>→</kbd>'; });
+document.getElementById('vPlay').addEventListener('click', e=>{ e.stopPropagation(); videoToggle(); });
+timerEl.addEventListener('click', teamToggle);
+video.addEventListener('click', videoToggle);
+let hideT = null;
+addEventListener('mousemove', ()=>{ if (slides[cur].hasAttribute('data-video') && !video.paused){ document.body.classList.remove('rail-hidden'); clearTimeout(hideT); hideT = setTimeout(()=>document.body.classList.add('rail-hidden'), 2500); } });
+
+/* ═══════════ QR · 회계 카드 ═══════════ */
+(function(){
+  try { const q = qrcode(0, 'M'); q.addData(CONFIG.albumUrl); q.make(); document.getElementById('qr').innerHTML = q.createSvgTag({ scalable: true, margin: 0 }); } catch(e) {}
+})();
+
+/* ═══════════ 키 · 클릭 ═══════════ */
+const help = document.getElementById('help');
+addEventListener('keydown', e=>{
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const el = slides[cur];
+  switch (e.key) {
+    case 'ArrowRight': case 'PageDown': case 'ArrowDown': e.preventDefault(); next(); break;
+    case 'ArrowLeft':  case 'PageUp':   case 'ArrowUp':   e.preventDefault(); back(); break;
+    case ' ': e.preventDefault();
+      if (el.hasAttribute('data-video')) { if (CONFIG.videoFile) videoToggle(); else next(); }
+      else if (el.hasAttribute('data-team')) teamToggle();
+      else next();
+      break;
+    case 'Home': go(0); break;
+    case 'End': go(slides.length-1); break;
+    case 'r': case 'R': if (el.hasAttribute('data-team')) teamReset(); break;
+    case 'n': case 'N': if (el.hasAttribute('data-photos')) { showPhoto(1); startPhotos(); } break;
+    case 'f': case 'F': document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); break;
+    case '?': help.classList.toggle('is-open'); break;
+    case 'Escape': help.classList.remove('is-open'); break;
+    case '0': if (confirm('단계 시간과 팀별 모임 타이머를 모두 초기화할까요? (리허설 후)')) { S.steps = {}; S.team = { left: CONFIG.teamMinutes*60000, since: null }; save(); renderRail(); renderTimer(); } break;
+    default: if (/^[1-6]$/.test(e.key)) goStep(+e.key);
+  }
+});
+stage.addEventListener('click', e=>{
+  if (e.target.closest('#rail, #help, video, .vOverlay, .timer')) return;
+  const x = e.clientX / innerWidth;
+  x < 0.25 ? back() : next();
+});
+help.addEventListener('click', ()=> help.classList.remove('is-open'));
+
+/* ═══════════ 시작 ═══════════ */
+showPhoto(0);
+go(cur);
+renderTimer();
+setInterval(()=>{ renderRail(); if (slides[cur].hasAttribute('data-team') || S.team.since) renderTimer(); }, 500);
+</script>
+</body>
+</html>

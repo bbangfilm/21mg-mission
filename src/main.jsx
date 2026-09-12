@@ -22,7 +22,7 @@ ensureAnonAuth().catch(() => {})
   //  삼켜 빠른 체크리스트 조작이 무반응이 되므로 사용하지 않는다.)
 }
 
-// 개발 모드에서 데이터 정합성 검증 로그 (45명·팀명단·미배정·다중소속)
+// 개발 모드에서 데이터 정합성 검증 로그 (참가 53명·팀명단·미배정·다중소속)
 if (import.meta.env.DEV) {
   import('./data/validate.js').then((m) => m.logValidation())
 }

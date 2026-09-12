@@ -88,14 +88,15 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .order__row[data-c="6"] .order__n{color:var(--text)}
 
 /* 팀 테이블 */
-.teams{margin-top:36px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.teams{margin-top:36px;display:grid;grid-template-columns:repeat(10,1fr);gap:20px}
+.team{grid-column:span 2}
 .team{background:var(--paper-2);border:2px solid var(--line);border-radius:28px;padding:24px 26px 26px;min-height:232px}
 .team__head{display:flex;align-items:center;gap:12px}
 .team__emoji{font-size:46px;line-height:1}
 .team__name{font-family:var(--font-display);font-weight:800;font-size:37px;letter-spacing:-.015em}
 .team__name small{font-family:var(--font-body);font-weight:700;font-size:24px;color:var(--muted);margin-left:8px}
 .team__people{margin-top:12px;font-size:31px;line-height:1.38;font-weight:600;color:#3A3745;word-break:keep-all}
-.team--kids{grid-column:span 2;background:color-mix(in srgb,var(--mint) 18%,var(--paper-2));border-color:color-mix(in srgb,var(--mint) 50%,var(--line))}
+.team--kids{grid-column:span 5;background:color-mix(in srgb,var(--mint) 18%,var(--paper-2));border-color:color-mix(in srgb,var(--mint) 50%,var(--line))}
 .team--misc{background:color-mix(in srgb,var(--sunny) 22%,var(--paper-2));border-color:color-mix(in srgb,var(--sunny) 55%,var(--line))}
 .team__tbd{display:block;margin-top:8px;font-size:26px;font-weight:700;color:var(--muted)}
 
@@ -297,15 +298,15 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   <p class="eyebrow">식사 <small>· 팀별 테이블 · 30분 · 오늘 47명 (어른 25 · 아이 22)</small></p>
   <h1 class="title">팀별로 앉아 맛있게 드세요</h1>
   <div class="teams">
-    <div class="team"><div class="team__head"><span class="team__emoji">📣</span><h2 class="team__name">전도·돌봄팀<small>3</small></h2></div><p class="team__people">김하연 · 전선희 · 함대희</p></div>
-    <div class="team"><div class="team__head"><span class="team__emoji">🎉</span><h2 class="team__name">레크팀<small>4</small></h2></div><p class="team__people">이성근 · 이정수 · 김성태 · 한상원</p></div>
-    <div class="team"><div class="team__head"><span class="team__emoji">🍜</span><h2 class="team__name">음식팀<small>4</small></h2></div><p class="team__people">정재선 · 정연설 · 공미혜 · 전덕인</p></div>
-    <div class="team"><div class="team__head"><span class="team__emoji">🛍️</span><h2 class="team__name">판매팀<small>4</small></h2></div><p class="team__people">이하나 · 은정원 · 최경연 · 송혜란</p></div>
-    <div class="team"><div class="team__head"><span class="team__emoji">🔧</span><h2 class="team__name">수리팀<small>4</small></h2></div><p class="team__people">이인현 · 정표수 · 권옥경 · 최성곤</p></div>
-    <div class="team team--misc"><div class="team__head"><span class="team__emoji">👨‍👩‍👧‍👦</span><h2 class="team__name">디렉터 · 미소속<small>6</small></h2></div><p class="team__people">이영천 · 신나희 · 박일규 · 손영혜 · 송현주 · 박성균<small class="team__tbd">+ 박한별 목사님 (참석 시)</small></p></div>
-    <div class="team team--kids"><div class="team__head"><span class="team__emoji">🧒</span><h2 class="team__name">아이 테이블<small>7</small></h2></div><p class="team__people">예준 · 예온 · 시온 · 선유 · 유안 · 예나 · 시윤<small class="team__tbd">성태/하나셀 아이들 — 수현이는 부모님(수리팀)과 함께</small></p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">📣</span><h2 class="team__name">전도·돌봄팀<small>5</small></h2></div><p class="team__people">김하연 · 전선희 · 함대희 · 손영혜 · 신나희</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🎉</span><h2 class="team__name">레크팀<small>5</small></h2></div><p class="team__people">이성근 · 이정수 · 김성태 · 한상원 · 이영천</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🍜</span><h2 class="team__name">음식팀<small>5</small></h2></div><p class="team__people">정재선 · 정연설 · 공미혜 · 전덕인 · 박일규</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🛍️</span><h2 class="team__name">판매팀<small>5</small></h2></div><p class="team__people">이하나 · 은정원 · 최경연 · 송혜란 · 박성균</p></div>
+    <div class="team"><div class="team__head"><span class="team__emoji">🔧</span><h2 class="team__name">수리팀<small>5</small></h2></div><p class="team__people">이인현 · 정표수 · 권옥경 · 최성곤 · 송현주</p></div>
+    <div class="team team--kids"><div class="team__head"><span class="team__emoji">🧒</span><h2 class="team__name">아이 테이블 ①</h2></div><p class="team__people">취학 아이들 자리<small class="team__tbd">미취학 동생들은 부모님과 같이 먹어요</small></p></div>
+    <div class="team team--kids"><div class="team__head"><span class="team__emoji">🧒</span><h2 class="team__name">아이 테이블 ②</h2></div><p class="team__people">취학 아이들 자리<small class="team__tbd">두 테이블 중 편한 쪽으로</small></p></div>
   </div>
-  <p class="note">어른 테이블 6 + 아이 테이블 1 · 부부가 팀이 다르면 각자 팀 테이블로 · 아이 테이블에 앉는 7명 말고 나머지 아이 15명은 부모 곁에 · 메뉴: 떡볶이(순한맛·짜장) · 유부초밥 · 치킨 · 음료</p>
+  <p class="note">어른 테이블 5 + 아이 테이블 2 · 미취학 아이는 부모님과 같이 · 박한별 목사님 참석 시 전도·돌봄팀 테이블로 · 메뉴: 떡볶이(순한맛·짜장) · 유부초밥 · 치킨 · 음료(테이블당 2개 + 종이컵)</p>
 </section>
 
 <!-- ═══ 4 · 식사 중 사진 ═══ -->
@@ -446,7 +447,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
       <div class="lrow"><span class="ld">8/19</span><span class="lc">활동비</span><span class="lt">수리팀 자재</span><span class="la">49,500</span></div>
     </div>
   </div>
-  <p class="note">셀 지원금 = 15,000원 × 인원 · 잔액 <b>770,740원</b>은 추가 헌금과 오늘 식사비로 (리더 결정) · 원본: 자료/4_보고/정산/…예산집행서_최종(9-6, 영수증 포함).xlsx</p>
+  <p class="note">셀 지원금 = 15,000원 × 인원 · 잔액 <b>770,740원</b> − 오늘 식사비 <b>405,800원</b> = 364,940원, 남는 돈은 추가 헌금으로 (리더 결정) · 원본: 자료/4_보고/정산/…예산집행서_최종(9-6, 영수증 포함).xlsx</p>
 </section>
 
 <!-- ═══ 14 · 마무리 랩업 ═══ -->
@@ -458,7 +459,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
       <div class="chips"><span class="chip">📣 전도·돌봄</span><span class="chip">🎉 레크</span><span class="chip">🍜 음식</span><span class="chip">🛍️ 판매</span><span class="chip">🔧 수리</span></div></div>
     <div class="card"><h2 class="card__t">잔액 처리</h2>
       <div class="fin"><div><small>수입</small><b>799만</b></div><div><small>지출</small><b>722만</b></div><div><small>잔액</small><b class="accent">77만</b></div></div>
-      <p class="card__b">잔액 <b>770,740원</b> → 추가 헌금 + 오늘 식사비 (리더 결정) · 표는 앞 슬라이드</p></div>
+      <p class="card__b">잔액 <b>770,740원</b> − 오늘 식사비 <b>405,800원</b> = <b>364,940원</b> → 추가 헌금 (리더 결정) · 표는 앞 슬라이드</p></div>
     <div class="card card--qr"><div><h2 class="card__t">사진 · 영상</h2><p class="card__b">QR로 <b>구글포토 앨범</b> 열기<br>스케치영상 링크는 리더방에</p></div><div class="qr" id="qr"></div></div>
     <div class="card"><h2 class="card__t">다음 일정</h2><p class="card__b"><b>9월 20일 주일</b> 셀모임 후 리더 모임<br>내년 방향은 취합지를 모아 정리해서 다시 나눕니다</p>
       <p class="card__b" style="margin-top:22px">마무리 기도 → <b>단체사진 📸</b></p></div>

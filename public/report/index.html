@@ -569,7 +569,7 @@ const CONFIG = {
   startTime: '14:00',                    // 순서 슬라이드에 실제 시각 표시 (null 이면 상대 시각)
   videoFile: '',                         // 온라인 버전: 영상은 현장에서 재생
   photoCount: 20, photoInterval: 7,     // photos/001.jpg … · 장당 초
-  birthdaySong: '',                      // 온라인 버전: 노래는 현장에서 재생(음원 미배포)
+  birthdaySong: 'birthday.mp3',          // 생일 슬라이드 노래 (빈 문자열이면 버튼 숨김)
   teamMinutes: 25,
   albumUrl: 'https://photos.app.goo.gl/F7gvqUFAyxGarU34A',
 };
@@ -710,7 +710,14 @@ const bdayBtn = document.getElementById('bdayPlay');
 const bdaySec = document.querySelector('[data-bday-song]');
 if (CONFIG.birthdaySong) bdaySong.src = encodeURI(CONFIG.birthdaySong);
 else { bdayBtn.style.display = 'none'; }
-function bdayPlay(){ if (!CONFIG.birthdaySong) return; bdayArmed = false; bdaySong.play().catch(()=>{}); }
+function bdayPlay(){
+  if (!CONFIG.birthdaySong) return;
+  bdayArmed = false;
+  bdaySong.play().catch(()=>{                      // 브라우저가 자동재생을 막은 경우
+    bdayArmed = true;                               // 다시 눌러도 넘어가지 않게 되돌린다
+    document.getElementById('bdayLabel').textContent = '버튼을 눌러 재생';
+  });
+}
 function bdayStop(){ bdaySong.pause(); bdaySong.currentTime = 0; bdaySec.classList.remove('is-playing'); }
 function bdayToggle(){ bdaySong.paused ? bdayPlay() : bdaySong.pause(); }
 bdaySong.addEventListener('play',  ()=>{ bdaySec.classList.add('is-playing');    document.getElementById('bdayLabel').textContent = '노래 일시정지'; });

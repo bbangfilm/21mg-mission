@@ -124,6 +124,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .bday.is-playing .bday__play .i-play{display:none}
 .bday__play .i-pause{display:none}
 .bday.is-playing .bday__play .i-pause{display:block}
+.bday__name--blank{color:transparent}
 
 /* 사진 슬라이드쇼 */
 .photos{background:#000}
@@ -334,8 +335,21 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   <p class="note">어른 테이블 5 + 아이 테이블 2 · 미취학 아이는 부모님과 같이 · 박한별 목사님 참석 시 전도·돌봄팀 테이블로 · 메뉴: 떡볶이(순한맛·짜장) · 유부초밥 · 치킨 · 음료(테이블당 2개 + 종이컵)</p>
 </section>
 
-<!-- ═══ 4 · 생일 축하 (식사 중) ═══ -->
+<!-- ═══ 4 · 생일 축하 ① 이름 공개 전 ═══ -->
 <section class="slide slide--ink bday" data-step="2" data-ink data-bday style="--c-step:var(--sunny)">
+  <div class="bday__glow"></div>
+  <p class="bday__deco">🎂🎉🎈</p>
+  <p class="eyebrow">잠깐만요 <small>· 식사 중 · 다 같이 한 곡</small></p>
+  <h1 class="bday__t">생일 축하합니다</h1>
+  <div class="bday__who">
+    <p class="bday__cell">성태 · 하나셀</p>
+    <p class="bday__name bday__name--blank">&nbsp;</p>
+  </div>
+  <p class="bday__sub">생일은 <b>9월 15일 화요일</b> — 오늘 다 같이 미리 축하해요</p>
+</section>
+
+<!-- ═══ 5 · 생일 축하 ② 이름 공개 → 한 번 더 누르면 노래 ═══ -->
+<section class="slide slide--ink bday" data-step="2" data-ink data-bday data-bday-song style="--c-step:var(--sunny)">
   <div class="bday__glow"></div>
   <p class="bday__deco">🎂🎉🎈</p>
   <p class="eyebrow">잠깐만요 <small>· 식사 중 · 다 같이 한 곡</small></p>
@@ -344,22 +358,22 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
     <p class="bday__cell">성태 · 하나셀</p>
     <p class="bday__name">송현주</p>
   </div>
-  <p class="bday__sub">생일은 <b>9월 15일 화요일</b> — 오늘 다 같이 미리 축하해요<br><small style="font-size:32px;opacity:.7">노래는 현장 덱에서 재생합니다</small></p>
+  <p class="bday__sub">생일은 <b>9월 15일 화요일</b> — 오늘 다 같이 미리 축하해요</p>
   <button class="bday__play" id="bdayPlay">
     <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
     <svg class="i-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-    <span id="bdayLabel">생일 노래 재생</span> <kbd>Space</kbd>
+    <span id="bdayLabel">생일 노래 재생</span> <kbd>한 번 더</kbd>
   </button>
 </section>
 
-<!-- ═══ 5 · 식사 중 사진 ═══ -->
+<!-- ═══ 6 · 식사 중 사진 ═══ -->
 <section class="slide slide--full photos" data-step="2" data-ink data-photos>
   <div class="ph" id="phA"><img class="ph__bg" alt=""><img class="ph__fg" alt=""></div>
   <div class="ph" id="phB"><img class="ph__bg" alt=""><img class="ph__fg" alt=""></div>
   <p class="photos__cap"><b>2026.8.14–16</b>부여 홍산은혜교회 · 오병이어 나눔축제 <span id="phIdx"></span></p>
 </section>
 
-<!-- ═══ 6 · 스케치영상 ═══ -->
+<!-- ═══ 7 · 스케치영상 ═══ -->
 <section class="slide slide--full video" data-step="3" data-ink data-video>
   <video id="video" playsinline preload="metadata" poster="poster.jpg"></video>
   <div class="vOverlay" id="vOverlay">
@@ -371,7 +385,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   </div>
 </section>
 
-<!-- ═══ 7 · 기도회 표지 ═══ -->
+<!-- ═══ 8 · 기도회 표지 ═══ -->
 <section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
   <p class="eyebrow">짧은 감사 기도회 <small>· 10분 · 인도 전덕인 리더</small></p>
   <h1 class="title">출발 전 구했던 다섯 가지를,<br>감사로 올려드립니다</h1>
@@ -381,7 +395,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   </div>
 </section>
 
-<!-- ═══ 8~10 · 감사 기도제목 ═══ -->
+<!-- ═══ 9~11 · 감사 기도제목 ═══ -->
 <section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
   <p class="eyebrow">감사 기도 <small>· 1 / 3</small></p>
   <div class="pray">
@@ -531,7 +545,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
       <div><span>다음 · 이전</span><kbd>→ ← · PgDn PgUp · 클릭</kbd></div>
       <div><span>단계로 바로 가기</span><kbd>1 ~ 6</kbd></div>
       <div><span>영상 재생 · 일시정지</span><kbd>Space</kbd></div>
-      <div><span>생일 노래 재생 · 일시정지</span><kbd>Space</kbd></div>
+      <div><span>생일 — 이름 공개 → 한 번 더 누르면 노래</span><kbd>→ · Space</kbd></div>
       <div><span>팀별 모임 타이머 시작 · 정지</span><kbd>Space</kbd></div>
       <div><span>타이머 처음으로</span><kbd>R</kbd></div>
       <div><span>전체 화면</span><kbd>F</kbd></div>
@@ -605,11 +619,14 @@ function go(i, opts={}){
   const st = stepOf(i);
   if (!S.steps[st]) { S.steps[st] = Date.now(); save(); }   // 단계 첫 진입 = 시작
   if (el.hasAttribute('data-photos')) startPhotos();
-  if (el.hasAttribute('data-bday') && CONFIG.birthdaySong && !opts.silent) bdayPlay();
+  bdayArmed = el.hasAttribute('data-bday-song') && !!CONFIG.birthdaySong;
   document.body.classList.toggle('rail-hidden', el.hasAttribute('data-video') && !video.paused);
   renderRail();
 }
 const next = () => go(cur+1), back = () => go(cur-1);
+let bdayArmed = false;
+/* 다음으로 — 생일 노래 슬라이드에서는 첫 누름이 '노래 재생'을 먹고, 두 번째 누름부터 넘어간다 */
+function advance(){ if (bdayArmed) { bdayPlay(); return; } next(); }
 function goStep(n){ const i = slides.findIndex(s => +s.dataset.step === n); if (i>=0) go(i); }
 
 /* ═══════════ 순서 슬라이드 시각 ═══════════ */
@@ -690,10 +707,10 @@ function stopPhotos(){ clearInterval(phTimer); phTimer = null; }
 /* ═══════════ 생일 노래 ═══════════ */
 const bdaySong = document.getElementById('bdaySong');
 const bdayBtn = document.getElementById('bdayPlay');
-const bdaySec = document.querySelector('[data-bday]');
+const bdaySec = document.querySelector('[data-bday-song]');
 if (CONFIG.birthdaySong) bdaySong.src = encodeURI(CONFIG.birthdaySong);
 else { bdayBtn.style.display = 'none'; }
-function bdayPlay(){ if (!CONFIG.birthdaySong) return; bdaySong.play().catch(()=>{}); }
+function bdayPlay(){ if (!CONFIG.birthdaySong) return; bdayArmed = false; bdaySong.play().catch(()=>{}); }
 function bdayStop(){ bdaySong.pause(); bdaySong.currentTime = 0; bdaySec.classList.remove('is-playing'); }
 function bdayToggle(){ bdaySong.paused ? bdayPlay() : bdaySong.pause(); }
 bdaySong.addEventListener('play',  ()=>{ bdaySec.classList.add('is-playing');    document.getElementById('bdayLabel').textContent = '노래 일시정지'; });
@@ -728,11 +745,11 @@ addEventListener('keydown', e=>{
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const el = slides[cur];
   switch (e.key) {
-    case 'ArrowRight': case 'PageDown': case 'ArrowDown': e.preventDefault(); next(); break;
+    case 'ArrowRight': case 'PageDown': case 'ArrowDown': e.preventDefault(); advance(); break;
     case 'ArrowLeft':  case 'PageUp':   case 'ArrowUp':   e.preventDefault(); back(); break;
     case ' ': e.preventDefault();
       if (el.hasAttribute('data-video')) { if (CONFIG.videoFile) videoToggle(); else next(); }
-      else if (el.hasAttribute('data-bday')) { if (CONFIG.birthdaySong) bdayToggle(); else next(); }
+      else if (el.hasAttribute('data-bday-song')) { if (CONFIG.birthdaySong) bdayToggle(); else advance(); }
       else if (el.hasAttribute('data-team')) teamToggle();
       else next();
       break;
@@ -750,7 +767,7 @@ addEventListener('keydown', e=>{
 stage.addEventListener('click', e=>{
   if (e.target.closest('#rail, #help, video, .vOverlay, .timer, .bday__play')) return;
   const x = e.clientX / innerWidth;
-  x < 0.25 ? back() : next();
+  x < 0.25 ? back() : advance();
 });
 help.addEventListener('click', ()=> help.classList.remove('is-open'));
 

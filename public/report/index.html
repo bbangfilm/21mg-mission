@@ -100,6 +100,31 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .team--misc{background:color-mix(in srgb,var(--sunny) 22%,var(--paper-2));border-color:color-mix(in srgb,var(--sunny) 55%,var(--line))}
 .team__tbd{display:block;margin-top:8px;font-size:26px;font-weight:700;color:var(--muted)}
 
+/* 생일 축하 (식사 중) */
+.bday{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.bday__glow{position:absolute;top:50%;left:50%;width:1600px;height:1600px;transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,color-mix(in srgb,var(--sunny) 24%,transparent),transparent 62%)}
+.bday__deco{position:relative;font-size:70px;letter-spacing:26px;line-height:1;margin-bottom:10px}
+.bday .eyebrow,.bday__t,.bday__who,.bday__sub,.bday__play{position:relative}
+.bday__t{font-family:var(--font-display);font-weight:900;font-size:126px;letter-spacing:-.035em;
+  line-height:1;color:var(--sunny);margin-top:20px}
+.bday__who{margin-top:46px;padding:34px 90px 40px;border-radius:46px;
+  background:rgba(255,255,255,.06);border:3px solid color-mix(in srgb,var(--sunny) 42%,transparent)}
+.bday__cell{font-size:42px;font-weight:700;color:var(--on-ink-muted);letter-spacing:.01em}
+.bday__name{font-family:var(--font-display);font-weight:900;font-size:186px;letter-spacing:-.045em;
+  line-height:1.02;margin-top:6px;color:var(--on-ink)}
+.bday__sub{margin-top:42px;font-size:42px;font-weight:600;color:var(--on-ink-muted);word-break:keep-all}
+.bday__play{margin-top:46px;display:inline-flex;align-items:center;gap:16px;cursor:pointer;
+  font-family:var(--font-body);font-size:36px;font-weight:700;letter-spacing:-.01em;
+  color:var(--ink);background:var(--sunny);border:0;border-radius:999px;padding:20px 44px}
+.bday__play svg{width:38px;height:38px;fill:currentColor}
+.bday__play kbd{font-family:var(--font-body);font-size:26px;font-weight:700;opacity:.62}
+.bday.is-playing .bday__play{background:rgba(255,255,255,.14);color:var(--on-ink)}
+.bday.is-playing .bday__play .i-play{display:none}
+.bday__play .i-pause{display:none}
+.bday.is-playing .bday__play .i-pause{display:block}
+
 /* 사진 슬라이드쇼 */
 .photos{background:#000}
 .photos::after{content:"";position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,rgba(22,21,29,0),rgba(22,21,29,.78));pointer-events:none}
@@ -309,14 +334,32 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   <p class="note">어른 테이블 5 + 아이 테이블 2 · 미취학 아이는 부모님과 같이 · 박한별 목사님 참석 시 전도·돌봄팀 테이블로 · 메뉴: 떡볶이(순한맛·짜장) · 유부초밥 · 치킨 · 음료(테이블당 2개 + 종이컵)</p>
 </section>
 
-<!-- ═══ 4 · 식사 중 사진 ═══ -->
+<!-- ═══ 4 · 생일 축하 (식사 중) ═══ -->
+<section class="slide slide--ink bday" data-step="2" data-ink data-bday style="--c-step:var(--sunny)">
+  <div class="bday__glow"></div>
+  <p class="bday__deco">🎂🎉🎈</p>
+  <p class="eyebrow">잠깐만요 <small>· 식사 중 · 다 같이 한 곡</small></p>
+  <h1 class="bday__t">생일 축하합니다</h1>
+  <div class="bday__who">
+    <p class="bday__cell">성태 · 하나셀</p>
+    <p class="bday__name">송현주</p>
+  </div>
+  <p class="bday__sub">생일은 <b>9월 15일 화요일</b> — 오늘 다 같이 미리 축하해요<br><small style="font-size:32px;opacity:.7">노래는 현장 덱에서 재생합니다</small></p>
+  <button class="bday__play" id="bdayPlay">
+    <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="i-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    <span id="bdayLabel">생일 노래 재생</span> <kbd>Space</kbd>
+  </button>
+</section>
+
+<!-- ═══ 5 · 식사 중 사진 ═══ -->
 <section class="slide slide--full photos" data-step="2" data-ink data-photos>
   <div class="ph" id="phA"><img class="ph__bg" alt=""><img class="ph__fg" alt=""></div>
   <div class="ph" id="phB"><img class="ph__bg" alt=""><img class="ph__fg" alt=""></div>
   <p class="photos__cap"><b>2026.8.14–16</b>부여 홍산은혜교회 · 오병이어 나눔축제 <span id="phIdx"></span></p>
 </section>
 
-<!-- ═══ 5 · 스케치영상 ═══ -->
+<!-- ═══ 6 · 스케치영상 ═══ -->
 <section class="slide slide--full video" data-step="3" data-ink data-video>
   <video id="video" playsinline preload="metadata" poster="poster.jpg"></video>
   <div class="vOverlay" id="vOverlay">
@@ -328,7 +371,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   </div>
 </section>
 
-<!-- ═══ 6 · 기도회 표지 ═══ -->
+<!-- ═══ 7 · 기도회 표지 ═══ -->
 <section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
   <p class="eyebrow">짧은 감사 기도회 <small>· 10분 · 인도 전덕인 리더</small></p>
   <h1 class="title">출발 전 구했던 다섯 가지를,<br>감사로 올려드립니다</h1>
@@ -338,7 +381,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
   </div>
 </section>
 
-<!-- ═══ 7~9 · 감사 기도제목 ═══ -->
+<!-- ═══ 8~10 · 감사 기도제목 ═══ -->
 <section class="slide slide--ink" data-step="4" data-ink style="--c-step:var(--violet-2)">
   <p class="eyebrow">감사 기도 <small>· 1 / 3</small></p>
   <div class="pray">
@@ -488,6 +531,7 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
       <div><span>다음 · 이전</span><kbd>→ ← · PgDn PgUp · 클릭</kbd></div>
       <div><span>단계로 바로 가기</span><kbd>1 ~ 6</kbd></div>
       <div><span>영상 재생 · 일시정지</span><kbd>Space</kbd></div>
+      <div><span>생일 노래 재생 · 일시정지</span><kbd>Space</kbd></div>
       <div><span>팀별 모임 타이머 시작 · 정지</span><kbd>Space</kbd></div>
       <div><span>타이머 처음으로</span><kbd>R</kbd></div>
       <div><span>전체 화면</span><kbd>F</kbd></div>
@@ -502,6 +546,8 @@ body.ink .railMeta__clock small{color:var(--on-ink-muted)}
 </div>
 </div>
 
+<audio id="bdaySong" preload="auto"></audio>
+
 <script src="lib/qrcode.js"></script>
 <script>
 /* ═══════════ 설정 — 당일 바뀌는 값은 여기만 고치면 됩니다 ═══════════ */
@@ -509,6 +555,7 @@ const CONFIG = {
   startTime: '14:00',                    // 순서 슬라이드에 실제 시각 표시 (null 이면 상대 시각)
   videoFile: '',                         // 온라인 버전: 영상은 현장에서 재생
   photoCount: 20, photoInterval: 7,     // photos/001.jpg … · 장당 초
+  birthdaySong: '',                      // 온라인 버전: 노래는 현장에서 재생(음원 미배포)
   teamMinutes: 25,
   albumUrl: 'https://photos.app.goo.gl/F7gvqUFAyxGarU34A',
 };
@@ -548,6 +595,7 @@ function go(i, opts={}){
   const prev = slides[cur];
   if (prev.hasAttribute('data-video')) { video.pause(); }
   if (prev.hasAttribute('data-photos')) stopPhotos();
+  if (prev.hasAttribute('data-bday')) bdayStop();
   cur = i; S.slide = i; save();
   try { history.replaceState(null, '', '#' + (i+1)); } catch(e) {}
   slides.forEach((s,k)=> s.classList.toggle('is-active', k===i));
@@ -557,6 +605,7 @@ function go(i, opts={}){
   const st = stepOf(i);
   if (!S.steps[st]) { S.steps[st] = Date.now(); save(); }   // 단계 첫 진입 = 시작
   if (el.hasAttribute('data-photos')) startPhotos();
+  if (el.hasAttribute('data-bday') && CONFIG.birthdaySong && !opts.silent) bdayPlay();
   document.body.classList.toggle('rail-hidden', el.hasAttribute('data-video') && !video.paused);
   renderRail();
 }
@@ -638,9 +687,26 @@ function showPhoto(step=1){
 function startPhotos(){ clearInterval(phTimer); phTimer = setInterval(()=>showPhoto(1), CONFIG.photoInterval*1000); }
 function stopPhotos(){ clearInterval(phTimer); phTimer = null; }
 
+/* ═══════════ 생일 노래 ═══════════ */
+const bdaySong = document.getElementById('bdaySong');
+const bdayBtn = document.getElementById('bdayPlay');
+const bdaySec = document.querySelector('[data-bday]');
+if (CONFIG.birthdaySong) bdaySong.src = encodeURI(CONFIG.birthdaySong);
+else { bdayBtn.style.display = 'none'; }
+function bdayPlay(){ if (!CONFIG.birthdaySong) return; bdaySong.play().catch(()=>{}); }
+function bdayStop(){ bdaySong.pause(); bdaySong.currentTime = 0; bdaySec.classList.remove('is-playing'); }
+function bdayToggle(){ bdaySong.paused ? bdayPlay() : bdaySong.pause(); }
+bdaySong.addEventListener('play',  ()=>{ bdaySec.classList.add('is-playing');    document.getElementById('bdayLabel').textContent = '노래 일시정지'; });
+bdaySong.addEventListener('pause', ()=>{ bdaySec.classList.remove('is-playing'); document.getElementById('bdayLabel').textContent = '생일 노래 재생'; });
+bdaySong.addEventListener('ended', ()=>{ bdaySong.currentTime = 0; document.getElementById('bdayLabel').textContent = '한 번 더'; });
+bdaySong.addEventListener('error', ()=>{ document.getElementById('bdayLabel').textContent = '노래 파일을 못 읽었어요'; });
+bdayBtn.addEventListener('click', e=>{ e.stopPropagation(); bdayToggle(); });
+
 /* ═══════════ 영상 ═══════════ */
 if (CONFIG.videoFile) video.src = encodeURI(CONFIG.videoFile);
 else { document.getElementById('vPlay').style.display = 'none'; vOverlay.querySelector('p').innerHTML = '스케치영상은 모임 현장에서 재생합니다 · 다음은 <kbd>→</kbd>'; }
+video.addEventListener('error', ()=>{ vOverlay.classList.remove('is-hidden');
+  vOverlay.querySelector('p').innerHTML = '⚠️ 영상 파일을 못 읽었습니다 — <b>자료</b> 폴더째로 옮겼는지, 파일명이 그대로인지 확인하세요'; });
 function videoToggle(){ if (video.paused) video.play(); else video.pause(); }
 video.addEventListener('play', ()=>{ vOverlay.classList.add('is-hidden'); document.body.classList.add('rail-hidden'); });
 video.addEventListener('pause', ()=>{ document.body.classList.remove('rail-hidden'); if (video.ended || video.currentTime === 0) vOverlay.classList.remove('is-hidden'); });
@@ -666,6 +732,7 @@ addEventListener('keydown', e=>{
     case 'ArrowLeft':  case 'PageUp':   case 'ArrowUp':   e.preventDefault(); back(); break;
     case ' ': e.preventDefault();
       if (el.hasAttribute('data-video')) { if (CONFIG.videoFile) videoToggle(); else next(); }
+      else if (el.hasAttribute('data-bday')) { if (CONFIG.birthdaySong) bdayToggle(); else next(); }
       else if (el.hasAttribute('data-team')) teamToggle();
       else next();
       break;
@@ -681,7 +748,7 @@ addEventListener('keydown', e=>{
   }
 });
 stage.addEventListener('click', e=>{
-  if (e.target.closest('#rail, #help, video, .vOverlay, .timer')) return;
+  if (e.target.closest('#rail, #help, video, .vOverlay, .timer, .bday__play')) return;
   const x = e.clientX / innerWidth;
   x < 0.25 ? back() : next();
 });
@@ -689,7 +756,7 @@ help.addEventListener('click', ()=> help.classList.remove('is-open'));
 
 /* ═══════════ 시작 ═══════════ */
 showPhoto(0);
-go(cur);
+go(cur, { silent: true });
 renderTimer();
 setInterval(()=>{ renderRail(); if (slides[cur].hasAttribute('data-team') || S.team.since) renderTimer(); }, 500);
 </script>
